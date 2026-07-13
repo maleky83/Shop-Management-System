@@ -13,8 +13,12 @@ An online shop built with ASP.NET Core 10.
 
 ## Features
 
-• User Authentication
+• Cookie-based Authentication
 • Role-based Authorization
 • Admin Panel
-• CRUD Operations
-• SQL Server Database with Entity Framework Core
+• Product & Category Management (CRUD)
+• Image Upload
+• Server-side Validation
+• Entity Framework Core (Code First)
+• Dependency Injection
+• Logging
