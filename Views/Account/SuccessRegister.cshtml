@@ -1,0 +1,11 @@
+﻿@model RegisterViewModel
+
+<h1>ثبت نام با موفقیت انجام شد</h1>
+<div class="alert alert-success">
+	کاربر عزیز با نام کاربری '@Model.Name' ممنون از ثبت نام شما میتوانید از طریق لینک زیر وارد سایت شوید
+	<a class="d-block"
+	   asp-controller="Account"
+	   asp-action="Login">
+		ورود به سایت
+	</a>
+</div>

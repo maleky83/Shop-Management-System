@@ -1,0 +1,47 @@
+﻿@page
+@model program.Pages.Admin.IndexModel
+@{
+	ViewData["title"] = "Index";
+}
+
+<h1>لیست کالا ها</h1>
+<p>
+	<a class="btn btn-outline-success"
+	   asp-page="AddProduct">
+		افزودن کالا
+	</a>
+</p>
+<table>
+	<thead>
+		<tr>
+			<th>تصویر</th>
+			<th>نام</th>
+			<th>قیمت</th>
+			<th>دستورات</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Product item in Model.Products)
+		{
+			<tr>
+				<td>
+					<img class="card-img-top img-thumbnail"
+						 style="max-width:200px;border:1px solid gray;padding:3px;"
+						 src="~/images/@(item.Id).jpg" />
+				</td>
+				<td>@item.Name</td>
+				<td>@item.Item.Price</td>
+				<td>
+					<a asp-route-id="@item.Id"
+					   asp-page="EditProduct">
+						ویرایش
+					</a>
+					<a asp-route-productId="@item.Id"
+					   asp-page="RemoveProduct">
+						حذف
+					</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

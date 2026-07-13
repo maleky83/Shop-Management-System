@@ -1,0 +1,17 @@
+﻿@using program.Data.Repositories
+@inject IGroupRepository _groupRepository;
+
+<li class="nav-item dropdown">
+	<a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">گروه ها</a>
+	<div class="dropdown-menu" aria-labelledby="dropdown09">
+		@foreach (var item in _groupRepository.GetAllCategories())
+		{
+			<a class="dropdown-item" asp-controller="Product"
+			   asp-action="ShowProductByGroupId"
+			   asp-route-id="@item.Id"
+			   asp-route-name="@item.Name">
+				@item.Name
+			</a>
+		}
+	</div>
+</li>

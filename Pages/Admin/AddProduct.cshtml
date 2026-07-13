@@ -1,0 +1,47 @@
+﻿@page
+@model program.Pages.Admin.AddModel
+@{
+	ViewData["title"] = "Add Product";
+}
+
+<h1>افزودن کالا</h1>
+<hr />
+<form method="post" enctype="multipart/form-data">
+	<div class="form-group">
+		<label asp-for="Product.Name"></label>
+		<input class="form-control" asp-for="Product.Name" />
+		<span class="text-danger" asp-validation-for="Product.Name"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Product.Description"></label>
+		<textarea class="form-control" asp-for="Product.Description"></textarea>
+		<span class="text-danger" asp-validation-for="Product.Description"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Product.Price"></label>
+		<input class="form-control" asp-for="Product.Price" />
+		<span class="text-danger" asp-validation-for="Product.Price"></span>
+	</div>
+	<div class="form-group">
+		<label>دسته بندی</label>
+		@foreach (var item in Model.Product.Categories)
+		{
+			<p>
+				<input type="checkbox" value="@item.Id" name="selectedGroup" />@item.Name
+			</p>
+		}
+	</div>
+	<div class="form-group">
+		<label asp-for="Product.QuantityInStock"></label>
+		<input class="form-control" asp-for="Product.QuantityInStock" />
+		<span class="text-danger" asp-validation-for="Product.QuantityInStock"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Product.Picture"></label>
+		<input class="form-control-file" asp-for="Product.Picture" />
+		<span class="text-danger" asp-validation-for="Product.Picture"></span>
+	</div>
+	<div class="form-group">
+		<input class="btn btn-success" type="submit" value="ثبت" />
+	</div>
+</form>

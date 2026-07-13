@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Product>;
+@{
+	ViewData["Title"] = "فروشگاه";
+}
+
+
+<div class="text-center">
+	<h1 class="display-4">به فروشگاه ما خوش آمدید</h1>
+	<div class="row">
+		@foreach (Product item in Model)
+		{
+			<partial model=item name="_BoxProduct" />
+		}
+	</div>
+</div>
