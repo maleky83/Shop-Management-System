@@ -7,6 +7,7 @@ An online shop built with ASP.NET Core 10.
 - C#
 - ASP.NET Core 10
 - Entity Framework Core
+- Linq
 - Razor Pages
 - SQL Server
 - ASP.NET Core Identity
