@@ -1,26 +1,24 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using program.Data.Repositories;
-using program.Models;
-using System;
+using Program.Core.DTOs;
+using Program.Core.Services.Interfaces;
+using Program.Data.Entities;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
-using System.Security.Cryptography.Xml;
+using System.Threading.Tasks;
 
 
-namespace program.Controllers
+namespace Program.Web.Controllers
 {
     public class AccountController : Controller
     {
-        private IUserRepository _userRepository;
-        public AccountController(IUserRepository userRepository)
+        private readonly IUserService _userService;
+        private readonly IProductService _productService;
+        public AccountController(IUserService userService, IProductService productService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
+            _productService = productService;
         }
 
         #region Register
@@ -30,33 +28,26 @@ namespace program.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Register(RegisterViewModel register)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
-
             if (!ModelState.IsValid)
-            {
-                return View(register);
-            }
-            if (_userRepository.IsExistUserByName(register.Name.ToLower()))
-            {
-                ModelState.AddModelError("Name", "نام کاربری وارد شده قبلا ثبت نام کرده است");
-                return View(register);
-            }
-            Users user = new Users()
-            {
-                Name = register.Name,
-                Password = register.Password,
-                RegisterDate = DateTime.Now,
-                IsAdmin = true
-            };
-            _userRepository.AddUser(user);
+                return View(model);
 
-            return View("SuccessRegister", register);
+
+            if (await _userService.GetUserAsync(model.Name) != null)
+            {
+                ModelState.AddModelError(nameof(model.Name), "نام کاربری وارد شده قبلا ثبت نام کرده است");
+                return View(model);
+            }
+
+            await _userService.RegisterAsync(model);
+
+            return Redirect("/Account/Login");
         }
 
-        public IActionResult VerifyName(string name)
+        public async Task<IActionResult> VerifyName(string name)
         {
-            if (_userRepository.IsExistUserByName(name))
+            if (await _userService.GetUserAsync(name) != null)
             {
                 return Json($"نام {name} تکراری است");
             }
@@ -72,17 +63,19 @@ namespace program.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel login)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(login);
+                return View(model);
             }
-            var user = _userRepository.GetUserForLogin(login.Name.ToLower(), login.Password);
+
+            User user = await _userService.LoginAsync(model);
+
             if (user == null)
             {
-                ModelState.AddModelError("Name", "اطلاعات صحیح نیست");
-                return View(login);
+                ModelState.AddModelError(nameof(model.Name), "اطلاعات صحیح نیست");
+                return View(model);
             }
 
             var claims = new List<Claim>
@@ -97,19 +90,19 @@ namespace program.Controllers
 
             var properties = new AuthenticationProperties
             {
-                IsPersistent = login.RememberMe
+                IsPersistent = model.RememberMe
             };
 
-            HttpContext.SignInAsync(principal, properties);
+            await HttpContext.SignInAsync(principal, properties);
 
             return Redirect("/");
         }
         #endregion
 
         #region Logout
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Redirect("/Account/Login");
         }
         #endregion

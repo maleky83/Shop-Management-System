@@ -1,5 +1,5 @@
 ﻿@page
-@model program.Pages.Admin.ManageUser.CreateModel
+@model Program.Web.Pages.Admin.ManageUser.CreateModel
 
 @{
     ViewData["Title"] = "Create";
@@ -7,30 +7,30 @@
 
 <h1>Create</h1>
 
-<h4>Users</h4>
+<h4>User</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Users.Name" class="control-label"></label>
-                <input asp-for="Users.Name" class="form-control" />
-                <span asp-validation-for="Users.Name" class="text-danger"></span>
+                <label asp-for="User.Name" class="control-label"></label>
+                <input asp-for="User.Name" class="form-control" />
+                <span asp-validation-for="User.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Users.Password" class="control-label"></label>
-                <input asp-for="Users.Password" class="form-control" />
-                <span asp-validation-for="Users.Password" class="text-danger"></span>
+                <label asp-for="User.Password" class="control-label"></label>
+                <input asp-for="User.Password" class="form-control" />
+                <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Users.RegisterDate" class="control-label"></label>
-                <input asp-for="Users.RegisterDate" class="form-control" />
-                <span asp-validation-for="Users.RegisterDate" class="text-danger"></span>
+                <label asp-for="User.RegisterDate" class="control-label"></label>
+                <input asp-for="User.RegisterDate" class="form-control" />
+                <span asp-validation-for="User.RegisterDate" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Users.IsAdmin" /> @Html.DisplayNameFor(model => model.Users.IsAdmin)
+                    <input class="form-check-input" asp-for="User.IsAdmin" /> @Html.DisplayNameFor(model => model.User.IsAdmin)
                 </label>
             </div>
             <div class="form-group">

@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using program.Data;
-using program.Models;
+using Program.Data.Context;
+using Program.Data.Entities;
+using System.Threading.Tasks;
 
-namespace program.Pages.Admin.ManageUser
+
+namespace Program.Web.Pages.Admin.ManageUser
 {
     public class CreateModel : PageModel
     {
-        private readonly program.Data.ProgramContext _context;
+        private readonly ProgramContext _context;
 
-        public CreateModel(program.Data.ProgramContext context)
+        public CreateModel(ProgramContext context)
         {
             _context = context;
         }
@@ -25,7 +22,7 @@ namespace program.Pages.Admin.ManageUser
         }
 
         [BindProperty]
-        public Users Users { get; set; }
+        public User User { get; set; }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://aka.ms/RazorPagesCRUD.
@@ -36,7 +33,7 @@ namespace program.Pages.Admin.ManageUser
                 return Page();
             }
 
-            _context.Users.Add(Users);
+            _context.Users.Add(User);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

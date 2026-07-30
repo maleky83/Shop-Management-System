@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using program.Data;
-using program.Models;
-using System.Collections;
+using Program.Data.Context;
+using Program.Data.Entities;
 using System.Collections.Generic;
 
-namespace program.Pages.Admin
+namespace Program.Web.Pages.Admin
 {
     public class IndexModel : PageModel
     {

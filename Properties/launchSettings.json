@@ -7,7 +7,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "program": {
+    "Program.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

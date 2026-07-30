@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Program.Data.Context;
+using Program.Data.Entities;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using program.Data;
-using program.Models;
 
-namespace program.Pages.Admin.ManageUser
+
+namespace Program.Web.Pages.Admin.ManageUser
 {
     public class EditModel : PageModel
     {
-        private readonly program.Data.ProgramContext _context;
+        private readonly ProgramContext _context;
 
-        public EditModel(program.Data.ProgramContext context)
+        public EditModel(ProgramContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Users Users { get; set; }
+        public User User { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,9 +28,9 @@ namespace program.Pages.Admin.ManageUser
                 return NotFound();
             }
 
-            Users = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
+            User = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
 
-            if (Users == null)
+            if (User == null)
             {
                 return NotFound();
             }
@@ -48,7 +46,7 @@ namespace program.Pages.Admin.ManageUser
                 return Page();
             }
 
-            _context.Attach(Users).State = EntityState.Modified;
+            _context.Attach(User).State = EntityState.Modified;
 
             try
             {
@@ -56,7 +54,7 @@ namespace program.Pages.Admin.ManageUser
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsersExists(Users.UserId))
+                if (!UsersExists(User.UserId))
                 {
                     return NotFound();
                 }

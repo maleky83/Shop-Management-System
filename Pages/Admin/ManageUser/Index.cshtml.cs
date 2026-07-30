@@ -1,25 +1,24 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Program.Data.Context;
+using Program.Data.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using program.Data;
-using program.Models;
 
-namespace program.Pages.Admin.ManageUser
+
+namespace Program.Web.Pages.Admin.ManageUser
 {
     public class IndexModel : PageModel
     {
-        private readonly program.Data.ProgramContext _context;
+        private readonly ProgramContext _context;
 
-        public IndexModel(program.Data.ProgramContext context)
+        public IndexModel(ProgramContext context)
         {
             _context = context;
         }
 
-        public IList<Users> Users { get;set; }
+        public IList<User> Users { get;set; }
 
         public async Task OnGetAsync()
         {

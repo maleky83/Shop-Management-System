@@ -1,15 +1,17 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing.Constraints;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using program.Data;
-using program.Data.Repositories;
+using Program.Core.Services;
+using Program.Core.Services.Interfaces;
+using Program.Data.Context;
+using Program.Data.Entities;
 using System;
 using System.Security.Claims;
 
-namespace WebApplication1
+namespace Program.Web
 {
     public class Program
     {
@@ -29,8 +31,10 @@ namespace WebApplication1
             #endregion
 
             #region IoC
-            builder.Services.AddScoped<IGroupRepository, GroupRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<PasswordHasher<User>>();
+            builder.Services.AddScoped<IGroupService, GroupService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IProductService, ProductService>();
             #endregion
 
             #region Authentication

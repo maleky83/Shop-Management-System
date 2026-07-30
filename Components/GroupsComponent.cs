@@ -4,17 +4,17 @@ using System.Threading.Tasks;
 
 namespace Program.Web.Components
 {
-    public class ProductGroupsComponent : ViewComponent
+    public class GroupsComponent : ViewComponent
     {
         private readonly IGroupService _groupService;
-        public ProductGroupsComponent(IGroupService groupService)
+        public GroupsComponent(IGroupService groupService)
         {
             _groupService = groupService;
         }
+
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var model = await _groupService.GetGroupForShowAsync();
-            return View(model);
+            return View(await _groupService.GetGroupForShowAsync());
         }
     }
 }

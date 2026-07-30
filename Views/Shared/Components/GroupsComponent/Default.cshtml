@@ -1,0 +1,17 @@
+﻿@using Program.Core.DTOs
+@model IEnumerable<ShowGroupViewModel>
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">گروه ها</a>
+    <div class="dropdown-menu" aria-labelledby="dropdown09">
+        @foreach (var item in Model)
+        {
+            <a class="dropdown-item" asp-controller="Product"
+               asp-action="ShowProductByGroupId"
+               asp-route-id="@item.GroupId"
+               asp-route-name="@item.Name">
+                @item.Name
+            </a>
+        }
+    </div>
+</li>

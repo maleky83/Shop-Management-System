@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using program.Data;
-using program.Models;
+using Program.Data.Context;
+using Program.Data.Entities;
 using System.IO;
 using System.Linq;
 
-namespace program.Pages.Admin
+namespace Program.Web.Pages.Admin
 {
     public class RemoveModel : PageModel
     {

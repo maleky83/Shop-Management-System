@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using program.Data;
-using program.Models;
+using Program.Core.DTOs;
+using Program.Data.Context;
+using Program.Data.Entities.Category;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace program.Pages.Admin
+namespace Program.Web.Pages.Admin
 {
     public class EditModel : PageModel
     {
