@@ -1,0 +1,42 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
+
+namespace Program.Core.DTOs
+{
+    public class RegisterViewModel
+    {
+        [Key]
+        [MaxLength(300)]
+        [Display(Name = "نام کاربری")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Remote("VerifyName", "Account")]
+        public string Name { get; set; }
+        [MaxLength(50)]
+        [DataType(DataType.Password)]
+        [Display(Name = "رمز عبور")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public required string Password { get; set; }
+        [MaxLength(50)]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "{0} و {1}و باید یکسان باشد")]
+        [Display(Name = "تکرار رمز عبور")]
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        public string RePassword { get; set; }
+
+    }
+    public class LoginViewModel
+    {
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(300)]
+        [Display(Name = "نام کاربری")]
+        public string Name { get; set; }
+        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [MaxLength(50)]
+        [DataType(DataType.Password)]
+        [Display(Name = "رمز عبور")]
+        public string Password { get; set; }
+        [Display(Name = "مرا بخاطر بسپار")]
+        public bool RememberMe { get; set; }
+    }
+}
