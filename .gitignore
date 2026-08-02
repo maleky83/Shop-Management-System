@@ -1,0 +1,23 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+
+# Build
+bin/
+obj/
+
+# Publish
+publish/
+
+# Logs
+*.log
+
+# ASP.NET Core
+appsettings.Development.json

@@ -1,0 +1,31 @@
+﻿@using ShopManagementSystem.Core.DTOs.ProductViewModels
+@using ShopManagementSystem.Data.Entities.Category
+@model DetailsViewModel
+@{
+    ViewData["Title"] = "کالا " + Model.Product.Name;
+}
+<div>
+    <h1 class="display-5">@Model.Product.Name</h1>
+    <hr />
+    <img src="~/images/@(Model.Product.Id).jpg"
+         class="img-thumbnail"
+         height="500"
+         width="500"
+         alt="@Model.Product.Name" />
+    <p class="py-2">@Model.Product.Description</p>
+    <p>قیمت : @Model.Product.Item.Price</p>
+    <dl>
+        @foreach (Category item in Model.Categories)
+        {
+            <dt>@item.Name</dt>
+            <dd>@item.Description</dd>
+        }
+    </dl>
+    <div>
+        <a class="btn btn-primary"
+           asp-controller="Home"
+           asp-action="AddToCart"
+           asp-route-itemId="@Model.Product.ItemId">افزودن به سبد خرید</a>
+    </div>
+
+</div>
