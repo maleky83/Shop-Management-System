@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Core.DTOs.OrderViewModels;
 using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Entities;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -10,10 +9,10 @@ namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
     [Route("order")]
-    public class OrdersController : ControllerBase
+    public class CartController : ControllerBase
     {
         private IProductService _productService;
-        public OrdersController(IProductService productService)
+        public CartController(IProductService productService)
         {
             _productService = productService;
         }
@@ -43,7 +42,7 @@ namespace ShopManagementSystem.Api.Controllers
             if (order == null)
                 return BadRequest(new
                 {
-                    message = "you don't have any orders"
+                    message = "you don't have any oreders"
                 });
 
             return Ok(order);
@@ -69,18 +68,5 @@ namespace ShopManagementSystem.Api.Controllers
 
             return NoContent();
         }
-
-        [Authorize]
-        [HttpPost("{orderId}/payment")]
-        public async Task<IActionResult> Payment(int orderId)
-        {
-            await _productService.PaymentAsync(orderId);
-
-            return Ok(new
-            {
-                message = "Successful payment"
-            });
-        }
-
     }
 }
