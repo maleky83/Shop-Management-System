@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Data.Context;
 
@@ -11,9 +12,11 @@ using ShopManagementSystem.Data.Context;
 namespace ShopManagementSystem.Data.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    partial class ProgramContextModelSnapshot : ModelSnapshot
+    [Migration("20260805071435_init-mg")]
+    partial class initmg
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,24 +258,21 @@ namespace ShopManagementSystem.Data.Migrations
                             Id = 1,
                             Description = "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.",
                             ItemId = 1,
-                            Name = "پیراهن آستین‌بلند مجلسی طرح‌دار",
-                            PictureName = "1.jpg"
+                            Name = "پیراهن آستین‌بلند مجلسی طرح‌دار"
                         },
                         new
                         {
                             Id = 2,
                             Description = "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.",
                             ItemId = 2,
-                            Name = "مانتو نخی بهاره طرح گل‌های کوچک",
-                            PictureName = "2.jpg"
+                            Name = "مانتو نخی بهاره طرح گل‌های کوچک"
                         },
                         new
                         {
                             Id = 3,
                             Description = "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.",
                             ItemId = 3,
-                            Name = "ساعت هوشمند اسپرت پرو مدل X-200",
-                            PictureName = "1.jpg"
+                            Name = "ساعت هوشمند اسپرت پرو مدل X-200"
                         });
                 });
 

@@ -1,5 +1,4 @@
 ﻿using ShopManagementSystem.Data.Entities.Category;
-using System.Collections.Generic;
 
 namespace ShopManagementSystem.Data.Entities
 {
@@ -9,6 +8,7 @@ namespace ShopManagementSystem.Data.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public int ItemId { get; set; }
+        public string? PictureName { get; set; }
 
         public ICollection<CategoryToProduct> CategoryToProducts { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }

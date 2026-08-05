@@ -11,10 +11,10 @@ namespace ShopManagementSystem.Api.Controllers
     [Route("order")]
     public class CartController : ControllerBase
     {
-        private IProductService _productService;
-        public CartController(IProductService productService)
+        private IOrderService _orderService;
+        public CartController(IOrderService orderService)
         {
-            _productService = productService;
+            _orderService = orderService;
         }
 
         [Authorize]
@@ -23,7 +23,7 @@ namespace ShopManagementSystem.Api.Controllers
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            await _productService.AddToOrderAsync(itemId, userId);
+            await _orderService.AddToOrderAsync(itemId, userId);
 
             return Ok(new
             {
@@ -37,7 +37,7 @@ namespace ShopManagementSystem.Api.Controllers
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            var order = await _productService.ShowOrderAsync(userId);
+            var order = await _orderService.ShowOrderAsync(userId);
 
             if (order == null)
                 return BadRequest(new
@@ -52,10 +52,10 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpPatch("items/{detailId}/decrease")]
         public async Task<IActionResult> ReduceOrder(int detailId)
         {
-            int result = await _productService.ReduceOrderAsync(detailId);
+            int result = await _orderService.ReduceOrderAsync(detailId);
 
             if (result == 1)
-                await _productService.RemoveOrderAsync(detailId);
+                await _orderService.RemoveOrderAsync(detailId);
 
             return NoContent();
         }
@@ -64,7 +64,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpDelete("items/{detailId}")]
         public async Task<IActionResult> RemoveOrder(int detailId)
         {
-            await _productService.RemoveOrderAsync(detailId);
+            await _orderService.RemoveOrderAsync(detailId);
 
             return NoContent();
         }

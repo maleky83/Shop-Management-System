@@ -8,9 +8,11 @@ namespace ShopManagementSystem.Core.DTOs.ProductViewModels
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string? PictureName { get; set; }
         public long Price { get; set; }
         public int QuantityInStock { get; set; }
-        public IFormFile Picture { get; set; }
-        public List<Category> Categories { get; set; }
+        public IFormFile? Picture { get; set; }
+        public List<int> CategoriIds { get; set; } = [];
+        public List<Category> Categories { get; set; } = [];
     }
 }

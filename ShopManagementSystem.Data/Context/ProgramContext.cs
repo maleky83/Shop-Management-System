@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CodeActions;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Data.Entities;
 using ShopManagementSystem.Data.Entities.Category;
 
@@ -60,21 +59,24 @@ namespace ShopManagementSystem.Data.Context
                 Id = 1,
                 ItemId = 1,
                 Name = "پیراهن آستین‌بلند مجلسی طرح‌دار",
-                Description = "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف."
+                Description = "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.",
+                PictureName = "1.jpg",
             },
             new Product()
             {
                 Id = 2,
                 ItemId = 2,
                 Name = "مانتو نخی بهاره طرح گل‌های کوچک",
-                Description = "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند."
+                Description = "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.",
+                PictureName = "2.jpg",
             },
             new Product()
             {
                 Id = 3,
                 ItemId = 3,
                 Name = "ساعت هوشمند اسپرت پرو مدل X-200",
-                Description = "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر."
+                Description = "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.",
+                PictureName = "1.jpg",
             });
 
             modelBuilder.Entity<CategoryToProduct>().HasData(

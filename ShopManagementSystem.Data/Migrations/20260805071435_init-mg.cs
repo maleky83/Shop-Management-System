@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopManagementSystem.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmg : Migration
+    public partial class initmg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,7 +65,8 @@ namespace ShopManagementSystem.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ItemId = table.Column<int>(type: "int", nullable: false)
+                    ItemId = table.Column<int>(type: "int", nullable: false),
+                    PictureName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -174,12 +175,12 @@ namespace ShopManagementSystem.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "Description", "ItemId", "Name" },
+                columns: new[] { "Id", "Description", "ItemId", "Name", "PictureName" },
                 values: new object[,]
                 {
-                    { 1, "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.", 1, "پیراهن آستین‌بلند مجلسی طرح‌دار" },
-                    { 2, "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.", 2, "مانتو نخی بهاره طرح گل‌های کوچک" },
-                    { 3, "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.", 3, "ساعت هوشمند اسپرت پرو مدل X-200" }
+                    { 1, "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.", 1, "پیراهن آستین‌بلند مجلسی طرح‌دار", null },
+                    { 2, "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.", 2, "مانتو نخی بهاره طرح گل‌های کوچک", null },
+                    { 3, "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.", 3, "ساعت هوشمند اسپرت پرو مدل X-200", null }
                 });
 
             migrationBuilder.InsertData(

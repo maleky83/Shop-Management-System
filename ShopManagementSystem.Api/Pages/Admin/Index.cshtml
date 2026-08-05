@@ -28,12 +28,12 @@
 				<td>
 					<img class="card-img-top img-thumbnail"
 						 style="max-width:200px;border:1px solid gray;padding:3px;"
-						 src="~/images/@(item.Id).jpg" />
+						 src="~/images/@(item.PictureName)" />
 				</td>
 				<td>@item.Name</td>
 				<td>@item.Item.Price</td>
 				<td>
-					<a asp-route-id="@item.Id"
+					<a asp-route-productId="@item.Id"
 					   asp-page="EditProduct">
 						ویرایش
 					</a>

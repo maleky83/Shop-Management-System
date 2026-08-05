@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Core.Services.Interfaces;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ShopManagementSystem.Core.DTOs.ProductViewModels;
 
@@ -18,8 +17,6 @@ namespace ShopManagementSystem.Api.Pages.Admin
         [BindProperty]
         public AddEditProductViewModel Product { get; set; }
 
-        [BindProperty]
-        public List<int> selectedGroup { get; set; }
         public async Task OnGetAsync()
         {
             Product = new AddEditProductViewModel()
@@ -31,10 +28,11 @@ namespace ShopManagementSystem.Api.Pages.Admin
         {
             if (!ModelState.IsValid)
             {
+                Product.Categories = await _productService.GetCategories();
                 return Page();
             }
 
-           await _productService.AddProductAsync(Product, selectedGroup);
+            await _productService.AddProductAsync(Product);
 
             return RedirectToPage("Index");
         }

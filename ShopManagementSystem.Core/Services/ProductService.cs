@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Core.DTOs.OrderViewModels;
 using ShopManagementSystem.Core.DTOs.ProductViewModels;
 using ShopManagementSystem.Core.Services.Interfaces;
 using ShopManagementSystem.Data.Context;
@@ -11,14 +10,16 @@ namespace ShopManagementSystem.Core.Services
     public class ProductService : IProductService
     {
         private readonly ProgramContext _context;
-        public ProductService(ProgramContext context)
+        private readonly IFileService _fileService;
+        public ProductService(ProgramContext context, IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
-        public async Task<Product?> GetProductItemByIdAsync(int id)
+        public async Task<Product?> GetProductItemByIdAsync(int productId)
         {
-            Product? product = await _context.Products.Include(p => p.Item).AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+            Product? product = await _context.Products.Include(p => p.Item).AsNoTracking().FirstOrDefaultAsync(p => p.Id == productId);
             return product;
         }
 
@@ -27,130 +28,22 @@ namespace ShopManagementSystem.Core.Services
             return await _context.Products.AsNoTracking().ToListAsync();
         }
 
-        public async Task<DetailsViewModel> DetailsAsync(int id)
+        public async Task<DetailsViewModel> DetailsAsync(int productId)
         {
-            List<Category> categories = await _context.Products.Where(p => p.Id == id).SelectMany(c => c.CategoryToProducts).Select(ca => ca.Category).AsNoTracking().ToListAsync();
+            List<Category> categories = await _context.Products.Where(p => p.Id == productId).SelectMany(c => c.CategoryToProducts).Select(ca => ca.Category).AsNoTracking().ToListAsync();
 
             var vm = new DetailsViewModel()
             {
-                Product = await GetProductItemByIdAsync(id),
+                Product = await GetProductItemByIdAsync(productId),
                 Categories = categories
             };
             return vm;
         }
 
-		public async Task AddToOrderAsync(int itemId, int userId)
-        {
-            var product = await _context.Products.Include(p => p.Item).AsNoTracking().FirstOrDefaultAsync(p => p.ItemId == itemId);
-            if (product != null)
-            {
-                var order = await _context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.UserId == userId && !o.IsFinaly);
-
-                if (order != null)
-                {
-                    var orderDetail = await _context.OrderDetail.FirstOrDefaultAsync(d =>
-                    d.OrderId == order.OrderId &&
-                    d.ProductId == product.Id);
-                    if (orderDetail != null)
-                    {
-                        orderDetail.Count += 1;
-                    }
-                    else
-                    {
-                        await _context.OrderDetail.AddAsync(new OrderDetail()
-                        {
-                            OrderId = order.OrderId,
-                            Count = 1,
-                            ProductId = product.Id,
-                            Price = product.Item.Price
-                        });
-                        await _context.SaveChangesAsync();
-                    }
-                }
-                else
-                {
-                    order = new Order()
-                    {
-                        IsFinaly = false,
-                        CreateTime = DateTime.Now,
-                        UserId = userId
-                    };
-                    await _context.Orders.AddAsync(order);
-                    await _context.SaveChangesAsync();
-                    await _context.OrderDetail.AddAsync(new OrderDetail()
-                    {
-                        OrderId = order.OrderId,
-                        ProductId = product.Id,
-                        Price = product.Item.Price,
-                        Count = 1
-                    });
-                }
-                await _context.SaveChangesAsync();
-            }
-        }
-
-		public async Task<OrderViewModel?> ShowOrderAsync(int userId)
-        {
-			var order = await _context.Orders.Where(o => o.UserId == userId && !o.IsFinaly)
-				.Select(o => new OrderViewModel()
-				{
-					UserId = o.UserId,
-					OrderId = o.OrderId,
-					IsFinaly = o.IsFinaly,
-					Sum = o.OrderDetails.Sum(od => od.Count * od.Price),
-					OrderDetails = o.OrderDetails.Select(od => new OrderDetailViewModel()
-					{
-						Price = od.Price * od.Count,
-						Count = od.Count,
-						DetailId = od.DetailId,
-					}).ToList(),
-				}).FirstOrDefaultAsync();
-
-            return order;
-        }
-
-		public async Task<int> ReduceOrderAsync(int detailId)
-        {
-            var orderDetail = await _context.OrderDetail.FindAsync(detailId);
-
-            if (orderDetail.Count > 1)
-            {
-                orderDetail.Count -= 1;
-            }
-            await _context.SaveChangesAsync();
-
-            return orderDetail.Count;
-        }
-
-		public async Task RemoveOrderAsync(int detailId)
-        {
-            var orderDetail = await _context.OrderDetail.FindAsync(detailId);
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderDetail.OrderId);
-
-            _context.Remove(orderDetail);
-            await _context.SaveChangesAsync();
-
-            var orderDetailCount = await _context.OrderDetail.Where(o => o.OrderId == order.OrderId).SumAsync(o => o.Count);
-
-            if (orderDetailCount == 0)
-            {
-                _context.Orders.Remove(order);
-            }
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task PaymentAsync(int orderId)
-        {
-            var order = await _context.Orders.Where(o => o.OrderId == orderId).FirstOrDefaultAsync();
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-        }
-
-		public async Task<List<Product>> ShowProductByGroupIdAsync(int id)
+        public async Task<List<Product>> ShowProductByGroupIdAsync(int categoryId)
         {
             List<Product> products = await _context.CategoryToProducts
-                .Where(c => c.CategoryId == id)
+                .Where(c => c.CategoryId == categoryId)
                 .Include(c => c.Product)
                 .Select(c => c.Product)
                 .ToListAsync();
@@ -158,51 +51,35 @@ namespace ShopManagementSystem.Core.Services
             return products;
         }
 
-        public async Task AddProductAsync(AddEditProductViewModel model, List<int> selectedGroup)
+        public async Task AddProductAsync(AddEditProductViewModel model)
         {
-            var item = new Item()
-            {
-                Price = model.Price,
-                QuantityInStock = model.QuantityInStock
-            };
-            await _context.AddAsync(item);
-            await _context.SaveChangesAsync();
-
             var product = new Product()
             {
                 Name = model.Name,
                 Description = model.Description,
-                Item = item
+                Item = new Item
+                {
+                    Price = model.Price,
+                    QuantityInStock = model.QuantityInStock,
+                }
             };
             await _context.AddAsync(product);
             await _context.SaveChangesAsync();
-            product.ItemId = product.Id;
 
-            if (model.Picture?.Length > 0)
+            if (model.Picture is not null)
             {
-                var filePath = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    "wwwroot/images/",
-                    product.Id + ".jpg"
-                    //Path.GetExtension(Product.Picture.FileName
-                    );
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await model.Picture.CopyToAsync(stream);
-                }
+                product.PictureName = await _fileService.SaveFileAsync(product.Id, model.Picture);
             }
 
-            if (selectedGroup.Any() && selectedGroup.Count > 0)
+            if (model.CategoriIds.Any())
             {
-                foreach (int numberGroup in selectedGroup)
-                {
-                    await _context.CategoryToProducts.AddAsync(new CategoryToProduct()
+                await _context.CategoryToProducts.AddRangeAsync(
+                    model.CategoriIds.Select(id => new CategoryToProduct()
                     {
-                        CategoryId = numberGroup,
-                        ProductId = product.Id
-
-                    });
-                }
+                        ProductId = product.Id,
+                        CategoryId = id,
+                    })
+                    );
             }
             await _context.SaveChangesAsync();
         }
@@ -210,6 +87,71 @@ namespace ShopManagementSystem.Core.Services
         public async Task<List<Category>> GetCategories()
         {
             return await _context.Categories.AsNoTracking().ToListAsync();
+        }
+
+        public async Task EditProductAsync(AddEditProductViewModel model)
+        {
+            var product = await _context.Products.FindAsync(model.Id);
+            var item = await _context.Items.FirstAsync(item => item.Id == product.ItemId);
+
+            product.Name = model.Name;
+            product.Description = model.Description;
+            item.Price = model.Price;
+            item.QuantityInStock = model.QuantityInStock;
+            await _context.SaveChangesAsync();
+
+            if (model.Picture?.Length > 0)
+            {
+                _fileService.DeleleFile(product.Id, product.PictureName);
+                product.PictureName = await _fileService.SaveFileAsync(product.Id, model.Picture);
+            }
+            _context.CategoryToProducts.Where(c => c.ProductId == product.Id).ToList()
+                .ForEach(g => _context.CategoryToProducts.Remove(g));
+
+            if (model.CategoriIds.Any() && model.CategoriIds.Count > 0)
+            {
+                foreach (int numberGroup in model.CategoriIds)
+                {
+                    await _context.CategoryToProducts.AddAsync(new CategoryToProduct()
+                    {
+                        CategoryId = numberGroup,
+                        ProductId = product.Id
+                    });
+                }
+            }
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<AddEditProductViewModel?> GetEditProductViewModel(int productId)
+        {
+            var product = await _context.Products.Include(product => product.Item)
+                .Where(product => product.Id == productId)
+                .Select(s => new AddEditProductViewModel()
+                {
+                    Id = productId,
+                    Name = s.Name,
+                    Description = s.Description,
+                    QuantityInStock = s.Item.QuantityInStock,
+                    Price = s.Item.Price,
+                    PictureName = s.PictureName,
+                }).FirstOrDefaultAsync();
+
+            product.Categories = await _context.Categories.ToListAsync();
+            product.CategoriIds = await _context.CategoryToProducts.Where(c => c.ProductId == productId)
+                .Select(s => s.CategoryId).ToListAsync();
+
+            return product;
+        }
+
+        public async Task DeleteProductAsync(int productId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var item = await _context.Items.FirstOrDefaultAsync(i => i.Id == product.ItemId);
+            _fileService.DeleleFile(productId, product.PictureName);
+            _context.Remove(product);
+            _context.Remove(item);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

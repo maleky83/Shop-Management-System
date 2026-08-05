@@ -1,41 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities;
-using System.IO;
-using System.Linq;
+using ShopManagementSystem.Core.DTOs.ProductViewModels;
+using ShopManagementSystem.Core.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
     public class RemoveModel : PageModel
     {
-        private ProgramContext _context;
-        public RemoveModel(ProgramContext context)
+        private readonly IProductService _productService;
+        public RemoveModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
+
         [BindProperty]
-        public Product Product { get; set; }
-        public void OnGet(int productId)
+        public AddEditProductViewModel Product { get; set; }
+        public async Task OnGetAsync(int productId)
         {
-            Product = _context.Products.FirstOrDefault(p => p.Id == productId);
+            Product = await _productService.GetEditProductViewModel(productId);
         }
-        public IActionResult OnPostAsync() 
+        public async Task<IActionResult> OnPostAsync()
         {
-            var product = _context.Products.Find(Product.Id);
-            var item = _context.Items.FirstOrDefault(i => i.Id == product.ItemId);
-            _context.Remove(product);
-            _context.Remove(item);
-
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(),
-                $"wwwroot/images/${product.Id}.jpg");
-            if (System.IO.File.Exists(filePath))
-            {
-                System.IO.File.Delete(filePath);
-            }
-
-            _context.SaveChanges();
-
+            await _productService.DeleteProductAsync(Product.Id);
             return RedirectToPage("Index");
         }
     }
