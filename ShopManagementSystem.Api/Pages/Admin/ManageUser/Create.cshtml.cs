@@ -19,7 +19,7 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
         }
 
         [BindProperty]
-        public ManagerUserViewModel model { get; set; }
+        public UserViewModel model { get; set; }
 
         public IActionResult OnGet()
         {

@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Data.Entities.Category
+﻿using ShopManagementSystem.Data.Entities.Products;
+
+namespace ShopManagementSystem.Data.Entities.Category
 {
     public class CategoryToProduct
     {

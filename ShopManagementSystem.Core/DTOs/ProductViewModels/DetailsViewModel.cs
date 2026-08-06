@@ -1,11 +1,9 @@
-﻿using ShopManagementSystem.Data.Entities;
-using ShopManagementSystem.Data.Entities.Category;
-
+﻿
 namespace ShopManagementSystem.Core.DTOs.ProductViewModels
 {
-    public class DetailsViewModel
+    public class ProductDetailsViewModel
     {
-        public Product Product { get; set; }
-        public List<Category> Categories { get; set; }
+        public ProductViewModel Product { get; set; }
+        public List<CategoryViewModel> Categories { get; set; }
     }
 }

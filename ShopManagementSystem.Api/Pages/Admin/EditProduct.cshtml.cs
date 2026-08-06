@@ -21,11 +21,11 @@ namespace ShopManagementSystem.Api.Pages.Admin
         }
 
         [BindProperty]
-        public AddEditProductViewModel Product { get; set; }
+        public ProductViewModel Product { get; set; }
 
         public async Task OnGetAsync(int productId)
         {
-            Product = await _productService.GetEditProductViewModel(productId);
+            Product = await _productService.GetProductViewModelAsync(productId);
         }
 
         public async Task<IActionResult> OnPostAsync()

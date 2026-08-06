@@ -1,13 +1,13 @@
 ﻿@page
 @model ShopManagementSystem.Api.Pages.Admin.RemoveModel
-@* @{
+@{
 	ViewData["title"] = "Remove";
-} *@
+}
 
-<h1>حذف کالا</h1>
+<h1>Remove Product</h1>
 <hr />
 <form method="post">
-    <input type="hidden" asp-for="Product.Id" />
+    <input type="hidden" asp-for="Product.ProductId" />
     <div class="form-group">
         <label asp-for="Product.Name"></label>
         <p>@Model.Product.Name</p>
@@ -22,6 +22,6 @@
              src="~/images/@(Model.Product.PictureName)" />
     </div>
     <div class="form-group">
-        <input class="btn btn-danger" type="submit" value="حذف" />
+        <input class="btn btn-danger" type="submit" value="remove" />
     </div>
 </form>

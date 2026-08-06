@@ -1,11 +1,11 @@
-﻿using ShopManagementSystem.Core.DTOs.ProductViewModels;
-using ShopManagementSystem.Data.Entities.Category;
+﻿using ShopManagementSystem.Core.DTOs;
+using ShopManagementSystem.Core.DTOs.ProductViewModels;
 
 namespace ShopManagementSystem.Core.Services.Interfaces
 {
     public interface IGroupService
     {
-        Task<List<Category>> GetAllCategoriesAsync();
+        Task<List<CategoryViewModel>> GetAllCategoriesAsync();
         Task<List<ShowGroupViewModel>> GetGroupForShowAsync();
 
     }

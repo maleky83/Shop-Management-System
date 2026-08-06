@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-namespace ShopManagementSystem.Data.Entities
+﻿
+namespace ShopManagementSystem.Data.Entities.Products
 {
     public class Item
     {

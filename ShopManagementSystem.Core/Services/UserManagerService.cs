@@ -4,7 +4,6 @@ using ShopManagementSystem.Core.DTOs;
 using ShopManagementSystem.Core.Services.Interfaces;
 using ShopManagementSystem.Data.Context;
 using ShopManagementSystem.Data.Entities;
-using System.Xml.Linq;
 
 namespace ShopManagementSystem.Core.Services
 {
@@ -18,7 +17,7 @@ namespace ShopManagementSystem.Core.Services
             _passwordHasher = passwordHasher;
         }
 
-        public async Task CreateAsync(ManagerUserViewModel model)
+        public async Task CreateAsync(UserViewModel model)
         {
             User user = new User()
             {
@@ -33,16 +32,16 @@ namespace ShopManagementSystem.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(int userId)
         {
-            User user = await _context.Users.FirstAsync(u => u.UserId == id);
+            User user = await _context.Users.FirstAsync(u => u.Id== userId);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ManagerUserViewModel> DetailAsync(int id)
+        public async Task<UserViewModel> DetailAsync(int userId)
         {
-            return await GetUserById(id);
+            return await GetUserById(userId);
         }
 
         public async Task EditAsync(EditUserViweModel model)
@@ -60,11 +59,11 @@ namespace ShopManagementSystem.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ManagerUserViewModel> GetUserById(int id)
+        public async Task<UserViewModel> GetUserById(int userId)
         {
             return await _context.Users
-                .Where(u => u.UserId == id)
-                .Select(u => new ManagerUserViewModel()
+                .Where(u => u.Id == userId)
+                .Select(u => new UserViewModel()
                 {
                     IsAdmin = u.IsAdmin,
                     Name = u.Name,
@@ -72,22 +71,28 @@ namespace ShopManagementSystem.Core.Services
                 }).FirstAsync();
         }
 
-        public async Task<EditUserViweModel> GetUserForEditAsync(int id)
+        public async Task<EditUserViweModel> GetUserForEditAsync(int userId)
         {
             return await _context.Users
-                .Where(u => u.UserId == id)
+                .Where(u => u.Id== userId)
                 .Select(u => new EditUserViweModel()
                 {
                     Name = u.Name,
-                    Id = u.UserId,
+                    UserId= u.Id,
                     IsAdmin = u.IsAdmin,
                     Password = u.Password
                 }).FirstAsync();
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<List<UserViewModel>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users.Select(u => new UserViewModel()
+            {
+                UserId= u.Id,
+                IsAdmin = u.IsAdmin,
+                Name = u.Name,
+                Password = u.Password,
+            }).AsNoTracking().ToListAsync();
         }
     }
 }

@@ -5,9 +5,8 @@ namespace ShopManagementSystem.Core.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<User?> GetUserAsync(string name);
+        Task<UserViewModel?> GetUserAsync(string userName);
         Task AddUserAsync(User user);
         Task RegisterAsync(RegisterViewModel model);
-        Task<User?> LoginAsync(LoginViewModel model);
     }
 }

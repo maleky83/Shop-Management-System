@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Data.Entities;
 using ShopManagementSystem.Data.Entities.Category;
+using ShopManagementSystem.Data.Entities.Orders;
+using ShopManagementSystem.Data.Entities.Products;
 
 namespace ShopManagementSystem.Data.Context
 {
@@ -90,9 +92,6 @@ namespace ShopManagementSystem.Data.Context
                 new CategoryToProduct() { CategoryId = 2, ProductId = 3 },
                 new CategoryToProduct() { CategoryId = 3, ProductId = 3 }
                 );
-
-
         }
-
     }
 }

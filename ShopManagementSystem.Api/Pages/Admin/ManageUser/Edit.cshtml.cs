@@ -30,7 +30,7 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
         {
             if (!ModelState.IsValid)
             {
-                model = await _userManager.GetUserForEditAsync(model.Id);
+                model = await _userManager.GetUserForEditAsync(model.UserId);
                 return Page();
             }
 

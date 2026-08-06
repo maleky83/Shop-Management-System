@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShopManagementSystem.Core.DTOs;
 using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -50,7 +49,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            User user = await _userService.LoginAsync(model);
+            UserViewModel user = await _userService.GetUserAsync(model.Name);
 
             if (user == null)
             {

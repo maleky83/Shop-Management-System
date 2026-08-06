@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopManagementSystem.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initmg : Migration
+    public partial class mginit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,7 +45,7 @@ namespace ShopManagementSystem.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -54,7 +54,7 @@ namespace ShopManagementSystem.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,7 +83,7 @@ namespace ShopManagementSystem.Data.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     CreateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -92,12 +92,12 @@ namespace ShopManagementSystem.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Orders_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -129,7 +129,7 @@ namespace ShopManagementSystem.Data.Migrations
                 name: "OrderDetail",
                 columns: table => new
                 {
-                    DetailId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
@@ -138,12 +138,12 @@ namespace ShopManagementSystem.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderDetail", x => x.DetailId);
+                    table.PrimaryKey("PK_OrderDetail", x => x.Id);
                     table.ForeignKey(
                         name: "FK_OrderDetail_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "OrderId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderDetail_Products_ProductId",
@@ -178,9 +178,9 @@ namespace ShopManagementSystem.Data.Migrations
                 columns: new[] { "Id", "Description", "ItemId", "Name", "PictureName" },
                 values: new object[,]
                 {
-                    { 1, "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.", 1, "پیراهن آستین‌بلند مجلسی طرح‌دار", null },
-                    { 2, "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.", 2, "مانتو نخی بهاره طرح گل‌های کوچک", null },
-                    { 3, "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.", 3, "ساعت هوشمند اسپرت پرو مدل X-200", null }
+                    { 1, "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.", 1, "پیراهن آستین‌بلند مجلسی طرح‌دار", "1.jpg" },
+                    { 2, "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.", 2, "مانتو نخی بهاره طرح گل‌های کوچک", "2.jpg" },
+                    { 3, "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.", 3, "ساعت هوشمند اسپرت پرو مدل X-200", "1.jpg" }
                 });
 
             migrationBuilder.InsertData(

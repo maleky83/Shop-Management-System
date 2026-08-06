@@ -1,12 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ShopManagementSystem.Data.Entities.Products;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ShopManagementSystem.Data.Entities
+namespace ShopManagementSystem.Data.Entities.Orders
 {
     public class OrderDetail
     {
-        [Key]
-        public int DetailId { get; set; }
+        public int Id { get; set; }
         [Required]
         public int OrderId { get; set; }
         [Required]
@@ -15,9 +15,7 @@ namespace ShopManagementSystem.Data.Entities
         public long Price { get; set; }
         public int Count { get; set; }
 
-        [ForeignKey("OrderId")]
         public Order Order { get; set; }
-        [ForeignKey("ProductId")]
         public Product Product { get; set; }
     }
 }

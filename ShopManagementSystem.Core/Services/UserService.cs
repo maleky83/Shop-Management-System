@@ -17,11 +17,19 @@ namespace ShopManagementSystem.Core.Services
             _passwordHasher = passwordHasher;
         }
 
-        public async Task<User?> GetUserAsync(string name)
+        public async Task<UserViewModel?> GetUserAsync(string userName)
         {
             return await _context.Users
+                .Select(u => new UserViewModel()
+                {
+                    Name = u.Name,
+                    UserId= u.Id,
+                    IsAdmin = u.IsAdmin,
+                    Password = u.Password,
+                    Orders = u.Orders,
+                })
                 .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Name == name);
+                .FirstOrDefaultAsync(u => u.Name == userName);
         }
         public async Task AddUserAsync(User user)
         {
@@ -40,12 +48,6 @@ namespace ShopManagementSystem.Core.Services
 
 
             await AddUserAsync(user);
-        }
-        public async Task<User?> LoginAsync(LoginViewModel model)
-        {
-            User? user = await GetUserAsync(model.Name);
-
-            return user;
         }
     }
 }

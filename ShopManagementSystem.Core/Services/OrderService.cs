@@ -2,7 +2,7 @@
 using ShopManagementSystem.Core.DTOs.OrderViewModels;
 using ShopManagementSystem.Core.Services.Interfaces;
 using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities;
+using ShopManagementSystem.Data.Entities.Orders;
 
 namespace ShopManagementSystem.Core.Services
 {
@@ -19,12 +19,12 @@ namespace ShopManagementSystem.Core.Services
             var product = await _context.Products.Include(p => p.Item).AsNoTracking().FirstOrDefaultAsync(p => p.ItemId == itemId);
             if (product != null)
             {
-                var order = await _context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.UserId == userId && !o.IsFinaly);
+                var order = await _context.Orders.FirstOrDefaultAsync(o => o.UserId == userId && !o.IsFinaly);
 
                 if (order != null)
                 {
                     var orderDetail = await _context.OrderDetail.FirstOrDefaultAsync(d =>
-                    d.OrderId == order.OrderId &&
+                    d.OrderId == order.Id &&
                     d.ProductId == product.Id);
                     if (orderDetail != null)
                     {
@@ -34,7 +34,7 @@ namespace ShopManagementSystem.Core.Services
                     {
                         await _context.OrderDetail.AddAsync(new OrderDetail()
                         {
-                            OrderId = order.OrderId,
+                            OrderId = order.Id,
                             Count = 1,
                             ProductId = product.Id,
                             Price = product.Item.Price
@@ -54,7 +54,7 @@ namespace ShopManagementSystem.Core.Services
                     await _context.SaveChangesAsync();
                     await _context.OrderDetail.AddAsync(new OrderDetail()
                     {
-                        OrderId = order.OrderId,
+                        OrderId = order.Id,
                         ProductId = product.Id,
                         Price = product.Item.Price,
                         Count = 1
@@ -70,14 +70,15 @@ namespace ShopManagementSystem.Core.Services
                 .Select(o => new OrderViewModel()
                 {
                     UserId = o.UserId,
-                    OrderId = o.OrderId,
+                    OrderId = o.Id,
                     IsFinaly = o.IsFinaly,
                     Sum = o.OrderDetails.Sum(od => od.Count * od.Price),
                     OrderDetails = o.OrderDetails.Select(od => new OrderDetailViewModel()
                     {
+                        ProductId = od.ProductId,
                         Price = od.Price * od.Count,
                         Count = od.Count,
-                        DetailId = od.DetailId,
+                        DetailId = od.Id,
                     }).ToList(),
                 }).FirstOrDefaultAsync();
 
@@ -100,12 +101,12 @@ namespace ShopManagementSystem.Core.Services
         public async Task RemoveOrderAsync(int detailId)
         {
             var orderDetail = await _context.OrderDetail.FindAsync(detailId);
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.OrderId == orderDetail.OrderId);
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderDetail.OrderId);
 
             _context.Remove(orderDetail);
             await _context.SaveChangesAsync();
 
-            var orderDetailCount = await _context.OrderDetail.Where(o => o.OrderId == order.OrderId).SumAsync(o => o.Count);
+            var orderDetailCount = await _context.OrderDetail.Where(o => o.OrderId == order.Id).SumAsync(o => o.Count);
 
             if (orderDetailCount == 0)
             {
@@ -117,7 +118,7 @@ namespace ShopManagementSystem.Core.Services
 
         public async Task PaymentAsync(int orderId)
         {
-            var order = await _context.Orders.Where(o => o.OrderId == orderId).FirstOrDefaultAsync();
+            var order = await _context.Orders.Where(o => o.Id == orderId).FirstOrDefaultAsync();
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
         }

@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ShopManagementSystem.Data.Entities.Orders;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopManagementSystem.Data.Entities
 {
     public class User
     {
-        [Key]
-        public int UserId { get; set; }
+        public int Id { get; set; }
         [Display(Name = "نام کاربری")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(300)]

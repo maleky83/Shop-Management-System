@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShopManagementSystem.Data.Entities.Orders;
 using System.ComponentModel.DataAnnotations;
 using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
@@ -6,7 +7,6 @@ namespace ShopManagementSystem.Core.DTOs
 {
     public class RegisterViewModel
     {
-        [Key]
         [MaxLength(300)]
         [Display(Name = "نام کاربری")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
@@ -38,5 +38,15 @@ namespace ShopManagementSystem.Core.DTOs
         public string Password { get; set; }
         [Display(Name = "مرا بخاطر بسپار")]
         public bool RememberMe { get; set; }
+    }
+    public class UserViewModel
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string Password { get; set; }
+        public DateTime RegisterDate { get; set; }
+        public bool IsAdmin { get; set; }
+
+        public List<Order> Orders { get; set; } = [];
     }
 }

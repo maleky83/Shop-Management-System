@@ -1,16 +1,15 @@
 ﻿using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Data.Entities;
 
 namespace ShopManagementSystem.Core.Services.Interfaces
 {
     public interface IUserManagerService
     {
-        Task CreateAsync(ManagerUserViewModel model);
-        Task<List<User>> GetUsers();
-        Task<ManagerUserViewModel> DetailAsync(int id);
+        Task CreateAsync(UserViewModel model);
+        Task<List<UserViewModel>> GetUsers();
+        Task<UserViewModel> DetailAsync(int userId);
         Task DeleteAsync(int id);
         Task EditAsync(EditUserViweModel model);
-        Task<EditUserViweModel> GetUserForEditAsync(int id);
-        Task<ManagerUserViewModel> GetUserById(int id);
+        Task<EditUserViweModel> GetUserForEditAsync(int userId);
+        Task<UserViewModel> GetUserById(int userId);
     }
 }

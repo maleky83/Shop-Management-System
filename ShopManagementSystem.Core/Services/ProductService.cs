@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShopManagementSystem.Core.DTOs;
 using ShopManagementSystem.Core.DTOs.ProductViewModels;
 using ShopManagementSystem.Core.Services.Interfaces;
 using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities;
 using ShopManagementSystem.Data.Entities.Category;
+using ShopManagementSystem.Data.Entities.Products;
 
 namespace ShopManagementSystem.Core.Services
 {
@@ -17,41 +18,73 @@ namespace ShopManagementSystem.Core.Services
             _fileService = fileService;
         }
 
-        public async Task<Product?> GetProductItemByIdAsync(int productId)
+        public async Task<ProductViewModel?> GetProductAsync(int productId)
         {
-            Product? product = await _context.Products.Include(p => p.Item).AsNoTracking().FirstOrDefaultAsync(p => p.Id == productId);
+            var product = await _context.Products.AsNoTracking().Select(p => new ProductViewModel()
+            {
+                ProductId = p.Id,
+                Description = p.Description,
+                Name = p.Name,
+                PictureName = p.PictureName,
+                Price = p.Item.Price,
+                QuantityInStock = p.Item.QuantityInStock,
+
+            }).FirstOrDefaultAsync(p => p.ProductId == productId);
             return product;
         }
 
-        public async Task<List<Product>> GetProductsAsync()
+        public async Task<List<ProductViewModel>> GetProductsAsync()
         {
-            return await _context.Products.AsNoTracking().ToListAsync();
+            return await _context.Products.AsNoTracking().Select(p => new ProductViewModel()
+            {
+                ProductId = p.Id,
+                Description = p.Description,
+                Name = p.Name,
+                PictureName = p.PictureName,
+                Price = p.Item.Price,
+                QuantityInStock = p.Item.QuantityInStock,
+            })
+                .ToListAsync();
         }
 
-        public async Task<DetailsViewModel> DetailsAsync(int productId)
+        public async Task<ProductDetailsViewModel> GetProductDetails(int productId)
         {
-            List<Category> categories = await _context.Products.Where(p => p.Id == productId).SelectMany(c => c.CategoryToProducts).Select(ca => ca.Category).AsNoTracking().ToListAsync();
-
-            var vm = new DetailsViewModel()
+            List<CategoryViewModel> categories = await _context.Products.Where(p => p.Id == productId).SelectMany(c => c.CategoryToProducts).Select(ca => new CategoryViewModel()
             {
-                Product = await GetProductItemByIdAsync(productId),
+                Description = ca.Category.Description,
+                Name = ca.Category.Name,
+                CategoryToProducts = ca.Category.CategoryToProducts,
+                CategoryId= ca.CategoryId,
+            }).AsNoTracking().ToListAsync();
+
+            var vm = new ProductDetailsViewModel()
+            {
+                Product = await GetProductAsync(productId),
                 Categories = categories
             };
             return vm;
         }
 
-        public async Task<List<Product>> ShowProductByGroupIdAsync(int categoryId)
+        public async Task<List<ProductViewModel?>> ShowProductByGroupIdAsync(int categoryId)
         {
-            List<Product> products = await _context.CategoryToProducts
+            var products = await _context.CategoryToProducts
                 .Where(c => c.CategoryId == categoryId)
-                .Include(c => c.Product)
-                .Select(c => c.Product)
+                .Select(c => new ProductViewModel()
+                {
+                    Description = c.Product.Description,
+                    ProductId= c.ProductId,
+                    Name = c.Product.Name,
+                    PictureName = c.Product.PictureName,
+                    Price = c.Product.Item.Price,
+                    QuantityInStock = c.Product.Item.QuantityInStock,
+
+                })
                 .ToListAsync();
 
             return products;
         }
 
-        public async Task AddProductAsync(AddEditProductViewModel model)
+        public async Task AddProductAsync(ProductViewModel model)
         {
             var product = new Product()
             {
@@ -89,9 +122,9 @@ namespace ShopManagementSystem.Core.Services
             return await _context.Categories.AsNoTracking().ToListAsync();
         }
 
-        public async Task EditProductAsync(AddEditProductViewModel model)
+        public async Task EditProductAsync(ProductViewModel model)
         {
-            var product = await _context.Products.FindAsync(model.Id);
+            var product = await _context.Products.FindAsync(model.ProductId);
             var item = await _context.Items.FirstAsync(item => item.Id == product.ItemId);
 
             product.Name = model.Name;
@@ -122,13 +155,13 @@ namespace ShopManagementSystem.Core.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<AddEditProductViewModel?> GetEditProductViewModel(int productId)
+        public async Task<ProductViewModel?> GetProductViewModelAsync(int productId)
         {
             var product = await _context.Products.Include(product => product.Item)
                 .Where(product => product.Id == productId)
-                .Select(s => new AddEditProductViewModel()
+                .Select(s => new ProductViewModel()
                 {
-                    Id = productId,
+                    ProductId= productId,
                     Name = s.Name,
                     Description = s.Description,
                     QuantityInStock = s.Item.QuantityInStock,

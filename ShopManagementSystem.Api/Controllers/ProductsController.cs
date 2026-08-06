@@ -1,12 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using ShopManagementSystem.Core.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShopManagementSystem.Core.DTOs.ProductViewModels;
 using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Entities;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ShopManagementSystem.Api.Controllers
@@ -19,27 +14,26 @@ namespace ShopManagementSystem.Api.Controllers
         public ProductsController(IProductService productService)
         {
             _productService = productService;
-
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<List<ProductViewModel>>> GetProducts()
         {
             var products = await _productService.GetProductsAsync();
             return Ok(products);
         }
 
-        [HttpGet("group/{id}")]
-        public async Task<ActionResult<List<Product>>> ShowProductByGroupId(int id)
+        [HttpGet("group/{categoryId}")]
+        public async Task<ActionResult<List<ProductViewModel>>> ShowProductByGroupId(int categoryId)
         {
-            List<Product> products = await _productService.ShowProductByGroupIdAsync(id);
+            List<ProductViewModel> products = await _productService.ShowProductByGroupIdAsync(categoryId);
             return Ok(products);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        [HttpGet("{productId}")]
+        public async Task<ActionResult<ProductDetailsViewModel>> GetProduct(int productId)
         {
-            var productDetail = await _productService.DetailsAsync(id);
+            var productDetail = await _productService.GetProductDetails(productId);
 
             if (productDetail == null)
                 return NotFound();

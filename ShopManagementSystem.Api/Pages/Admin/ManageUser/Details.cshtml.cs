@@ -20,7 +20,7 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
             _userManager = userManager;
         }
 
-        public ManagerUserViewModel User { get; set; }
+        public UserViewModel User { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int id)
         {

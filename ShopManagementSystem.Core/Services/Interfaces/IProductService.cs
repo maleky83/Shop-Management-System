@@ -7,13 +7,13 @@ namespace ShopManagementSystem.Core.Services.Interfaces
     public interface IProductService
     {
         Task DeleteProductAsync(int productId);
-        Task<List<Product>> GetProductsAsync();
-        Task<Product?> GetProductItemByIdAsync(int productId);
-        Task<DetailsViewModel> DetailsAsync(int productId);
-        Task<List<Product>> ShowProductByGroupIdAsync(int categoryId);
-        Task AddProductAsync(AddEditProductViewModel model);
-        Task EditProductAsync(AddEditProductViewModel model);
-        Task<AddEditProductViewModel?> GetEditProductViewModel(int productId);
+        Task<List<ProductViewModel>> GetProductsAsync();
+        Task<ProductViewModel?> GetProductAsync(int productId);
+        Task<ProductDetailsViewModel> GetProductDetails(int productId);
+        Task<List<ProductViewModel?>> ShowProductByGroupIdAsync(int categoryId);
+        Task AddProductAsync(ProductViewModel model);
+        Task EditProductAsync(ProductViewModel model);
+        Task<ProductViewModel?> GetProductViewModelAsync(int productId);
         Task<List<Category>> GetCategories();
 
     }

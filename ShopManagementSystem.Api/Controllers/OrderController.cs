@@ -9,10 +9,10 @@ namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
     [Route("order")]
-    public class CartController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private IOrderService _orderService;
-        public CartController(IOrderService orderService)
+        public OrderController(IOrderService orderService)
         {
             _orderService = orderService;
         }
@@ -42,7 +42,7 @@ namespace ShopManagementSystem.Api.Controllers
             if (order == null)
                 return BadRequest(new
                 {
-                    message = "you don't have any oreders"
+                    message = "you don't have any orders"
                 });
 
             return Ok(order);
