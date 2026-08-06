@@ -28,6 +28,7 @@ namespace ShopManagementSystem.Data.Context
         public DbSet<CategoryToProduct> CategoryToProducts { get; set; }
 
         #endregion
+
         public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,18 +46,18 @@ namespace ShopManagementSystem.Data.Context
             modelBuilder.Entity<Category>().HasData(new Category
             {
                 Id = 1,
-                Name = "لباس مردانه",
-                Description = "انواع پوشاک رسمی، اسپرت و روزمره برای آقایان با بهترین کیفیت"
+                Name = "Mobile",
+                Description = "for call and plaing"
             }, new Category
             {
                 Id = 2,
-                Name = "لباس زنانه",
-                Description = "جدیدترین مدل‌های پوشاک زنانه شامل مانتو، شال، کیف و کفش"
+                Name = "laptop",
+                Description = "for programming , suding and game"
             }, new Category
             {
                 Id = 3,
-                Name = "اکسسوری",
-                Description = "ساعت، عینک، کمربند، جواهرات و سایر اکسسوری‌های شیک"
+                Name = "Accessory",
+                Description = "for example watch and sock"
             });
 
             modelBuilder.Entity<Item>().HasData(
@@ -69,7 +70,7 @@ namespace ShopManagementSystem.Data.Context
             {
                 Id = 1,
                 ItemId = 1,
-                Name = "Mobile Sumsung",
+                Name = "Sumsung Mobile",
                 Description = "ram 6 , memory 128",
                 PictureName = "1.jpg",
             },
@@ -77,7 +78,7 @@ namespace ShopManagementSystem.Data.Context
             {
                 Id = 2,
                 ItemId = 2,
-                Name = "lap top lenovo",
+                Name = "lenovo laptop",
                 Description = "ram 16 , memory 1T",
                 PictureName = "2.jpg",
             },
@@ -85,20 +86,14 @@ namespace ShopManagementSystem.Data.Context
             {
                 Id = 3,
                 ItemId = 3,
-                Name = "Watch sport X-200",
+                Name = "X-200 sport Watch",
                 Description = " AMOLED،GPS ",
                 PictureName = "3.jpg",
             });
 
             modelBuilder.Entity<CategoryToProduct>().HasData(
                 new CategoryToProduct() { CategoryId = 1, ProductId = 1 },
-                new CategoryToProduct() { CategoryId = 2, ProductId = 1 },
-                new CategoryToProduct() { CategoryId = 3, ProductId = 1 },
-                new CategoryToProduct() { CategoryId = 1, ProductId = 2 },
                 new CategoryToProduct() { CategoryId = 2, ProductId = 2 },
-                new CategoryToProduct() { CategoryId = 3, ProductId = 2 },
-                new CategoryToProduct() { CategoryId = 1, ProductId = 3 },
-                new CategoryToProduct() { CategoryId = 2, ProductId = 3 },
                 new CategoryToProduct() { CategoryId = 3, ProductId = 3 }
                 );
         }

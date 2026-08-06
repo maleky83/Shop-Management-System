@@ -79,6 +79,7 @@ namespace ShopManagementSystem.Core.Services
                         Price = od.Price * od.Count,
                         Count = od.Count,
                         DetailId = od.Id,
+                        ProductName = od.Product.Name,
                     }).ToList(),
                 }).FirstOrDefaultAsync();
 
@@ -89,18 +90,25 @@ namespace ShopManagementSystem.Core.Services
         {
             var orderDetail = await _context.OrderDetail.FindAsync(detailId);
 
-            if (orderDetail.Count > 1)
+            if (orderDetail == null)
+                return 0;
+
+            if (orderDetail?.Count > 1)
             {
                 orderDetail.Count -= 1;
+                await _context.SaveChangesAsync();
             }
-            await _context.SaveChangesAsync();
 
-            return orderDetail.Count;
+            return (orderDetail == null) ? 0 : orderDetail.Count;
         }
 
-        public async Task RemoveOrderAsync(int detailId)
+        public async Task<int?> RemoveOrderAsync(int detailId)
         {
             var orderDetail = await _context.OrderDetail.FindAsync(detailId);
+
+            if (orderDetail == null)
+                return null;
+
             var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderDetail.OrderId);
 
             _context.Remove(orderDetail);
@@ -114,6 +122,8 @@ namespace ShopManagementSystem.Core.Services
             }
 
             await _context.SaveChangesAsync();
+
+            return 1;
         }
 
         public async Task PaymentAsync(int orderId)

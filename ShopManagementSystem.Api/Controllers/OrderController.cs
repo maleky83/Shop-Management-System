@@ -57,16 +57,34 @@ namespace ShopManagementSystem.Api.Controllers
             if (result == 1)
                 await _orderService.RemoveOrderAsync(detailId);
 
-            return NoContent();
+            if (result == 0)
+                return BadRequest(new
+                {
+                    message = "there isn't any OrderDetails"
+                });
+
+            return Ok(new
+            {
+                message = "decreased orderDetail"
+            });
         }
 
         [Authorize]
         [HttpDelete("items/{detailId}")]
         public async Task<IActionResult> RemoveOrder(int detailId)
         {
-            await _orderService.RemoveOrderAsync(detailId);
+            var result = await _orderService.RemoveOrderAsync(detailId);
 
-            return NoContent();
+            if (result == null)
+                return BadRequest(new
+                {
+                    message = "there isn't any OrderDetails"
+                });
+
+            return Ok(new
+            {
+                messsage = "Removed Order"
+            });
         }
     }
 }

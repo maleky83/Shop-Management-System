@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopManagementSystem.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class mginit : Migration
+    public partial class mginitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -158,9 +158,9 @@ namespace ShopManagementSystem.Data.Migrations
                 columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "انواع پوشاک رسمی، اسپرت و روزمره برای آقایان با بهترین کیفیت", "لباس مردانه" },
-                    { 2, "جدیدترین مدل‌های پوشاک زنانه شامل مانتو، شال، کیف و کفش", "لباس زنانه" },
-                    { 3, "ساعت، عینک، کمربند، جواهرات و سایر اکسسوری‌های شیک", "اکسسوری" }
+                    { 1, "for call and plaing", "Mobile" },
+                    { 2, "for programming , suding and game", "laptop" },
+                    { 3, "for example watch and sock", "Accessory" }
                 });
 
             migrationBuilder.InsertData(
@@ -178,9 +178,9 @@ namespace ShopManagementSystem.Data.Migrations
                 columns: new[] { "Id", "Description", "ItemId", "Name", "PictureName" },
                 values: new object[,]
                 {
-                    { 1, "پیراهن شیک با جنس ترکیبی پنبه و پلی‌استر، مناسب مهمانی‌ها و مجالس رسمی. دارای ۴ سایز و ۳ رنگ مختلف.", 1, "پیراهن آستین‌بلند مجلسی طرح‌دار", "1.jpg" },
-                    { 2, "مانتو سبک و خنک با طرح گل‌های ظریف، جنس نخی درجه یک و رنگ‌بندی شاد. دارای دو جیب کاربردی و قد بلند.", 2, "مانتو نخی بهاره طرح گل‌های کوچک", "2.jpg" },
-                    { 3, "ساعت هوشمند با صفحه نمایش AMOLED، حسگرهای پیشرفته سلامت، GPS داخلی و مقاومت در برابر آب تا عمق ۵۰ متر.", 3, "ساعت هوشمند اسپرت پرو مدل X-200", "1.jpg" }
+                    { 1, "ram 6 , memory 128", 1, "Sumsung Mobile", "1.jpg" },
+                    { 2, "ram 16 , memory 1T", 2, "lenovo laptop", "2.jpg" },
+                    { 3, " AMOLED،GPS ", 3, "X-200 sport Watch", "3.jpg" }
                 });
 
             migrationBuilder.InsertData(
@@ -189,13 +189,7 @@ namespace ShopManagementSystem.Data.Migrations
                 values: new object[,]
                 {
                     { 1, 1 },
-                    { 2, 1 },
-                    { 3, 1 },
-                    { 1, 2 },
                     { 2, 2 },
-                    { 3, 2 },
-                    { 1, 3 },
-                    { 2, 3 },
                     { 3, 3 }
                 });
 

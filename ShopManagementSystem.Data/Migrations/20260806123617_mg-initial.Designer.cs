@@ -12,8 +12,8 @@ using ShopManagementSystem.Data.Context;
 namespace ShopManagementSystem.Data.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20260806113627_before-refreshf")]
-    partial class beforerefreshf
+    [Migration("20260806123617_mg-initial")]
+    partial class mginitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,20 +49,20 @@ namespace ShopManagementSystem.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "انواع پوشاک رسمی، اسپرت و روزمره برای آقایان با بهترین کیفیت",
-                            Name = "لباس مردانه"
+                            Description = "for call and plaing",
+                            Name = "Mobile"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "جدیدترین مدل‌های پوشاک زنانه شامل مانتو، شال، کیف و کفش",
-                            Name = "لباس زنانه"
+                            Description = "for programming , suding and game",
+                            Name = "laptop"
                         },
                         new
                         {
                             Id = 3,
-                            Description = "ساعت، عینک، کمربند، جواهرات و سایر اکسسوری‌های شیک",
-                            Name = "اکسسوری"
+                            Description = "for example watch and sock",
+                            Name = "Accessory"
                         });
                 });
 
@@ -88,37 +88,7 @@ namespace ShopManagementSystem.Data.Migrations
                         },
                         new
                         {
-                            ProductId = 1,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            ProductId = 1,
-                            CategoryId = 3
-                        },
-                        new
-                        {
                             ProductId = 2,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            CategoryId = 3
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            ProductId = 3,
                             CategoryId = 2
                         },
                         new
@@ -258,7 +228,7 @@ namespace ShopManagementSystem.Data.Migrations
                             Id = 1,
                             Description = "ram 6 , memory 128",
                             ItemId = 1,
-                            Name = "Mobile Sumsung",
+                            Name = "Sumsung Mobile",
                             PictureName = "1.jpg"
                         },
                         new
@@ -266,7 +236,7 @@ namespace ShopManagementSystem.Data.Migrations
                             Id = 2,
                             Description = "ram 16 , memory 1T",
                             ItemId = 2,
-                            Name = "lap top lenovo",
+                            Name = "lenovo laptop",
                             PictureName = "2.jpg"
                         },
                         new
@@ -274,7 +244,7 @@ namespace ShopManagementSystem.Data.Migrations
                             Id = 3,
                             Description = " AMOLED،GPS ",
                             ItemId = 3,
-                            Name = "Watch sport X-200",
+                            Name = "X-200 sport Watch",
                             PictureName = "3.jpg"
                         });
                 });

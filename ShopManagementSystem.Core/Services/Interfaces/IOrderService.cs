@@ -7,7 +7,7 @@ namespace ShopManagementSystem.Core.Services.Interfaces
         Task AddToOrderAsync(int itemId, int userId);
         Task<OrderViewModel?> ShowOrderAsync(int userId);
         Task<int> ReduceOrderAsync(int detailId);
-        Task RemoveOrderAsync(int detailId);
+        Task<int?> RemoveOrderAsync(int detailId);
         Task PaymentAsync(int orderId);
     }
 }
