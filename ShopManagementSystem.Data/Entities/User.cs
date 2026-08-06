@@ -6,18 +6,14 @@ namespace ShopManagementSystem.Data.Entities
     public class User
     {
         public int Id { get; set; }
-        [Display(Name = "نام کاربری")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         [MaxLength(300)]
         public string Name { get; set; }
-        [Display(Name = "رمزعبور")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         public string Password { get; set; }
-        [Display(Name = "تاریخ ثبت نام")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         public DateTime RegisterDate { get; set; }
-        [Display(Name = "ادمین")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         public bool IsAdmin { get; set; }
 
         public List<Order> Orders { get; set; }

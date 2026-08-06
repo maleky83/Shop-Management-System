@@ -1,9 +1,9 @@
 ﻿@page
 @model ShopManagementSystem.Api.Pages.Admin.EditModel
 @{
-    ViewData["title"] = "ویرایش";
+    ViewData["title"] = "EditProduct";
 }
-<h1>ویرایش کالا</h1>
+<h1>EditProduct</h1>
 
 <form method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Product.ProductId" />
@@ -37,6 +37,6 @@
     </div>
     <div class="text-danger" asp-validation-summary="All"></div>
     <div class="form-group">
-        <input type="submit" value="ثبت ویرایش" class="btn btn-outline-success" />
+        <input type="submit" value="Edit" class="btn btn-outline-success" />
     </div>
 </form>

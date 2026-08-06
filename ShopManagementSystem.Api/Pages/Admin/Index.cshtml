@@ -2,47 +2,47 @@
 @using ShopManagementSystem.Data.Entities.Products
 @model ShopManagementSystem.Api.Pages.Admin.IndexModel
 @{
-	ViewData["title"] = "Index";
+    ViewData["title"] = "Index";
 }
 
-<h1>لیست کالا ها</h1>
+<h1>Products</h1>
 <p>
-	<a class="btn btn-outline-success"
-	   asp-page="AddProduct">
-		افزودن کالا
-	</a>
+    <a class="btn btn-outline-success"
+       asp-page="AddProduct">
+        Add Product
+    </a>
 </p>
 <table>
-	<thead>
-		<tr>
-			<th>تصویر</th>
-			<th>نام</th>
-			<th>قیمت</th>
-			<th>دستورات</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (Product item in Model.Products)
-		{
-			<tr>
-				<td>
-					<img class="card-img-top img-thumbnail"
-						 style="max-width:200px;border:1px solid gray;padding:3px;"
-						 src="~/images/@(item.PictureName)" />
-				</td>
-				<td>@item.Name</td>
-				<td>@item.Item.Price</td>
-				<td>
-					<a asp-route-productId="@item.Id"
-					   asp-page="EditProduct">
-						ویرایش
-					</a>
-					<a asp-route-productId="@item.Id"
-					   asp-page="RemoveProduct">
-						حذف
-					</a>
-				</td>
-			</tr>
-		}
-	</tbody>
+    <thead>
+        <tr>
+            <th>Picture</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Commands</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product item in Model.Products)
+        {
+            <tr>
+                <td>
+                    <img class="card-img-top img-thumbnail"
+                         style="max-width:200px;border:1px solid gray;padding:3px;"
+                         src="~/images/@(item.PictureName)" />
+                </td>
+                <td>@item.Name</td>
+                <td>@item.Item.Price</td>
+                <td>
+                    <a asp-route-productId="@item.Id"
+                       asp-page="EditProduct">
+                        Edit
+                    </a>
+                    <a asp-route-productId="@item.Id"
+                       asp-page="RemoveProduct">
+                        Remove
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>

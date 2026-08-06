@@ -8,35 +8,29 @@ namespace ShopManagementSystem.Core.DTOs
     public class RegisterViewModel
     {
         [MaxLength(300)]
-        [Display(Name = "نام کاربری")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         [Remote("VerifyName", "Account")]
         public string Name { get; set; }
         [MaxLength(50)]
         [DataType(DataType.Password)]
-        [Display(Name = "رمز عبور")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         public required string Password { get; set; }
         [MaxLength(50)]
         [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "{0} و {1}و باید یکسان باشد")]
-        [Display(Name = "تکرار رمز عبور")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Compare("Password")]
+        [Required]
         public string RePassword { get; set; }
 
     }
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         [MaxLength(300)]
-        [Display(Name = "نام کاربری")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [Required]
         [MaxLength(50)]
         [DataType(DataType.Password)]
-        [Display(Name = "رمز عبور")]
         public string Password { get; set; }
-        [Display(Name = "مرا بخاطر بسپار")]
         public bool RememberMe { get; set; }
     }
     public class UserViewModel
