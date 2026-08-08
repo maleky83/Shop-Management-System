@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ShopManagementSystem.Core.Services.Interfaces;
 using System.Threading.Tasks;
-using ShopManagementSystem.Core.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {

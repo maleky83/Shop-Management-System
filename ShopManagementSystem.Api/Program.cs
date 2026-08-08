@@ -6,11 +6,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using ShopManagementSystem.Core.Services;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
 using System.Text;
+using ShopManagementSystem.Application.Services;
+using ShopManagementSystem.Domain.Entities;
 
 namespace ShopManagementSystem.Api
 {

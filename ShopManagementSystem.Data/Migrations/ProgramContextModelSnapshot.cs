@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopManagementSystem.Data.Context;
+using ShopManagementSystem.Infrastructure.Context;
+
+
 
 #nullable disable
 
@@ -22,7 +24,7 @@ namespace ShopManagementSystem.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Category.Category", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +65,7 @@ namespace ShopManagementSystem.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Category.CategoryToProduct", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.CategoryToProduct", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -95,7 +97,7 @@ namespace ShopManagementSystem.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Orders.Order", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +124,7 @@ namespace ShopManagementSystem.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Orders.OrderDetail", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -151,7 +153,7 @@ namespace ShopManagementSystem.Data.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Products.Item", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Item", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -190,7 +192,7 @@ namespace ShopManagementSystem.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Products.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +248,7 @@ namespace ShopManagementSystem.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.User", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -274,15 +276,15 @@ namespace ShopManagementSystem.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Category.CategoryToProduct", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.CategoryToProduct", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Data.Entities.Category.Category", "Category")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Category.Category", "Category")
                         .WithMany("CategoryToProducts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Data.Entities.Products.Product", "Product")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Products.Product", "Product")
                         .WithMany("CategoryToProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,9 +295,9 @@ namespace ShopManagementSystem.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Orders.Order", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Data.Entities.User", "User")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,15 +306,15 @@ namespace ShopManagementSystem.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Orders.OrderDetail", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.OrderDetail", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Data.Entities.Orders.Order", "Order")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Orders.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Data.Entities.Products.Product", "Product")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Products.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -323,41 +325,41 @@ namespace ShopManagementSystem.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Products.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Product", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Data.Entities.Products.Item", "Item")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Products.Item", "Item")
                         .WithOne("Product")
-                        .HasForeignKey("ShopManagementSystem.Data.Entities.Products.Product", "ItemId")
+                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Products.Product", "ItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Item");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Category.Category", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.Category", b =>
                 {
                     b.Navigation("CategoryToProducts");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Orders.Order", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Products.Item", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Item", b =>
                 {
                     b.Navigation("Product")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.Products.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Product", b =>
                 {
                     b.Navigation("CategoryToProducts");
 
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Data.Entities.User", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User", b =>
                 {
                     b.Navigation("Orders");
                 });

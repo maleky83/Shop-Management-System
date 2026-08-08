@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Domain.Entities;
 using System.Threading.Tasks;
+using ShopManagementSystem.Application.DTOs;
 
 
 namespace ShopManagementSystem.Api.Pages.Admin.ManageUser

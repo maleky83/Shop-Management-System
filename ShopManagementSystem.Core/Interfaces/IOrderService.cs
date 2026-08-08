@@ -1,6 +1,6 @@
-﻿using ShopManagementSystem.Core.DTOs.OrderViewModels;
+﻿using ShopManagementSystem.Application.DTOs.OrderViewModels;
 
-namespace ShopManagementSystem.Core.Services.Interfaces
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IOrderService
     {

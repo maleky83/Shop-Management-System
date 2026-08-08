@@ -1,6 +1,6 @@
-﻿using ShopManagementSystem.Data.Entities.Category;
+﻿using ShopManagementSystem.Domain.Entities.Category;
 
-namespace ShopManagementSystem.Core.DTOs
+namespace ShopManagementSystem.Application.DTOs
 {
     public class CategoryViewModel
     {

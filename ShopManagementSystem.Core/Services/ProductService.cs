@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Core.DTOs.ProductViewModels;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities.Category;
-using ShopManagementSystem.Data.Entities.Products;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Domain.Entities.Products;
+using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Domain.Entities.Category;
 
-namespace ShopManagementSystem.Core.Services
+namespace ShopManagementSystem.Application.Services
 {
     public class ProductService : IProductService
     {

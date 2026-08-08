@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Data.Entities.Orders;
+using ShopManagementSystem.Domain.Entities.Orders;
 using System.ComponentModel.DataAnnotations;
 using CompareAttribute = System.ComponentModel.DataAnnotations.CompareAttribute;
 
-namespace ShopManagementSystem.Core.DTOs
+namespace ShopManagementSystem.Application.DTOs
 {
     public class RegisterViewModel
     {

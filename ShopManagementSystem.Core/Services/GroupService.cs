@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Core.DTOs.ProductViewModels;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
+using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
 
-namespace ShopManagementSystem.Core.Services
+namespace ShopManagementSystem.Application.Services
 {
     public class GroupService : IGroupService
     {

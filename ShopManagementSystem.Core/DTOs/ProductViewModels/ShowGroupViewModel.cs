@@ -1,4 +1,4 @@
-﻿namespace ShopManagementSystem.Core.DTOs.ProductViewModels
+﻿namespace ShopManagementSystem.Application.DTOs.ProductViewModels
 {
     public class ShowGroupViewModel
     {

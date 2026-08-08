@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Core.DTOs.OrderViewModels;
-using ShopManagementSystem.Core.Services.Interfaces;
+using ShopManagementSystem.Application.DTOs.OrderViewModels;
+using ShopManagementSystem.Application.Interfaces;
 using System.Security.Claims;
 using System.Threading.Tasks;
 

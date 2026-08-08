@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
 
-namespace ShopManagementSystem.Core.Services
+namespace ShopManagementSystem.Application.Services
 {
     public class FileService : IFileService
     {

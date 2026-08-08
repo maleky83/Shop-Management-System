@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities.Products;
+using ShopManagementSystem.Infrastructure.Context;
 using System.Collections.Generic;
+using ShopManagementSystem.Domain.Entities.Products;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {

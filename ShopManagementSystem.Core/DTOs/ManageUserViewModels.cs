@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShopManagementSystem.Core.DTOs
+namespace ShopManagementSystem.Application.DTOs
 {
     public class EditUserViweModel
     {

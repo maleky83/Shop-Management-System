@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Core.DTOs.OrderViewModels;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities.Orders;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Domain.Entities.Orders;
+using ShopManagementSystem.Application.DTOs.OrderViewModels;
 
-namespace ShopManagementSystem.Core.Services
+namespace ShopManagementSystem.Application.Services
 {
     public class OrderService : IOrderService
     {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ShopManagementSystem.Core.DTOs.OrderViewModels
+namespace ShopManagementSystem.Application.DTOs.OrderViewModels
 {
     public class OrderViewModel
     {

@@ -1,8 +1,8 @@
-﻿using ShopManagementSystem.Data.Entities.Products;
+﻿using ShopManagementSystem.Domain.Entities.Products;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ShopManagementSystem.Data.Entities.Orders
+namespace ShopManagementSystem.Domain.Entities.Orders
 {
     public class OrderDetail
     {

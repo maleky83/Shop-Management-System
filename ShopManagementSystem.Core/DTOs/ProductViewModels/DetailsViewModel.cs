@@ -1,5 +1,6 @@
-﻿
-namespace ShopManagementSystem.Core.DTOs.ProductViewModels
+﻿using ShopManagementSystem.Application.DTOs;
+
+namespace ShopManagementSystem.Application.DTOs.ProductViewModels
 {
     public class ProductDetailsViewModel
     {

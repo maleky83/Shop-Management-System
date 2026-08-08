@@ -1,7 +1,7 @@
-﻿using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Data.Entities;
+﻿using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Domain.Entities;
 
-namespace ShopManagementSystem.Core.Services.Interfaces
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IUserService
     {

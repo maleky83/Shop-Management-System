@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
-using ShopManagementSystem.Data.Entities.Category;
+using ShopManagementSystem.Domain.Entities.Category;
 
-namespace ShopManagementSystem.Core.DTOs.ProductViewModels
+namespace ShopManagementSystem.Application.DTOs.ProductViewModels
 {
     public class ProductViewModel
     {

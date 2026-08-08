@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace ShopManagementSystem.Data.Entities.Category
+namespace ShopManagementSystem.Domain.Entities.Category
 {
     public class Category
     {

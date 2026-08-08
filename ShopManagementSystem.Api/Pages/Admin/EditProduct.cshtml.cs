@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Data.Entities.Category;
-using ShopManagementSystem.Data.Context;
+using ShopManagementSystem.Domain.Entities.Category;
+using ShopManagementSystem.Infrastructure.Context;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ShopManagementSystem.Core.DTOs.ProductViewModels;
-using ShopManagementSystem.Core.Services.Interfaces;
 using System.Threading.Tasks;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {

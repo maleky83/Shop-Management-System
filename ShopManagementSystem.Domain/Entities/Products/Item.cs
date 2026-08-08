@@ -1,5 +1,4 @@
-﻿
-namespace ShopManagementSystem.Data.Entities.Products
+﻿namespace ShopManagementSystem.Domain.Entities.Products
 {
     public class Item
     {

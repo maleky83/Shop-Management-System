@@ -1,6 +1,6 @@
-﻿using ShopManagementSystem.Core.DTOs;
+﻿using ShopManagementSystem.Application.DTOs;
 
-namespace ShopManagementSystem.Core.Services.Interfaces
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IUserManagerService
     {

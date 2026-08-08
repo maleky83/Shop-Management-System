@@ -1,7 +1,7 @@
-﻿using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Core.DTOs.ProductViewModels;
+﻿using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
 
-namespace ShopManagementSystem.Core.Services.Interfaces
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IGroupService
     {

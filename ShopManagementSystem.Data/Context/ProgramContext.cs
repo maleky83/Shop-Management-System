@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Data.Entities;
-using ShopManagementSystem.Data.Entities.Category;
-using ShopManagementSystem.Data.Entities.Orders;
-using ShopManagementSystem.Data.Entities.Products;
+using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.Category;
+using ShopManagementSystem.Domain.Entities.Orders;
+using ShopManagementSystem.Domain.Entities.Products;
 
-namespace ShopManagementSystem.Data.Context
+namespace ShopManagementSystem.Infrastructure.Context
 {
     public class ProgramContext : DbContext
     {

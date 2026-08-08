@@ -1,8 +1,7 @@
-﻿using ShopManagementSystem.Core.DTOs.ProductViewModels;
-using ShopManagementSystem.Data.Entities;
-using ShopManagementSystem.Data.Entities.Category;
+﻿using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Domain.Entities.Category;
 
-namespace ShopManagementSystem.Core.Services.Interfaces
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IProductService
     {

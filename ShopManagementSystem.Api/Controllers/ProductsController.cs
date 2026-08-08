@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Core.DTOs.ProductViewModels;
-using ShopManagementSystem.Core.Services.Interfaces;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

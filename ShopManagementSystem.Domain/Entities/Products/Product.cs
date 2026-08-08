@@ -1,8 +1,7 @@
-﻿
-using ShopManagementSystem.Data.Entities.Category;
-using ShopManagementSystem.Data.Entities.Orders;
+﻿using ShopManagementSystem.Domain.Entities.Category;
+using ShopManagementSystem.Domain.Entities.Orders;
 
-namespace ShopManagementSystem.Data.Entities.Products
+namespace ShopManagementSystem.Domain.Entities.Products
 {
     public class Product
     {

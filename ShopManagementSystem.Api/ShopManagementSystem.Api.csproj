@@ -67,7 +67,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ShopManagementSystem.Core\ShopManagementSystem.Core.csproj" />
+	  <ProjectReference Include="..\ShopManagementSystem.Core\ShopManagementSystem.Application.csproj" />
 	</ItemGroup>
 
 

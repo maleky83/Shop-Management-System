@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Core.DTOs;
-using ShopManagementSystem.Core.Services.Interfaces;
-using ShopManagementSystem.Data.Context;
-using ShopManagementSystem.Data.Entities;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Domain.Entities;
 
-namespace ShopManagementSystem.Core.Services
+namespace ShopManagementSystem.Application.Services
 {
     public class UserService : IUserService
     {

@@ -1,7 +1,7 @@
-﻿using ShopManagementSystem.Data.Entities.Orders;
+﻿using ShopManagementSystem.Domain.Entities.Orders;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopManagementSystem.Data.Entities
+namespace ShopManagementSystem.Domain.Entities
 {
     public class User
     {
