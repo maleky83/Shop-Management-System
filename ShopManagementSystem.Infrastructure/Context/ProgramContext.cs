@@ -35,13 +35,7 @@ namespace ShopManagementSystem.Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<CategoryToProduct>().HasKey(p => new { p.ProductId, p.CategoryId });
-
-            modelBuilder.Entity<Item>(i =>
-            {
-                i.HasKey(w => w.Id);
-                i.Property(i => i.Price).HasColumnType("Money");
-            });
+            #region Category
 
             modelBuilder.Entity<Category>().HasData(new Category
             {
@@ -60,11 +54,24 @@ namespace ShopManagementSystem.Infrastructure.Context
                 Description = "for example watch and sock"
             });
 
-            modelBuilder.Entity<Item>().HasData(
+            #endregion
+
+            #region Item
+
+            modelBuilder.Entity<Item>(i =>
+            {
+                i.HasKey(w => w.Id);
+                i.Property(i => i.Price).HasColumnType("Money");
+            })
+                .HasData(
                 new Item { Id = 1, Price = 1250000, QuantityInStock = 45 },
                 new Item { Id = 2, Price = 980000, QuantityInStock = 32 },
                 new Item { Id = 3, Price = 4500000, QuantityInStock = 18 }
                 );
+
+            #endregion
+
+            #region Product
 
             modelBuilder.Entity<Product>().HasData(new Product()
             {
@@ -74,28 +81,36 @@ namespace ShopManagementSystem.Infrastructure.Context
                 Description = "ram 6 , memory 128",
                 PictureName = "1.jpg",
             },
-            new Product()
-            {
-                Id = 2,
-                ItemId = 2,
-                Name = "lenovo laptop",
-                Description = "ram 16 , memory 1T",
-                PictureName = "2.jpg",
-            },
-            new Product()
-            {
-                Id = 3,
-                ItemId = 3,
-                Name = "X-200 sport Watch",
-                Description = " AMOLED،GPS ",
-                PictureName = "3.jpg",
-            });
+                new Product()
+                {
+                    Id = 2,
+                    ItemId = 2,
+                    Name = "lenovo laptop",
+                    Description = "ram 16 , memory 1T",
+                    PictureName = "2.jpg",
+                },
+                new Product()
+                {
+                    Id = 3,
+                    ItemId = 3,
+                    Name = "X-200 sport Watch",
+                    Description = " AMOLED،GPS ",
+                    PictureName = "3.jpg",
+                });
 
-            modelBuilder.Entity<CategoryToProduct>().HasData(
+            #endregion
+
+            #region CategoryToProduct
+
+            modelBuilder.Entity<CategoryToProduct>()
+                .HasKey(p => new { p.ProductId, p.CategoryId })
+                .HasData(
                 new CategoryToProduct() { CategoryId = 1, ProductId = 1 },
                 new CategoryToProduct() { CategoryId = 2, ProductId = 2 },
                 new CategoryToProduct() { CategoryId = 3, ProductId = 3 }
                 );
+
+            #endregion
         }
     }
 }
