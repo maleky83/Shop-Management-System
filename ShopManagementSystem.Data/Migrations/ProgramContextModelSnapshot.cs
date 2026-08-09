@@ -6,11 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Infrastructure.Context;
 
-
-
 #nullable disable
 
-namespace ShopManagementSystem.Data.Migrations
+namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
     partial class ProgramContextModelSnapshot : ModelSnapshot

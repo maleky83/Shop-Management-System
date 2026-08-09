@@ -41,6 +41,6 @@ namespace ShopManagementSystem.Application.DTOs
         public DateTime RegisterDate { get; set; }
         public bool IsAdmin { get; set; }
 
-        public List<Order> Orders { get; set; } = [];
+        public ICollection<Order> Orders { get; set; } = [];
     }
 }

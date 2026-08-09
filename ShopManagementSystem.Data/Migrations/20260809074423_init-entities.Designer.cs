@@ -7,15 +7,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Infrastructure.Context;
 
-
-
 #nullable disable
 
-namespace ShopManagementSystem.Data.Migrations
+namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20260806123617_mg-initial")]
-    partial class mginitial
+    [Migration("20260809074423_init-entities")]
+    partial class initentities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

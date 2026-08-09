@@ -12,7 +12,7 @@ namespace ShopManagementSystem.Application.DTOs.ProductViewModels
         public long Price { get; set; }
         public int QuantityInStock { get; set; }
         public IFormFile? Picture { get; set; }
-        public List<int> CategoriIds { get; set; } = [];
-        public List<Category> Categories { get; set; } = [];
+        public ICollection<int> CategoriIds { get; set; } = [];
+        public ICollection<Category> Categories { get; set; } = [];
     }
 }

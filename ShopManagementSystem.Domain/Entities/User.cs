@@ -16,6 +16,6 @@ namespace ShopManagementSystem.Domain.Entities
         [Required]
         public bool IsAdmin { get; set; }
 
-        public List<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }
