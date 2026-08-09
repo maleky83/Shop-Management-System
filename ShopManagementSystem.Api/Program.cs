@@ -11,6 +11,7 @@ using ShopManagementSystem.Infrastructure.Context;
 using System.Text;
 using ShopManagementSystem.Application.Services;
 using ShopManagementSystem.Domain.Entities;
+using Microsoft.Extensions.Configuration;
 
 namespace ShopManagementSystem.Api
 {
@@ -46,7 +47,9 @@ namespace ShopManagementSystem.Api
             #region DB Context
             builder.Services.AddDbContext<ProgramContext>(options =>
             {
-                options.UseSqlServer("Data Source = . ; Initial Catalog=ShopManagementSystemDb;Integrated Security=true; TrustServerCertificate=True");
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                );
             });
             #endregion
 
