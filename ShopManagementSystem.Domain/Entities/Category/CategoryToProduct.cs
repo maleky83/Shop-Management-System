@@ -8,7 +8,7 @@ namespace ShopManagementSystem.Domain.Entities.Category
         public int ProductId { get; set; }
 
         // Navigation Property
-        public Category Category { get; set; }
-        public Product Product { get; set; }
+        public Category Category { get; set; } = null!;
+        public Product Product { get; set; } = null!;
     }
 }

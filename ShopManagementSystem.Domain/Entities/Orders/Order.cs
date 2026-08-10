@@ -11,7 +11,7 @@ namespace ShopManagementSystem.Domain.Entities.Orders
         public int ProductId { get; set; }
         public bool IsFinaly { get; set; }
 
-        public User User { get; set; }
-        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public User User { get; set; } = null!;
+        public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }

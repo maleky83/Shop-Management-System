@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ShopManagementSystem.Data\ShopManagementSystem.Infrastructure.csproj" />
+    <ProjectReference Include="..\ShopManagementSystem.Infrastructure\ShopManagementSystem.Infrastructure.csproj" />
   </ItemGroup>
 
 

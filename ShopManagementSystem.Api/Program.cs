@@ -7,7 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Infrastructure.Data.Context;
 using System.Text;
 using ShopManagementSystem.Application.Services;
 using ShopManagementSystem.Domain.Entities;

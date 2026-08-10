@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Infrastructure.Data.Context;
 using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Application.DTOs.OrderViewModels;
 

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
+﻿
 namespace ShopManagementSystem.Domain.Entities.Category
 {
     public class Category

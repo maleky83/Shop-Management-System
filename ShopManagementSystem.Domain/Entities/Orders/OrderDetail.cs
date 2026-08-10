@@ -1,6 +1,5 @@
 ﻿using ShopManagementSystem.Domain.Entities.Products;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShopManagementSystem.Domain.Entities.Orders
 {
@@ -15,7 +14,7 @@ namespace ShopManagementSystem.Domain.Entities.Orders
         public long Price { get; set; }
         public int Count { get; set; }
 
-        public Order Order { get; set; }
-        public Product Product { get; set; }
+        public Order Order { get; set; } = null!;
+        public Product Product { get; set; } = null!;
     }
 }

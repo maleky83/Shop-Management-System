@@ -1,22 +1,23 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Infrastructure.Context;
 using System.Collections.Generic;
-using ShopManagementSystem.Domain.Entities.Products;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using System.Threading.Tasks;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
     public class IndexModel : PageModel
     {
-        private ProgramContext _context;
-        public IndexModel(ProgramContext context)
+        private readonly IProductService _productService;
+        public IndexModel(IProductService productService)
         {
-            _context = context;
+            _productService = productService;
         }
-        public IEnumerable<Product> Products { get; set; }
-        public void OnGet()
+
+        public IEnumerable<ProductViewModel> Products { get; set; }
+        public async Task OnGetAsync()
         {
-            Products = _context.Products.Include(p => p.Item);
+            Products = await _productService.GetProductsAsync();
         }
     }
 }

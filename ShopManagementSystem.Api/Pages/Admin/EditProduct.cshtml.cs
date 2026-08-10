@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Domain.Entities.Category;
-using ShopManagementSystem.Infrastructure.Context;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;

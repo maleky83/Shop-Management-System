@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Context;
-using ShopManagementSystem.Domain.Entities;
 using System.Threading.Tasks;
 using ShopManagementSystem.Application.DTOs;
 

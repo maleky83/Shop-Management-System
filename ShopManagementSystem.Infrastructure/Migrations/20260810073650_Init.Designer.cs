@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Infrastructure.Data.Context;
 
 #nullable disable
 
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20260809074423_init-entities")]
-    partial class initentities
+    [Migration("20260810073650_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

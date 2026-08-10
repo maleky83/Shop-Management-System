@@ -1,5 +1,5 @@
 ﻿@page
-@using ShopManagementSystem.Domain.Entities.Products
+@using ShopManagementSystem.Application.DTOs.ProductViewModels
 @model ShopManagementSystem.Api.Pages.Admin.IndexModel
 @{
     ViewData["title"] = "Index";
@@ -22,7 +22,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (Product item in Model.Products)
+        @foreach (ProductViewModel item in Model.Products)
         {
             <tr>
                 <td>
@@ -31,13 +31,13 @@
                          src="~/images/@(item.PictureName)" />
                 </td>
                 <td>@item.Name</td>
-                <td>@item.Item.Price</td>
+                <td>@item.Price</td>
                 <td>
-                    <a asp-route-productId="@item.Id"
+                    <a asp-route-productId="@item.ProductId"
                        asp-page="EditProduct">
                         Edit
                     </a>
-                    <a asp-route-productId="@item.Id"
+                    <a asp-route-productId="@item.ProductId"
                        asp-page="RemoveProduct">
                         Remove
                     </a>

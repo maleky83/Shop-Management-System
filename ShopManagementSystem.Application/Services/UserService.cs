@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Infrastructure.Data.Context;
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Domain.Entities;
 

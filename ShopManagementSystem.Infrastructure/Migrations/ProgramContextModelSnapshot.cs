@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Infrastructure.Data.Context;
 
 #nullable disable
 

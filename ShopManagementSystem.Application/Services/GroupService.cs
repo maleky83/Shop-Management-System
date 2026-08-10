@@ -2,7 +2,7 @@
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
 using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Context;
+using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services
 {
