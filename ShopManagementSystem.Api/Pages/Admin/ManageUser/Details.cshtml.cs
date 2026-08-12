@@ -1,26 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ShopManagementSystem.Application.DTOs.Admin;
 using ShopManagementSystem.Application.Interfaces;
-using System.Threading.Tasks;
-using ShopManagementSystem.Application.DTOs;
 
 
 namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class DetailsModel : PageModel
     {
-        private readonly IUserManagerService _userManager;
+        private readonly IUserAdminService _userAdminService;
 
-        public DetailsModel(IUserManagerService userManager)
+        public DetailsModel(IUserAdminService userManager)
         {
-            _userManager = userManager;
+            _userAdminService = userManager;
         }
 
-        public UserViewModel User { get; set; }
+        public UserDetailViewModel? User { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int userId)
         {
-            User = await _userManager.DetailAsync(id);
+            User = await _userAdminService.UserDetailAsync(userId);
 
             if (User == null)
             {

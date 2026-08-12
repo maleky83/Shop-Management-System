@@ -8,11 +8,15 @@ namespace ShopManagementSystem.Domain.Entities.Products
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public int ItemId { get; set; }
         public string? PictureName { get; set; }
 
+        #region Relation
+
+        public int ItemId { get; set; }
         public ICollection<CategoryToProduct> CategoryToProducts { get; set; } = new List<CategoryToProduct>();
         public ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
         public Item Item { get; set; } = null!;
+
+        #endregion
     }
 }

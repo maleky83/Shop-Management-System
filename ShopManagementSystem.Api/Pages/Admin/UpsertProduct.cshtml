@@ -1,12 +1,13 @@
 ﻿@page
 @model ShopManagementSystem.Api.Pages.Admin.AddModel
 @{
-    ViewData["title"] = "Add Product";
+    ViewData["title"] = "Upsert Product";
 }
 
-<h1>Add Product</h1>
+<h1>Upsert Product</h1>
 <hr />
 <form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Product.ProductId" />
     <div class="form-group">
         <label asp-for="Product.Name"></label>
         <input class="form-control" asp-for="Product.Name" />
@@ -36,6 +37,6 @@
     </div>
     <div class="text-danger" asp-validation-summary="All"></div>
     <div class="form-group">
-        <input class="btn btn-success" type="submit" value="Add" />
+        <input class="btn btn-success" type="submit" value="Upsert" />
     </div>
 </form>

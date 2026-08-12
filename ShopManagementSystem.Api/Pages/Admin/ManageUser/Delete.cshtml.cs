@@ -1,27 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.Interfaces;
-using System.Threading.Tasks;
-using ShopManagementSystem.Domain.Entities;
 
 
 namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class DeleteModel : PageModel
     {
-        private readonly IUserManagerService _userManager;
+        private readonly IUserAdminService _userAdminService;
 
-        public DeleteModel(IUserManagerService userManager)
+        public DeleteModel(IUserAdminService userManager)
         {
-            _userManager = userManager;
+            _userAdminService = userManager;
         }
 
-        [BindProperty]
-        public User User { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int userId)
         {
-            await _userManager.DeleteAsync(id);
+            await _userAdminService.DeleteAsync(userId);
             return RedirectToPage("Index");
         }
     }

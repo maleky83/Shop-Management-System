@@ -1,17 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Data.Context;
-using System.Text;
 using ShopManagementSystem.Application.Services;
 using ShopManagementSystem.Domain.Entities;
-using Microsoft.Extensions.Configuration;
+using ShopManagementSystem.Infrastructure.Data.Context;
+using System.Text;
 
 namespace ShopManagementSystem.Api
 {
@@ -55,10 +51,9 @@ namespace ShopManagementSystem.Api
 
             #region IoC
             builder.Services.AddScoped<PasswordHasher<User>>();
-            builder.Services.AddScoped<IGroupService, GroupService>();
-            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IUserManagerService, UserManagerService>();
+            builder.Services.AddScoped<IUserAdminService, UserAdminService>();
             builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
             #endregion

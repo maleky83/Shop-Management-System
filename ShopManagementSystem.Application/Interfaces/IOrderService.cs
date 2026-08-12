@@ -1,4 +1,5 @@
 ﻿using ShopManagementSystem.Application.DTOs.OrderViewModels;
+using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Application.Interfaces
 {
@@ -6,8 +7,8 @@ namespace ShopManagementSystem.Application.Interfaces
     {
         Task AddToOrderAsync(int itemId, int userId);
         Task<OrderViewModel?> ShowOrderAsync(int userId);
-        Task<int> ReduceOrderAsync(int detailId);
-        Task<int?> RemoveOrderAsync(int detailId);
+        Task<OrderStatus> ReduceOrderAsync(int detailId, int userId);
+        Task<OrderStatus> RemoveOrderAsync(int detailId, int userId);
         Task PaymentAsync(int orderId);
     }
 }

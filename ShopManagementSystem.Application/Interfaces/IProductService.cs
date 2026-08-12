@@ -12,7 +12,7 @@ namespace ShopManagementSystem.Application.Interfaces
         Task<List<ProductViewModel?>> ShowProductByGroupIdAsync(int categoryId);
         Task AddProductAsync(ProductViewModel model);
         Task EditProductAsync(ProductViewModel model);
-        Task<ProductViewModel?> GetProductViewModelAsync(int productId);
+        Task<ProductViewModel?> GetProductViewModelAsync(int? productId);
         Task<List<Category>> GetCategories();
 
     }

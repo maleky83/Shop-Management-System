@@ -1,17 +1,11 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.DTOs.Account;
+using ShopManagementSystem.Application.DTOs.AccountViweModels;
 using ShopManagementSystem.Application.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 
 namespace ShopManagementSystem.Api.Controllers
@@ -20,26 +14,26 @@ namespace ShopManagementSystem.Api.Controllers
     [Route("account")]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IAccountService _accountService;
         private readonly IConfiguration _configuration;
-        public AccountController(IUserService userService, IConfiguration configuration)
+        public AccountController(IAccountService userService, IConfiguration configuration)
         {
-            _userService = userService;
+            _accountService = userService;
             _configuration = configuration;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (await _userService.GetUserAsync(model.Name) != null)
+            if (await _accountService.IsExistUserByNameAsync(model.Name))
             {
                 return BadRequest(new
                 {
-                    message = "UesrName is exist"
+                    message = "Uesr is exist"
                 });
             }
 
-            await _userService.RegisterAsync(model);
+            await _accountService.RegisterAsync(model);
 
             return Ok(new
             {
@@ -50,21 +44,20 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
-            UserViewModel user = await _userService.GetUserAsync(model.Name);
+            UserDetailViewModel? user = await _accountService.LoginAsync(model);
 
             if (user == null)
             {
-                return BadRequest(new
+                return NotFound(new
                 {
-                    message = "The information is not correct"
+                    message = "the informaion is not correct"
                 });
             }
 
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
-                new Claim(ClaimTypes.Name,user.Name),
-                new Claim("IsAdmin",user.IsAdmin.ToString())
+                new Claim(ClaimTypes.Name,user.Name)
             };
 
             var key = new SymmetricSecurityKey(
@@ -84,7 +77,7 @@ namespace ShopManagementSystem.Api.Controllers
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Ok(new
+            return Accepted(new
             {
                 token = jwt
             });

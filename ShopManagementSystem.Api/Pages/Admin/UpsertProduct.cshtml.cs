@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Threading.Tasks;
-using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.Interfaces;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
@@ -17,12 +16,19 @@ namespace ShopManagementSystem.Api.Pages.Admin
         [BindProperty]
         public ProductViewModel Product { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int? productId)
         {
-            Product = new ProductViewModel()
+            if (productId == null)
             {
-                Categories = await _productService.GetCategories()
-            };
+                Product = new ProductViewModel()
+                {
+                    Categories = await _productService.GetCategories()
+                };
+            }
+            else
+            {
+                Product = await _productService.GetProductViewModelAsync(productId);
+            }
         }
         public async Task<IActionResult> OnPostAsync()
         {
@@ -32,7 +38,14 @@ namespace ShopManagementSystem.Api.Pages.Admin
                 return Page();
             }
 
-            await _productService.AddProductAsync(Product);
+            if (Product.ProductId == 0)
+            {
+                await _productService.AddProductAsync(Product);
+            }
+            else
+            {
+                await _productService.EditProductAsync(Product);
+            }
 
             return RedirectToPage("Index");
         }

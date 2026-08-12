@@ -8,7 +8,7 @@
 <h1>Products</h1>
 <p>
     <a class="btn btn-outline-success"
-       asp-page="AddProduct">
+       asp-page="UpsertProduct">
         Add Product
     </a>
 </p>
@@ -34,7 +34,7 @@
                 <td>@item.Price</td>
                 <td>
                     <a asp-route-productId="@item.ProductId"
-                       asp-page="EditProduct">
+                       asp-page="UpsertProduct">
                         Edit
                     </a>
                     <a asp-route-productId="@item.ProductId"

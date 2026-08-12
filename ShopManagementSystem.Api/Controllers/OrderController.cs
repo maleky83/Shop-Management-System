@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.OrderViewModels;
 using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Domain.Enums;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace ShopManagementSystem.Api.Controllers
 {
@@ -27,7 +28,7 @@ namespace ShopManagementSystem.Api.Controllers
 
             return Ok(new
             {
-                message = "Product added to order"
+                message = "Product added to order."
             });
         }
 
@@ -42,7 +43,7 @@ namespace ShopManagementSystem.Api.Controllers
             if (order == null)
                 return BadRequest(new
                 {
-                    message = "you don't have any orders"
+                    message = "You don't have any orders."
                 });
 
             return Ok(order);
@@ -50,22 +51,22 @@ namespace ShopManagementSystem.Api.Controllers
 
         [Authorize]
         [HttpPatch("items/{detailId}/decrease")]
-        public async Task<IActionResult> ReduceOrder(int detailId)
+        public async Task<IActionResult> ReduceOrder(int detailId, int userId)
         {
-            int result = await _orderService.ReduceOrderAsync(detailId);
+            OrderStatus result = await _orderService.ReduceOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
 
-            if (result == 1)
-                await _orderService.RemoveOrderAsync(detailId);
+            if (result == OrderStatus.RemoveOrder)
+                await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
 
-            if (result == 0)
-                return BadRequest(new
+            if (result == OrderStatus.NotFoundOrderDetail)
+                return NotFound(new
                 {
-                    message = "there isn't any OrderDetails"
+                    message = "No order details."
                 });
 
             return Ok(new
             {
-                message = "decreased orderDetail"
+                message = "Order details decreased."
             });
         }
 
@@ -73,17 +74,17 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpDelete("items/{detailId}")]
         public async Task<IActionResult> RemoveOrder(int detailId)
         {
-            var result = await _orderService.RemoveOrderAsync(detailId);
+            OrderStatus result = await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
 
-            if (result == null)
-                return BadRequest(new
+            if (result == OrderStatus.NotFoundOrderDetail)
+                return NotFound(new
                 {
-                    message = "there isn't any OrderDetails"
+                    message = "No order details."
                 });
 
             return Ok(new
             {
-                messsage = "Removed Order"
+                messsage = "Order deleted."
             });
         }
     }

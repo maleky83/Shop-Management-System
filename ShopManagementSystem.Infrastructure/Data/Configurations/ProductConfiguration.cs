@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Products;
-using System.Reflection.Emit;
 
 namespace ShopManagementSystem.Infrastructure.Data.Configurations
 {

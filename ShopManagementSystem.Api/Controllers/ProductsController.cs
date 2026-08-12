@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
 using ShopManagementSystem.Application.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ShopManagementSystem.Api.Controllers
 {

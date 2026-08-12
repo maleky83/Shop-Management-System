@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Data.Context;
-using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Application.DTOs.OrderViewModels;
+using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Domain.Entities.Orders;
+using ShopManagementSystem.Domain.Enums;
+using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services
 {
@@ -86,30 +87,36 @@ namespace ShopManagementSystem.Application.Services
             return order;
         }
 
-        public async Task<int> ReduceOrderAsync(int detailId)
+        public async Task<OrderStatus> ReduceOrderAsync(int detailId, int userId)
         {
             var orderDetail = await _context.OrderDetail.FindAsync(detailId);
 
             if (orderDetail == null)
-                return 0;
+                return OrderStatus.NotFoundOrderDetail;
 
-            if (orderDetail?.Count > 1)
+            if (orderDetail.Count > 1)
             {
                 orderDetail.Count -= 1;
                 await _context.SaveChangesAsync();
             }
+            if (orderDetail.Count == 1)
+                return OrderStatus.RemoveOrder;
 
-            return (orderDetail == null) ? 0 : orderDetail.Count;
+            return OrderStatus.Succeeded;
         }
 
-        public async Task<int?> RemoveOrderAsync(int detailId)
+        public async Task<OrderStatus> RemoveOrderAsync(int detailId, int userId)
         {
-            var orderDetail = await _context.OrderDetail.FindAsync(detailId);
+            var orderDetail = await _context.OrderDetail
+                .FirstOrDefaultAsync(od => od.Id == detailId && od.Order.UserId == userId);
 
             if (orderDetail == null)
-                return null;
+                return OrderStatus.NotFoundOrderDetail;
 
             var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderDetail.OrderId);
+
+            if (order == null)
+                return OrderStatus.NotFoundOrder;
 
             _context.Remove(orderDetail);
             await _context.SaveChangesAsync();
@@ -123,7 +130,7 @@ namespace ShopManagementSystem.Application.Services
 
             await _context.SaveChangesAsync();
 
-            return 1;
+            return OrderStatus.Succeeded;
         }
 
         public async Task PaymentAsync(int orderId)

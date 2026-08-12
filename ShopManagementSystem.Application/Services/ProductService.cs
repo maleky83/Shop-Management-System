@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Data.Context;
-using ShopManagementSystem.Domain.Entities.Products;
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Domain.Entities.Category;
+using ShopManagementSystem.Domain.Entities.Products;
+using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services
 {
@@ -54,7 +54,7 @@ namespace ShopManagementSystem.Application.Services
                 Description = ca.Category.Description,
                 Name = ca.Category.Name,
                 CategoryToProducts = ca.Category.CategoryToProducts,
-                CategoryId= ca.CategoryId,
+                CategoryId = ca.CategoryId,
             }).AsNoTracking().ToListAsync();
 
             var vm = new ProductDetailsViewModel()
@@ -72,7 +72,7 @@ namespace ShopManagementSystem.Application.Services
                 .Select(c => new ProductViewModel()
                 {
                     Description = c.Product.Description,
-                    ProductId= c.ProductId,
+                    ProductId = c.ProductId,
                     Name = c.Product.Name,
                     PictureName = c.Product.PictureName,
                     Price = c.Product.Item.Price,
@@ -155,13 +155,13 @@ namespace ShopManagementSystem.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ProductViewModel?> GetProductViewModelAsync(int productId)
+        public async Task<ProductViewModel?> GetProductViewModelAsync(int? productId)
         {
             var product = await _context.Products.Include(product => product.Item)
                 .Where(product => product.Id == productId)
                 .Select(s => new ProductViewModel()
                 {
-                    ProductId= productId,
+                    ProductId = s.Id,
                     Name = s.Name,
                     Description = s.Description,
                     QuantityInStock = s.Item.QuantityInStock,

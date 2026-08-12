@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
 using ShopManagementSystem.Application.Interfaces;
-using System.Threading.Tasks;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
@@ -16,7 +15,7 @@ namespace ShopManagementSystem.Api.Pages.Admin
 
         [BindProperty]
         public ProductViewModel Product { get; set; }
-        
+
         public async Task OnGetAsync(int productId)
         {
             Product = await _productService.GetProductViewModelAsync(productId);
