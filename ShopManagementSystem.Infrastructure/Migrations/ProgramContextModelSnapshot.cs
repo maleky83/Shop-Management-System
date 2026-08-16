@@ -22,7 +22,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.Category", b =>
+            modelBuilder.Entity("Permission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,13 +30,145 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions");
+                });
+
+            modelBuilder.Entity("Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("RolePermission", b =>
+                {
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PermissionId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermissions");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartItems");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -46,24 +178,30 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "for call and plaing",
+                            IsActive = true,
                             Name = "Mobile"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "for programming , suding and game",
+                            IsActive = true,
                             Name = "laptop"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "for example watch and sock",
+                            IsActive = true,
                             Name = "Accessory"
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.CategoryToProduct", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CategoryToProduct", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -95,7 +233,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,14 +241,17 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreateTime")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsFinaly")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -122,7 +263,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.OrderDetail", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.OrderDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -130,17 +271,23 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<long>("Price")
-                        .HasColumnType("bigint");
-
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -151,7 +298,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Item", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -159,38 +306,36 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("Money");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("QuantityInStock")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Items");
+                    b.HasIndex("OrderId")
+                        .IsUnique();
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Price = 1250000m,
-                            QuantityInStock = 45
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Price = 980000m,
-                            QuantityInStock = 32
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Price = 4500000m,
-                            QuantityInStock = 18
-                        });
+                    b.ToTable("Payment");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,12 +343,14 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ItemId")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -212,10 +359,16 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<string>("PictureName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.HasIndex("ItemId")
-                        .IsUnique();
+                    b.Property<int>("QuantityInStock")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Products");
 
@@ -223,30 +376,39 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "ram 6 , memory 128",
-                            ItemId = 1,
+                            IsActive = true,
                             Name = "Sumsung Mobile",
-                            PictureName = "1.jpg"
+                            PictureName = "1.jpg",
+                            Price = 0m,
+                            QuantityInStock = 0
                         },
                         new
                         {
                             Id = 2,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "ram 16 , memory 1T",
-                            ItemId = 2,
+                            IsActive = true,
                             Name = "lenovo laptop",
-                            PictureName = "2.jpg"
+                            PictureName = "2.jpg",
+                            Price = 0m,
+                            QuantityInStock = 0
                         },
                         new
                         {
                             Id = 3,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = " AMOLED،GPS ",
-                            ItemId = 3,
+                            IsActive = true,
                             Name = "X-200 sport Watch",
-                            PictureName = "3.jpg"
+                            PictureName = "3.jpg",
+                            Price = 0m,
+                            QuantityInStock = 0
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -254,19 +416,21 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("RegisterDate")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -274,15 +438,79 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.CategoryToProduct", b =>
+            modelBuilder.Entity("UserRole", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Category.Category", "Category")
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("RolePermission", b =>
+                {
+                    b.HasOne("Permission", "Permission")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
+                        .WithOne("Cart")
+                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Cart", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CartItem", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Cart", "Cart")
+                        .WithMany("Items")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Product", "Product")
+                        .WithMany("CartItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CategoryToProduct", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Category", "Category")
                         .WithMany("CategoryToProducts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Products.Product", "Product")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Product", "Product")
                         .WithMany("CategoryToProducts")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,9 +521,9 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.User", "User")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,15 +532,15 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.OrderDetail", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.OrderDetail", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Orders.Order", "Order")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Products.Product", "Product")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -323,43 +551,81 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Payment", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Products.Item", "Item")
-                        .WithOne("Product")
-                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Products.Product", "ItemId")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Order", "Order")
+                        .WithOne("Payment")
+                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Payment", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Item");
+                    b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category.Category", b =>
+            modelBuilder.Entity("UserRole", b =>
                 {
-                    b.Navigation("CategoryToProducts");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Item", b =>
-                {
-                    b.Navigation("Product")
+                    b.HasOne("Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("Permission", b =>
                 {
+                    b.Navigation("RolePermissions");
+                });
+
+            modelBuilder.Entity("Role", b =>
+                {
+                    b.Navigation("RolePermissions");
+
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("CategoryToProducts");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("CartItems");
+
                     b.Navigation("CategoryToProducts");
 
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User.User", b =>
                 {
+                    b.Navigation("Cart");
+
                     b.Navigation("Orders");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

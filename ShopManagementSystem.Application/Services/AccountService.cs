@@ -1,60 +1,61 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.AccountViweModels;
-using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Domain.Entities;
-using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Application.Interfaces.Repositories;
+using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Domain.Entities.User;
 
 namespace ShopManagementSystem.Application.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly ProgramContext _context;
+        private readonly IUserRepository _userRepository;
         private readonly PasswordHasher<User> _passwordHasher;
-        public AccountService(ProgramContext context, PasswordHasher<User> passwordHasher)
+        private readonly ITokenService _tokenService;
+        public AccountService(
+            IUserRepository userRepository,
+            PasswordHasher<User> passwordHasher,
+            ITokenService tokenService
+            )
         {
-            _context = context;
+            _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _tokenService = tokenService;
         }
 
-        public async Task<bool> IsExistUserByNameAsync(string userName)
-        {
-            return await _context.Users.AnyAsync(u => u.Name == userName);
-        }
-        public async Task AddUserAsync(User user)
-        {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-        }
         public async Task RegisterAsync(RegisterViewModel model)
         {
+            var userExists = await _userRepository.ExistsByNameAsync(model.Name);
+
+            if (userExists)
+                throw new Exception("Uesr is exist");
+
             User user = new User()
             {
                 Name = model.Name,
-                RegisterDate = DateTime.Now,
-                IsAdmin = true
             };
-            user.Password = _passwordHasher.HashPassword(user, model.Password);
+            user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
 
 
-            await AddUserAsync(user);
+            await _userRepository.CreateAsync(user);
         }
-        public async Task<UserDetailViewModel?> LoginAsync(LoginViewModel model)
+        public async Task<LoginResponseViewModel> LoginAsync(LoginViewModel model)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == model.Name);
+            var user = await _userRepository.GetByNameAsync(model.Name);
 
             if (user == null)
-                return null;
+                throw new Exception("Invalid username or password.");
 
-            if (_passwordHasher.VerifyHashedPassword(user, user.Password, model.Password) == 0)
-                return null;
+            var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
 
-            return new UserDetailViewModel()
+            if (passwordResult == PasswordVerificationResult.Failed)
+                throw new Exception("Invalid username or password.");
+
+            var token = _tokenService.CreateToken(user);
+
+            return new LoginResponseViewModel()
             {
-                IsAdmin = user.IsAdmin,
-                Name = user.Name,
-                UserId = user.Id,
+                Token = token
             };
         }
     }

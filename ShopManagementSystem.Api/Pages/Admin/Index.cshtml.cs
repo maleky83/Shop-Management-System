@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Api.Pages.Admin
         public IEnumerable<ProductViewModel> Products { get; set; }
         public async Task OnGetAsync()
         {
-            Products = await _productService.GetProductsAsync();
+            Products = await _productService.GetAllAsync();
         }
     }
 }

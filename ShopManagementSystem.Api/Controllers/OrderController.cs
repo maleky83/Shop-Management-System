@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.OrderViewModels;
-using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Domain.Enums;
+using ShopManagementSystem.Application.Interfaces.Services;
 using System.Security.Claims;
 
 namespace ShopManagementSystem.Api.Controllers
@@ -24,7 +21,7 @@ namespace ShopManagementSystem.Api.Controllers
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
-            await _orderService.AddToOrderAsync(itemId, userId);
+            //await _orderService.AddToOrderAsync(itemId, userId);
 
             return Ok(new
             {
@@ -32,60 +29,60 @@ namespace ShopManagementSystem.Api.Controllers
             });
         }
 
-        [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<OrderViewModel>> ShowOrder()
-        {
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //[Authorize]
+        //[HttpGet]
+        //public async Task<ActionResult<OrderViewModel>> ShowOrder()
+        //{
+        //int userId = int.Parse(ClaimTypes.NameIdentifier);
 
-            var order = await _orderService.ShowOrderAsync(userId);
+        //var order = await _orderService.ShowOrderAsync(userId);
 
-            if (order == null)
-                return BadRequest(new
-                {
-                    message = "You don't have any orders."
-                });
+        //if (order == null)
+        //    return BadRequest(new
+        //    {
+        //        message = "You don't have any orders."
+        //    });
 
-            return Ok(order);
-        }
+        //return Ok(order);
+        //}
 
-        [Authorize]
-        [HttpPatch("items/{detailId}/decrease")]
-        public async Task<IActionResult> ReduceOrder(int detailId, int userId)
-        {
-            OrderStatus result = await _orderService.ReduceOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
+        //[Authorize]
+        //[HttpPatch("items/{detailId}/decrease")]
+        //public async Task<IActionResult> ReduceOrder(int detailId, int userId)
+        //{
+        //    OrderStatus result = await _orderService.ReduceOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
 
-            if (result == OrderStatus.RemoveOrder)
-                await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
+        //    if (result == OrderStatus.RemoveOrder)
+        //        await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
 
-            if (result == OrderStatus.NotFoundOrderDetail)
-                return NotFound(new
-                {
-                    message = "No order details."
-                });
+        //    if (result == OrderStatus.NotFoundOrderDetail)
+        //        return NotFound(new
+        //        {
+        //            message = "No order details."
+        //        });
 
-            return Ok(new
-            {
-                message = "Order details decreased."
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        message = "Order details decreased."
+        //    });
+        //}
 
-        [Authorize]
-        [HttpDelete("items/{detailId}")]
-        public async Task<IActionResult> RemoveOrder(int detailId)
-        {
-            OrderStatus result = await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
+        //[Authorize]
+        //[HttpDelete("items/{detailId}")]
+        //public async Task<IActionResult> RemoveOrder(int detailId)
+        //{
+        //    OrderStatus result = await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
 
-            if (result == OrderStatus.NotFoundOrderDetail)
-                return NotFound(new
-                {
-                    message = "No order details."
-                });
+        //    if (result == OrderStatus.NotFoundOrderDetail)
+        //        return NotFound(new
+        //        {
+        //            message = "No order details."
+        //        });
 
-            return Ok(new
-            {
-                messsage = "Order deleted."
-            });
-        }
+        //    return Ok(new
+        //    {
+        //        messsage = "Order deleted."
+        //    });
+        //}
     }
 }

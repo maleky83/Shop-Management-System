@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.DTOs.Admin;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 
 namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class IndexModel : PageModel
     {
-        private readonly IUserAdminService _userAdminService;
+        private readonly IUserService _userAdminService;
 
-        public IndexModel(IUserAdminService userManager)
+        public IndexModel(IUserService userManager)
         {
             _userAdminService = userManager;
         }
@@ -18,7 +18,7 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 
         public async Task OnGetAsync()
         {
-            Users = await _userAdminService.GetUsersAsync();
+            Users = await _userAdminService.GetAllAsync();
         }
     }
 }

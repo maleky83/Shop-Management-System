@@ -1,17 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using ShopManagementSystem.Application.Interfaces;
-using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Application.Services
 {
     public class FileService : IFileService
     {
-        private readonly ProgramContext _context;
         private readonly IWebHostEnvironment _environment;
-        public FileService(ProgramContext context, IWebHostEnvironment environment)
+        public FileService(IWebHostEnvironment environment)
         {
-            _context = context;
             _environment = environment;
         }
 
@@ -42,8 +39,6 @@ namespace ShopManagementSystem.Application.Services
 
             if (File.Exists(filePath))
                 File.Delete(filePath);
-
-
         }
     }
 }

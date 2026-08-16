@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Repositories;
+using ShopManagementSystem.Application.Interfaces.Services;
 using ShopManagementSystem.Application.Services;
-using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.User;
 using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Infrastructure.Repositories;
 using System.Text;
 
 namespace ShopManagementSystem.Api
@@ -20,6 +22,8 @@ namespace ShopManagementSystem.Api
             // Add services to the container.
             builder.Services.AddControllers();
             builder.Services.AddRazorPages();
+
+            #region Swagger
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -40,6 +44,8 @@ namespace ShopManagementSystem.Api
                     });
             });
 
+            #endregion
+
             #region DB Context
             builder.Services.AddDbContext<ProgramContext>(options =>
             {
@@ -50,12 +56,27 @@ namespace ShopManagementSystem.Api
             #endregion
 
             #region IoC
+
             builder.Services.AddScoped<PasswordHasher<User>>();
+
+            #region Services
+
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProductService, ProductService>();
-            builder.Services.AddScoped<IUserAdminService, UserAdminService>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
+
+            #endregion
+
+            #region Repository
+
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ITokenService, TokenService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            #endregion
+
             #endregion
 
             #region Authentication

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
@@ -18,11 +18,11 @@ namespace ShopManagementSystem.Api.Pages.Admin
 
         public async Task OnGetAsync(int productId)
         {
-            Product = await _productService.GetProductViewModelAsync(productId);
+            Product = await _productService.GetByIdAsync(productId);
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            await _productService.DeleteProductAsync(Product.ProductId);
+            await _productService.DeleteByIdAsync(Product.ProductId);
             return RedirectToPage("Index");
         }
     }

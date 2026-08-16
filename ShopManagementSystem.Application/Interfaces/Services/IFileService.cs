@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Http;
 
-namespace ShopManagementSystem.Application.Interfaces
+namespace ShopManagementSystem.Application.Interfaces.Services
 {
     public interface IFileService
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using ShopManagementSystem.Domain.Entities.Category;
+using ShopManagementSystem.Domain.Entities;
 
 namespace ShopManagementSystem.Application.DTOs.ProductViewModels
 {
@@ -9,7 +9,7 @@ namespace ShopManagementSystem.Application.DTOs.ProductViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public string? PictureName { get; set; }
-        public long Price { get; set; }
+        public decimal Price { get; set; }
         public int QuantityInStock { get; set; }
         public IFormFile? Picture { get; set; }
         public ICollection<int> CategoriIds { get; set; } = [];

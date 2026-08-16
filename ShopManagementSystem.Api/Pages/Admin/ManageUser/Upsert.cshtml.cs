@@ -1,16 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.DTOs.Admin;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 
 namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class EditModel : PageModel
     {
-        private readonly IUserAdminService _userAdminService;
+        private readonly IUserService _userAdminService;
 
-        public EditModel(IUserAdminService userManager)
+        public EditModel(IUserService userManager)
         {
             _userAdminService = userManager;
         }
@@ -18,14 +18,14 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
         [BindProperty]
         public EditUserViewModel model { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? userId)
-        {
-            if (userId != null)
-            {
-                model = await _userAdminService.GetUserForEditAsync(userId);
-            }
-            return Page();
-        }
+        //public async Task<IActionResult> OnGetAsync(int? userId)
+        //{
+        //    if (userId != null)
+        //    {
+        //        model = await _userAdminService.GetUserForUpdateAsync(userId);
+        //    }
+        //    return Page();
+        //}
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -47,7 +47,7 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
             }
             else
             {
-                await _userAdminService.EditAsync(model);
+                await _userAdminService.UpdateAsync(model);
             }
 
             return RedirectToPage("Index");

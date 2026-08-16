@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShopManagementSystem.Domain.Entities.Products;
+using ShopManagementSystem.Domain.Entities;
 
 namespace ShopManagementSystem.Infrastructure.Data.Configurations
 {
@@ -11,7 +11,6 @@ namespace ShopManagementSystem.Infrastructure.Data.Configurations
             builder.HasData(new Product()
             {
                 Id = 1,
-                ItemId = 1,
                 Name = "Sumsung Mobile",
                 Description = "ram 6 , memory 128",
                 PictureName = "1.jpg",
@@ -19,7 +18,6 @@ namespace ShopManagementSystem.Infrastructure.Data.Configurations
                 new Product()
                 {
                     Id = 2,
-                    ItemId = 2,
                     Name = "lenovo laptop",
                     Description = "ram 16 , memory 1T",
                     PictureName = "2.jpg",
@@ -27,7 +25,6 @@ namespace ShopManagementSystem.Infrastructure.Data.Configurations
                 new Product()
                 {
                     Id = 3,
-                    ItemId = 3,
                     Name = "X-200 sport Watch",
                     Description = " AMOLED،GPS ",
                     PictureName = "3.jpg",

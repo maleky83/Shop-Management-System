@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 
 namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class DeleteModel : PageModel
     {
-        private readonly IUserAdminService _userAdminService;
+        private readonly IUserService _userAdminService;
 
-        public DeleteModel(IUserAdminService userManager)
+        public DeleteModel(IUserService userManager)
         {
             _userAdminService = userManager;
         }

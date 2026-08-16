@@ -1,4 +1,4 @@
-﻿using ShopManagementSystem.Domain.Entities.Category;
+﻿using ShopManagementSystem.Domain.Entities;
 
 namespace ShopManagementSystem.Application.DTOs
 {

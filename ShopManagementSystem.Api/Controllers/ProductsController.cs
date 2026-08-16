@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.ProductViewModels;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
-    [Route("products")]
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -17,26 +17,32 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProductViewModel>>> GetProducts()
         {
-            var products = await _productService.GetProductsAsync();
+            var products = await _productService.GetAllAsync();
+
             return Ok(products);
         }
 
-        [HttpGet("group/{categoryId}")]
-        public async Task<ActionResult<List<ProductViewModel>>> ShowProductByGroupId(int categoryId)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductViewModel>> GetById(int id)
         {
-            List<ProductViewModel> products = await _productService.ShowProductByGroupIdAsync(categoryId);
+            var products = await _productService.GetByIdAsync(id);
+
             return Ok(products);
         }
 
-        [HttpGet("{productId}")]
-        public async Task<ActionResult<ProductDetailsViewModel>> GetProduct(int productId)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> Create(int id, ProductViewModel model)
         {
-            var productDetail = await _productService.GetProductDetails(productId);
+            await _productService.CreateAsync(model);
 
-            if (productDetail == null)
-                return NotFound();
+            return NoContent();
+        }
 
-            return Ok(productDetail);
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, ProductViewModel model)
+        {
+            await _productService.UpdateAsync(model);
+            return NoContent();
         }
     }
 }
