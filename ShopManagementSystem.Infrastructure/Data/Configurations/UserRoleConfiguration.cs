@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Configurations
 
             builder.HasOne(ur => ur.Role)
                 .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.Role);
+                .HasForeignKey(ur => ur.RoleId);
         }
     }
 }

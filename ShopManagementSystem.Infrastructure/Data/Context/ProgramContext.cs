@@ -2,6 +2,7 @@
 using ShopManagementSystem.Domain.Entities;
 using ShopManagementSystem.Domain.Entities.User;
 using ShopManagementSystem.Infrastructure.Data.Configurations;
+using ShopManagementSystem.Infrastructure.Data.Seed;
 
 namespace ShopManagementSystem.Infrastructure.Data.Context
 {
@@ -37,13 +38,11 @@ namespace ShopManagementSystem.Infrastructure.Data.Context
         {
             base.OnModelCreating(modelBuilder);
 
-
+            SeedData.Seed(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new CategoryToProductConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
         }
     }
 }

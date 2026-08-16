@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Application.DTOs.AccountViweModels
         public required string Password { get; set; }
         [MaxLength(50)]
         [DataType(DataType.Password)]
-        [Compare("Password")]
+        [Compare(nameof(Password))]
         [Required]
         public string RePassword { get; set; }
     }

@@ -33,6 +33,9 @@ namespace ShopManagementSystem.Application.Services
             User user = new User()
             {
                 Name = model.Name,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                IsActive = true,
             };
             user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
 

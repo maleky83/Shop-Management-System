@@ -7,15 +7,13 @@ using ShopManagementSystem.Application.Interfaces.Services;
 namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/account/")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
-        private readonly IConfiguration _configuration;
-        public AccountController(IAccountService userService, IConfiguration configuration)
+        public AccountController(IAccountService userService)
         {
             _accountService = userService;
-            _configuration = configuration;
         }
 
         [HttpPost("register")]
