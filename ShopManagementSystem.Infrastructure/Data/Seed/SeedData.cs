@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.User;
 
 namespace ShopManagementSystem.Infrastructure.Data.Seed
 {
@@ -8,11 +9,14 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
         public static void Seed(ModelBuilder modelBuilder)
         {
             SeedRoles(modelBuilder);
-            SeedRolePermissions(modelBuilder);
-            SeedCategoryToProdcuts(modelBuilder);
             SeedCategories(modelBuilder);
             SeedProducts(modelBuilder);
+            SeedUsers(modelBuilder);
+
+            SeedCategoryToProdcuts(modelBuilder);
             SeedPermissions(modelBuilder);
+            SeedRolePermissions(modelBuilder);
+            SeedUserRoles(modelBuilder);
         }
 
         #region Roles
@@ -148,6 +152,34 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                 Id = 3,
                 Name = "Accessory",
                 Description = "for example watch and sock"
+            });
+        }
+
+        #endregion
+
+        #region Users
+
+        private static void SeedUsers(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                IsActive = true,
+                Name = "a",
+                PasswordHash = "AQAAAAIAAYagAAAAEJFJMLK8RQXhwNCo0C7ahb+wKtLiYnUUiEiKXwbKENtwFN/pYWMLY++k6vhRGmZ9gw==",
+            });
+        }
+
+        #endregion
+
+        #region UserRoles
+
+        private static void SeedUserRoles(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserRole>().HasData(new UserRole
+            {
+                RoleId = RoleIds.Admin,
+                UserId = 1,
             });
         }
 

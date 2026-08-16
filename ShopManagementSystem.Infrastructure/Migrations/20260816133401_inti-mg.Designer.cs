@@ -12,8 +12,8 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20260816113222_update_SeedDate_for_Permissions_and_roles")]
-    partial class update_SeedDate_for_Permissions_and_roles
+    [Migration("20260816133401_inti-mg")]
+    partial class intimg
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -500,6 +500,16 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsActive = true,
+                            Name = "a",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJFJMLK8RQXhwNCo0C7ahb+wKtLiYnUUiEiKXwbKENtwFN/pYWMLY++k6vhRGmZ9gw=="
+                        });
                 });
 
             modelBuilder.Entity("UserRole", b =>
@@ -515,6 +525,13 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("RolePermission", b =>
