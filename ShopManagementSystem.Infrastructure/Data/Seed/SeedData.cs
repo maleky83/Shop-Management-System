@@ -95,27 +95,31 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
 
         private static void SeedProducts(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>().HasData(new Product()
-            {
-                Id = 1,
-                Name = "Sumsung Mobile",
-                Description = "ram 6 , memory 128",
-                PictureName = "1.jpg",
-            },
-                    new Product()
-                    {
-                        Id = 2,
-                        Name = "lenovo laptop",
-                        Description = "ram 16 , memory 1T",
-                        PictureName = "2.jpg",
-                    },
-                    new Product()
-                    {
-                        Id = 3,
-                        Name = "X-200 sport Watch",
-                        Description = " AMOLED،GPS ",
-                        PictureName = "3.jpg",
-                    });
+            modelBuilder.Entity<Product>().HasData(
+                new Product()
+                {
+                    Id = 1,
+                    Name = "Sumsung Mobile",
+                    Description = "ram 6 , memory 128",
+                    PictureName = "1.jpg",
+                    Price = 20000,
+                },
+                new Product()
+                {
+                    Id = 2,
+                    Name = "lenovo laptop",
+                    Description = "ram 16 , memory 1T",
+                    PictureName = "2.jpg",
+                    Price = 10000,
+                },
+                new Product()
+                {
+                    Id = 3,
+                    Name = "X-200 sport Watch",
+                    Description = " AMOLED،GPS ",
+                    PictureName = "3.jpg",
+                    Price = 30000,
+                });
         }
 
         #endregion

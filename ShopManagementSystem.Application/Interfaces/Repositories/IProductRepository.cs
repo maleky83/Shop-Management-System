@@ -9,5 +9,6 @@ namespace ShopManagementSystem.Application.Interfaces.Repositories
         Task CreateAsync(Product product);
         Task<List<Product>> GetAllAsync();
         Task<Product?> GetByIdAsync(int id);
+        Task AddToCategoryAsync(int id, List<int> categoryIds);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -11,9 +12,11 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    partial class ProgramContextModelSnapshot : ModelSnapshot
+    [Migration("20260817074310_update-mig")]
+    partial class updatemig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,7 +445,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             IsActive = true,
                             Name = "Sumsung Mobile",
                             PictureName = "1.jpg",
-                            Price = 20000m,
+                            Price = 0m,
                             QuantityInStock = 0
                         },
                         new
@@ -453,7 +456,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             IsActive = true,
                             Name = "lenovo laptop",
                             PictureName = "2.jpg",
-                            Price = 10000m,
+                            Price = 0m,
                             QuantityInStock = 0
                         },
                         new
@@ -464,7 +467,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             IsActive = true,
                             Name = "X-200 sport Watch",
                             PictureName = "3.jpg",
-                            Price = 30000m,
+                            Price = 0m,
                             QuantityInStock = 0
                         });
                 });

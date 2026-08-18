@@ -43,5 +43,18 @@ namespace ShopManagementSystem.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
             return product;
         }
+
+        public async Task AddToCategoryAsync(int id, List<int> categoryIds)
+        {
+            foreach (var categoryId in categoryIds)
+            {
+                await _context.CategoryToProducts.AddAsync(new CategoryToProduct
+                {
+                    CategoryId = categoryId,
+                    ProductId = id
+                });
+            }
+            await _context.SaveChangesAsync();
+        }
     }
 }

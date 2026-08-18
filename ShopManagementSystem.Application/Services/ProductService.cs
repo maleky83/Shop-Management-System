@@ -1,4 +1,6 @@
-﻿using ShopManagementSystem.Application.DTOs.ProductViewModels;
+﻿using AutoMapper;
+using ShopManagementSystem.Application.DTOs.Product;
+using ShopManagementSystem.Application.DTOs.ProductViewModels;
 using ShopManagementSystem.Application.Interfaces.Repositories;
 using ShopManagementSystem.Application.Interfaces.Services;
 using ShopManagementSystem.Domain.Entities;
@@ -9,10 +11,12 @@ namespace ShopManagementSystem.Application.Services
     {
         private readonly IFileService _fileService;
         private readonly IProductRepository _productRepository;
-        public ProductService(IFileService fileService, IProductRepository productRepository)
+        private readonly IMapper _mapper;
+        public ProductService(IFileService fileService, IProductRepository productRepository, IMapper mapper)
         {
             _fileService = fileService;
             _productRepository = productRepository;
+            _mapper = mapper;
         }
 
         public async Task<ProductViewModel?> GetByIdAsync(int id)
@@ -20,82 +24,23 @@ namespace ShopManagementSystem.Application.Services
             var product = await _productRepository.GetByIdAsync(id);
 
             if (product == null)
-                return null;
+                throw new Exception("No products");
 
-            return new ProductViewModel
-            {
-                Name = product.Name,
-                Description = product.Description,
-                ProductId = product.Id,
-                PictureName = product.PictureName,
-                QuantityInStock = product.QuantityInStock,
-                Price = product.Price
-            };
+            var productViewModel = _mapper.Map<ProductViewModel>(product);
 
+            return productViewModel;
         }
 
         public async Task<List<ProductViewModel>> GetAllAsync()
         {
             var products = await _productRepository.GetAllAsync();
 
-            return products.Select(p => new ProductViewModel
-            {
-                Price = p.Price,
-                Description = p.Description,
-                Name = p.Name,
-                ProductId = p.Id,
-                PictureName = p.PictureName,
-                QuantityInStock = p.QuantityInStock
-            }).ToList();
-
+            return _mapper.Map<List<ProductViewModel>>(products);
         }
 
-        //public async Task<ProductDetailsViewModel?> GetDetailsByIdAsync(int productId)
-        //{
-        //    List<CategoryViewModel> categories = await _context.Products.Where(p => p.Id == productId).SelectMany(c => c.CategoryToProducts).Select(ca => new CategoryViewModel()
-        //    {
-        //        Description = ca.Category.Description,
-        //        Name = ca.Category.Name,
-        //        CategoryToProducts = ca.Category.CategoryToProducts,
-        //        CategoryId = ca.CategoryId,
-        //    }).AsNoTracking().ToListAsync();
-
-        //    var vm = new ProductDetailsViewModel()
-        //    {
-        //        Product = await GetByIdAsync(productId),
-        //        Categories = categories
-        //    };
-        //    return vm;
-        //}
-
-        //public async Task<List<ProductViewModel?>> ShowProductByGroupIdAsync(int categoryId)
-        //{
-        //    var products = await _context.CategoryToProducts
-        //        .Where(c => c.CategoryId == categoryId)
-        //        .Select(c => new ProductViewModel()
-        //        {
-        //            Description = c.Product.Description,
-        //            ProductId = c.ProductId,
-        //            Name = c.Product.Name,
-        //            PictureName = c.Product.PictureName,
-        //            Price = c.Product.Price,
-        //            QuantityInStock = c.Product.QuantityInStock,
-
-        //        })
-        //        .ToListAsync();
-
-        //    return products;
-        //}
-
-        public async Task CreateAsync(ProductViewModel model)
+        public async Task CreateAsync(CreateProductViewModel model)
         {
-            var product = new Product()
-            {
-                Name = model.Name,
-                Description = model.Description,
-                Price = model.Price,
-                QuantityInStock = model.QuantityInStock,
-            };
+            var product = _mapper.Map<Product>(model);
 
             if (model.Picture is not null)
             {
@@ -105,6 +50,8 @@ namespace ShopManagementSystem.Application.Services
             // Todo: add CategoryToProduct
 
             await _productRepository.CreateAsync(product);
+            await _productRepository.AddToCategoryAsync(product.Id, model.CategoryIds);
+
 
         }
 
@@ -113,25 +60,22 @@ namespace ShopManagementSystem.Application.Services
         //    return await _context.Categories.AsNoTracking().ToListAsync();
         //}
 
-        public async Task UpdateAsync(ProductViewModel model)
+        public async Task UpdateAsync(UpdateProductViewModel model)
         {
             var product = await _productRepository.GetByIdAsync(model.ProductId);
+
             if (product == null)
-                throw new Exception("No product");
+                throw new Exception("No products");
 
+            var productMap = _mapper.Map<Product>(model);
 
+            if (model.Picture?.Length > 0)
+            {
+                _fileService.DeleleFile(product.Id, product.PictureName);
+                product.PictureName = await _fileService.SaveFileAsync(product.Id, model.Picture);
+            }
 
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.QuantityInStock = model.QuantityInStock;
-            await _productRepository.UpdateAsync(product);
-
-            //if (model.Picture?.Length > 0)
-            //{
-            //    _fileService.DeleleFile(product.Id, product.PictureName);
-            //    product.PictureName = await _fileService.SaveFileAsync(product.Id, model.Picture);
-            //}
+            await _productRepository.UpdateAsync(productMap);
             //_context.CategoryToProducts.Where(c => c.ProductId == product.Id).ToList()
             //    .ForEach(g => _context.CategoryToProducts.Remove(g));
 

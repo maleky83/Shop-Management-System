@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using ShopManagementSystem.Domain.Entities;
+﻿using ShopManagementSystem.Application.DTOs.Category;
 
 namespace ShopManagementSystem.Application.DTOs.ProductViewModels
 {
@@ -11,8 +10,7 @@ namespace ShopManagementSystem.Application.DTOs.ProductViewModels
         public string? PictureName { get; set; }
         public decimal Price { get; set; }
         public int QuantityInStock { get; set; }
-        public IFormFile? Picture { get; set; }
         public ICollection<int> CategoriIds { get; set; } = [];
-        public ICollection<Category> Categories { get; set; } = [];
+        public ICollection<CategoryViewModel> Categories { get; set; } = [];
     }
 }

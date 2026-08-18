@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using ShopManagementSystem.Application.Interfaces.Repositories;
 using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Mappers;
+using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Application.Services;
 using ShopManagementSystem.Domain.Entities.User;
 using ShopManagementSystem.Infrastructure.Data.Context;
@@ -59,8 +61,15 @@ namespace ShopManagementSystem.Api
 
             builder.Services.AddScoped<PasswordHasher<User>>();
 
+            builder.Services.AddAutoMapper(cfg =>
+            {
+                cfg.AddProfile<ProductProfile>();
+                cfg.AddProfile<CategoryProfile>();
+            });
+
             #region Services
 
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<IUserService, UserService>();
@@ -75,6 +84,8 @@ namespace ShopManagementSystem.Api
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
             #endregion
 
             #endregion

@@ -30,19 +30,19 @@ namespace ShopManagementSystem.Api.Controllers
             return Ok(products);
         }
 
-        [HttpPost("{id}")]
-        public async Task<IActionResult> Create(int id, ProductViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm] CreateProductViewModel model)
         {
             await _productService.CreateAsync(model);
 
             return NoContent();
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, ProductViewModel model)
-        {
-            await _productService.UpdateAsync(model);
-            return NoContent();
-        }
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult> Update(int id, ProductViewModel model)
+        //{
+        //    await _productService.UpdateAsync(model);
+        //    return NoContent();
+        //}
     }
 }
