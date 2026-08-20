@@ -1,11 +1,10 @@
 ﻿@page
 @model ShopManagementSystem.Api.Pages.Admin.ManageUser.EditModel
-
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Upsert</h1>
+<h1>Edit</h1>
 
 <hr />
 <div class="row">
@@ -22,8 +21,15 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="model.IsAdmin" /> @Html.DisplayNameFor(model => model.model.IsAdmin)
+                    <input class="form-check-input" asp-for="model.IsActive" /> @Html.DisplayNameFor(model => model.model.IsActive)
                 </label>
+            </div>
+            <div class="form-group">
+                <label> Roels </label>
+                <select class="form-control"
+                        asp-for="model.RoleId"
+                        asp-items="@(new SelectList(Model.Roles, "RoleId", "Name"))">
+                </select>
             </div>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">

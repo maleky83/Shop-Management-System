@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-using ShopManagementSystem.Application.Interfaces.Repositories;
 using ShopManagementSystem.Application.Interfaces.Services;
 using ShopManagementSystem.Application.Mappers;
 using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Application.Services;
 using ShopManagementSystem.Domain.Entities.User;
 using ShopManagementSystem.Infrastructure.Data.Context;
-using ShopManagementSystem.Infrastructure.Repositories;
 using System.Text;
 
 namespace ShopManagementSystem.Api
@@ -65,6 +63,8 @@ namespace ShopManagementSystem.Api
             {
                 cfg.AddProfile<ProductProfile>();
                 cfg.AddProfile<CategoryProfile>();
+                cfg.AddProfile<UsertProfile>();
+                cfg.AddProfile<RoleProfile>();
             });
 
             #region Services
@@ -75,16 +75,7 @@ namespace ShopManagementSystem.Api
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IFileService, FileService>();
             builder.Services.AddScoped<IOrderService, OrderService>();
-
-            #endregion
-
-            #region Repository
-
-            builder.Services.AddScoped<IProductRepository, ProductRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ITokenService, TokenService>();
-            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             #endregion
 

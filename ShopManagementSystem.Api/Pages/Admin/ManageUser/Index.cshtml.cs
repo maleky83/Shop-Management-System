@@ -7,18 +7,18 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class IndexModel : PageModel
     {
-        private readonly IUserService _userAdminService;
+        private readonly IUserService _userService;
 
         public IndexModel(IUserService userManager)
         {
-            _userAdminService = userManager;
+            _userService = userManager;
         }
 
-        public IList<UserListViewModel> Users { get; set; }
+        public IList<UserViewModel> Users { get; set; }
 
         public async Task OnGetAsync()
         {
-            Users = await _userAdminService.GetAllAsync();
+            Users = await _userService.GetAllAsync();
         }
     }
 }

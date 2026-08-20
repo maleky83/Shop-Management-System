@@ -1,6 +1,4 @@
-﻿using ShopManagementSystem.Application.DTOs.Category;
-
-namespace ShopManagementSystem.Application.DTOs.ProductViewModels
+﻿namespace ShopManagementSystem.Application.DTOs.ProductViewModels
 {
     public class ProductViewModel
     {
@@ -10,7 +8,6 @@ namespace ShopManagementSystem.Application.DTOs.ProductViewModels
         public string? PictureName { get; set; }
         public decimal Price { get; set; }
         public int QuantityInStock { get; set; }
-        public ICollection<int> CategoriIds { get; set; } = [];
-        public ICollection<CategoryViewModel> Categories { get; set; } = [];
+        public int CategoryId { get; set; }
     }
 }

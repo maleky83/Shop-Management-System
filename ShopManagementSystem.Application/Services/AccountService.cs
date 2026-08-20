@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.AccountViweModels;
-using ShopManagementSystem.Application.Interfaces.Repositories;
 using ShopManagementSystem.Application.Interfaces.Services;
 using ShopManagementSystem.Domain.Entities.User;
 
@@ -9,42 +8,31 @@ namespace ShopManagementSystem.Application.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IUserRepository _userRepository;
         private readonly PasswordHasher<User> _passwordHasher;
         private readonly ITokenService _tokenService;
+        private readonly IUserService _userService;
         public AccountService(
-            IUserRepository userRepository,
             PasswordHasher<User> passwordHasher,
-            ITokenService tokenService
+            ITokenService tokenService,
+            IUserService userService
             )
         {
-            _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _tokenService = tokenService;
+            _userService = userService;
         }
 
         public async Task RegisterAsync(RegisterViewModel model)
         {
-            var userExists = await _userRepository.ExistsByNameAsync(model.Name);
-
-            if (userExists)
+            if (await _userService.ExistsByNameAsync(model.Name))
                 throw new Exception("Uesr is exist");
 
-            User user = new User()
-            {
-                Name = model.Name,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                IsActive = true,
-            };
-            user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
 
-
-            await _userRepository.CreateAsync(user);
+            await _userService.CreateForRegisterAsync(model);
         }
         public async Task<LoginResponseViewModel> LoginAsync(LoginViewModel model)
         {
-            var user = await _userRepository.GetByNameAsync(model.Name);
+            var user = await _userService.GetByNameAsync(model.Name);
 
             if (user == null)
                 throw new Exception("Invalid username or password.");

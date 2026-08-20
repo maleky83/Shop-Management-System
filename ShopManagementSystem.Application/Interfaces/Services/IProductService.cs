@@ -5,11 +5,12 @@ namespace ShopManagementSystem.Application.Interfaces.Services
 {
     public interface IProductService
     {
-        Task DeleteByIdAsync(int id);
         Task<List<ProductViewModel>> GetAllAsync();
-        Task<ProductViewModel?> GetByIdAsync(int id);
+        Task<ProductViewModel> GetByIdAsync(int id);
+        Task<UpdateProductViewModel> GetForUpdateByIdAsync(int id);
         Task CreateAsync(CreateProductViewModel model);
         Task UpdateAsync(UpdateProductViewModel model);
+        Task DeleteByIdAsync(int id);
 
     }
 }

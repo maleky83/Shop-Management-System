@@ -24,6 +24,6 @@ namespace ShopManagementSystem.Application.DTOs.ProductViewModels
         public bool IsActive { get; set; } = true;
 
         [Required]
-        public List<int> CategoryIds { get; set; }
+        public int CategoryId { get; set; }
     }
 }

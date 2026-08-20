@@ -7,16 +7,24 @@ namespace ShopManagementSystem.Api.Pages.Admin.ManageUser
 {
     public class DeleteModel : PageModel
     {
-        private readonly IUserService _userAdminService;
+        private readonly IUserService _userService;
 
         public DeleteModel(IUserService userManager)
         {
-            _userAdminService = userManager;
+            _userService = userManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(int userId)
+        [BindProperty]
+        public int UserId { get; set; }
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            await _userAdminService.DeleteAsync(userId);
+            UserId = id;
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            await _userService.DeleteAsync(UserId);
             return RedirectToPage("Index");
         }
     }

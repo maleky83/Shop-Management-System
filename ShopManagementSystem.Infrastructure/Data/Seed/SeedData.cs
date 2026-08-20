@@ -13,10 +13,8 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
             SeedProducts(modelBuilder);
             SeedUsers(modelBuilder);
 
-            SeedCategoryToProdcuts(modelBuilder);
             SeedPermissions(modelBuilder);
             SeedRolePermissions(modelBuilder);
-            SeedUserRoles(modelBuilder);
         }
 
         #region Roles
@@ -103,6 +101,9 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                     Description = "ram 6 , memory 128",
                     PictureName = "1.jpg",
                     Price = 20000,
+                    CategoryId = 1,
+                    QuantityInStock = 10,
+                    CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 },
                 new Product()
                 {
@@ -111,6 +112,9 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                     Description = "ram 16 , memory 1T",
                     PictureName = "2.jpg",
                     Price = 10000,
+                    CategoryId = 2,
+                    QuantityInStock = 30,
+                    CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 },
                 new Product()
                 {
@@ -119,20 +123,10 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                     Description = " AMOLED،GPS ",
                     PictureName = "3.jpg",
                     Price = 30000,
+                    CategoryId = 3,
+                    QuantityInStock = 20,
+                    CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 });
-        }
-
-        #endregion
-
-        #region CategoryToProducts
-
-        private static void SeedCategoryToProdcuts(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<CategoryToProduct>().HasData(
-                        new CategoryToProduct() { CategoryId = 1, ProductId = 1 },
-                        new CategoryToProduct() { CategoryId = 2, ProductId = 2 },
-                        new CategoryToProduct() { CategoryId = 3, ProductId = 3 }
-                        );
         }
 
         #endregion
@@ -171,19 +165,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                 IsActive = true,
                 Name = "a",
                 PasswordHash = "AQAAAAIAAYagAAAAEJFJMLK8RQXhwNCo0C7ahb+wKtLiYnUUiEiKXwbKENtwFN/pYWMLY++k6vhRGmZ9gw==",
-            });
-        }
-
-        #endregion
-
-        #region UserRoles
-
-        private static void SeedUserRoles(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<UserRole>().HasData(new UserRole
-            {
                 RoleId = RoleIds.Admin,
-                UserId = 1,
             });
         }
 

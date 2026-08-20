@@ -9,7 +9,9 @@ namespace ShopManagementSystem.Application.Mappers
     {
         public ProductProfile()
         {
-            CreateMap<Product, ProductViewModel>();
+            CreateMap<Product, ProductViewModel>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
+
             CreateMap<CreateProductViewModel, Product>();
             CreateMap<UpdateProductViewModel, Product>();
         }

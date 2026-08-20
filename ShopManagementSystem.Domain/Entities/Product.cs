@@ -1,8 +1,10 @@
-﻿namespace ShopManagementSystem.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ShopManagementSystem.Domain.Entities;
 
 public class Product : BaseEntity
 {
-    public string Name { get; set; } = string.Empty;
+    public string? Name { get; set; } = string.Empty;
 
     public string? Description { get; set; }
 
@@ -14,10 +16,12 @@ public class Product : BaseEntity
 
     public bool IsActive { get; set; } = true;
 
+
     #region Relations
 
-    public ICollection<CategoryToProduct> CategoryToProducts { get; set; }
-        = new List<CategoryToProduct>();
+    public int CategoryId { get; set; }
+    [ForeignKey(nameof(CategoryId))]
+    public Category Category { get; set; } = null!;
 
     public ICollection<OrderDetail> OrderDetails { get; set; }
         = new List<OrderDetail>();

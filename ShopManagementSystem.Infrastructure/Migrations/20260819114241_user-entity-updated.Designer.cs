@@ -12,15 +12,15 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20260816133401_inti-mg")]
-    partial class intimg
+    [Migration("20260819114241_user-entity-updated")]
+    partial class userentityupdated
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.10")
+                .HasAnnotation("ProductVersion", "10.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -39,9 +39,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -88,9 +85,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -164,9 +158,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -198,9 +189,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
@@ -230,9 +218,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -265,38 +250,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CategoryToProduct", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("CategoryToProducts");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            CategoryId = 1
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            CategoryId = 2
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            CategoryId = 3
-                        });
-                });
-
             modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -313,9 +266,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -349,9 +299,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
                     b.Property<decimal>("UnitPrice")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -388,9 +335,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId")
@@ -406,6 +350,9 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -429,10 +376,9 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
 
@@ -440,35 +386,38 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 1,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "ram 6 , memory 128",
                             IsActive = true,
                             Name = "Sumsung Mobile",
                             PictureName = "1.jpg",
-                            Price = 0m,
-                            QuantityInStock = 0
+                            Price = 20000m,
+                            QuantityInStock = 10
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 2,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = "ram 16 , memory 1T",
                             IsActive = true,
                             Name = "lenovo laptop",
                             PictureName = "2.jpg",
-                            Price = 0m,
-                            QuantityInStock = 0
+                            Price = 10000m,
+                            QuantityInStock = 30
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CategoryId = 3,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Description = " AMOLED،GPS ",
                             IsActive = true,
                             Name = "X-200 sport Watch",
                             PictureName = "3.jpg",
-                            Price = 0m,
-                            QuantityInStock = 0
+                            Price = 30000m,
+                            QuantityInStock = 20
                         });
                 });
 
@@ -494,10 +443,12 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
 
@@ -508,29 +459,8 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             Name = "a",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJFJMLK8RQXhwNCo0C7ahb+wKtLiYnUUiEiKXwbKENtwFN/pYWMLY++k6vhRGmZ9gw=="
-                        });
-                });
-
-            modelBuilder.Entity("UserRole", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RoleId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            RoleId = 1,
-                            UserId = 1
+                            PasswordHash = "AQAAAAIAAYagAAAAEJFJMLK8RQXhwNCo0C7ahb+wKtLiYnUUiEiKXwbKENtwFN/pYWMLY++k6vhRGmZ9gw==",
+                            RoleId = 1
                         });
                 });
 
@@ -583,25 +513,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CategoryToProduct", b =>
-                {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Category", "Category")
-                        .WithMany("CategoryToProducts")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Product", "Product")
-                        .WithMany("CategoryToProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
                 {
                     b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
@@ -643,23 +554,26 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("UserRole", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User.User", b =>
                 {
                     b.HasOne("Role", "Role")
-                        .WithMany("UserRoles")
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Permission", b =>
@@ -671,7 +585,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                 {
                     b.Navigation("RolePermissions");
 
-                    b.Navigation("UserRoles");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
@@ -681,7 +595,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category", b =>
                 {
-                    b.Navigation("CategoryToProducts");
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
@@ -695,8 +609,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                 {
                     b.Navigation("CartItems");
 
-                    b.Navigation("CategoryToProducts");
-
                     b.Navigation("OrderDetails");
                 });
 
@@ -705,8 +617,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Orders");
-
-                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

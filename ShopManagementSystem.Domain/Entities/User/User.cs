@@ -10,8 +10,8 @@ public class User : BaseEntity
 
     #region Relations
 
-    public ICollection<UserRole> UserRoles { get; set; }
-        = new List<UserRole>();
+    public int RoleId { get; set; }
+    public Role Role { get; set; }
 
     public Cart? Cart { get; set; }
 

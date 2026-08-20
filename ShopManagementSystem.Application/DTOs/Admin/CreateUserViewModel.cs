@@ -4,11 +4,12 @@ namespace ShopManagementSystem.Application.DTOs.Admin
 {
     public class CreateUserViewModel
     {
-        [Required] 
-        public string Name { get; set; }
         [Required]
-        public string Password { get; set; }
-        public bool IsAdmin { get; set; }
+        public required string Name { get; set; }
+        [Required]
+        public required string Password { get; set; }
+        public bool IsActive { get; set; }
+        public required int RoleId { get; set; }
 
     }
 }

@@ -10,8 +10,7 @@ public class Category : BaseEntity
 
     #region Relations
 
-    public ICollection<CategoryToProduct> CategoryToProducts { get; set; }
-        = new List<CategoryToProduct>();
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 
     #endregion
 }

@@ -8,7 +8,7 @@ namespace ShopManagementSystem.Application.DTOs.AccountViweModels
         [MaxLength(300)]
         [Required]
         [Remote("VerifyName", "Account")]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [MaxLength(50)]
         [DataType(DataType.Password)]
         [Required]
@@ -17,6 +17,6 @@ namespace ShopManagementSystem.Application.DTOs.AccountViweModels
         [DataType(DataType.Password)]
         [Compare(nameof(Password))]
         [Required]
-        public string RePassword { get; set; }
+        public required string RePassword { get; set; }
     }
 }

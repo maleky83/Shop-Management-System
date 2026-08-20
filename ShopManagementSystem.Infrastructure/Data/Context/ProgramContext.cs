@@ -21,14 +21,12 @@ namespace ShopManagementSystem.Infrastructure.Data.Context
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<CategoryToProduct> CategoryToProducts { get; set; }
 
         #endregion
 
         #region User
 
         public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<RolePermission> RolePermissions { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -40,9 +38,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Context
 
             SeedData.Seed(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryToProductConfiguration());
         }
     }
 }

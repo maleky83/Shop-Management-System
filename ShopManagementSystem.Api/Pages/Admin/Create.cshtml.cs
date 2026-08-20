@@ -6,11 +6,11 @@ using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Api.Pages.Admin
 {
-    public class AddModel : PageModel
+    public class CreateModel : PageModel
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
-        public AddModel(IProductService productService, ICategoryService categoryService)
+        public CreateModel(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
             _categoryService = categoryService;
