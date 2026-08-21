@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs;
-using ShopManagementSystem.Application.DTOs.AccountViweModels;
+using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.Admin;
 using ShopManagementSystem.Application.Interfaces.Services;
-using ShopManagementSystem.Domain.Entities.User;
+using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services

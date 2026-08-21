@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace ShopManagementSystem.Application.DTOs.ProductViewModels
+namespace ShopManagementSystem.Application.DTOs.Product
 {
     public class ProductDetailsViewModel
     {

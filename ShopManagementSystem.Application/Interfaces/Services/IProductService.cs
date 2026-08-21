@@ -1,5 +1,4 @@
 ﻿using ShopManagementSystem.Application.DTOs.Product;
-using ShopManagementSystem.Application.DTOs.ProductViewModels;
 
 namespace ShopManagementSystem.Application.Interfaces.Services
 {

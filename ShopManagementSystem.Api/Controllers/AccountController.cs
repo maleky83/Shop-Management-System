@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Account;
-using ShopManagementSystem.Application.DTOs.AccountViweModels;
 using ShopManagementSystem.Application.Interfaces.Services;
 
 

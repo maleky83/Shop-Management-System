@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ShopManagementSystem.Application.DTOs.AccountViweModels;
+using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.Admin;
-using ShopManagementSystem.Domain.Entities.User;
+using ShopManagementSystem.Domain.Entities.Identity;
 
-namespace ShopManagementSystem.Application.Mappers
+namespace ShopManagementSystem.Application.Mappings
 {
     public class UsertProfile : Profile
     {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopManagementSystem.Application.DTOs.ProductViewModels
+namespace ShopManagementSystem.Application.DTOs.Product
 {
     public class CreateProductViewModel
     {

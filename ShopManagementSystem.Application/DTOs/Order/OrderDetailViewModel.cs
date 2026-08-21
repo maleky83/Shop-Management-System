@@ -1,4 +1,4 @@
-﻿namespace ShopManagementSystem.Application.DTOs.OrderViewModels
+﻿namespace ShopManagementSystem.Application.DTOs.Order
 {
     public class OrderDetailViewModel
     {

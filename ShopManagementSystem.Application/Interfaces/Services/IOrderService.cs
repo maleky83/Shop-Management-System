@@ -1,5 +1,5 @@
 ﻿using ShopManagementSystem.Application.DTOs.Order;
-using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.Orders;
 
 namespace ShopManagementSystem.Application.Interfaces.Services
 {

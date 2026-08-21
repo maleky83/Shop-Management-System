@@ -1,10 +1,12 @@
-﻿namespace ShopManagementSystem.Domain.Entities;
+﻿using ShopManagementSystem.Domain.Entities.Identity;
+
+namespace ShopManagementSystem.Domain.Entities.Carts;
 
 public class Cart : BaseEntity
 {
     public int UserId { get; set; }
 
-    public User.User User { get; set; } = null!;
+    public User User { get; set; } = null!;
 
     #region Relations
 

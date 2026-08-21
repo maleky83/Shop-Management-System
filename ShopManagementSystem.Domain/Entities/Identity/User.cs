@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Domain.Entities.User;
+﻿using ShopManagementSystem.Domain.Entities.Carts;
+
+namespace ShopManagementSystem.Domain.Entities.Identity;
 
 public class User : BaseEntity
 {
@@ -15,8 +17,8 @@ public class User : BaseEntity
 
     public Cart? Cart { get; set; }
 
-    public ICollection<Order> Orders { get; set; }
-        = new List<Order>();
+    public ICollection<Orders.Order> Orders { get; set; }
+        = new List<Orders.Order>();
 
     #endregion
 }

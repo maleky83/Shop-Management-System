@@ -1,5 +1,4 @@
 ﻿using ShopManagementSystem.Application.DTOs.Account;
-using ShopManagementSystem.Application.DTOs.AccountViweModels;
 
 namespace ShopManagementSystem.Application.Interfaces.Services
 {

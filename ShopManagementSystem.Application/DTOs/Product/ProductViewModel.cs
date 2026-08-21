@@ -1,4 +1,4 @@
-﻿namespace ShopManagementSystem.Application.DTOs.ProductViewModels
+﻿namespace ShopManagementSystem.Application.DTOs.Product
 {
     public class ProductViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Domain.Entities;
-using ShopManagementSystem.Domain.Entities.User;
+using ShopManagementSystem.Domain.Entities.Catalog;
+using ShopManagementSystem.Domain.Entities.Identity;
 
 namespace ShopManagementSystem.Infrastructure.Data.Seed
 {

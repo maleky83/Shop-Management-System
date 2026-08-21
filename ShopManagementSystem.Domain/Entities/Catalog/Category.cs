@@ -1,4 +1,4 @@
-﻿namespace ShopManagementSystem.Domain.Entities;
+﻿namespace ShopManagementSystem.Domain.Entities.Catalog;
 
 public class Category : BaseEntity
 {

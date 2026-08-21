@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Domain.Entities;
-using ShopManagementSystem.Domain.Entities.User;
+using ShopManagementSystem.Domain.Entities.Carts;
+using ShopManagementSystem.Domain.Entities.Catalog;
+using ShopManagementSystem.Domain.Entities.Identity;
+using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Infrastructure.Data.Configurations;
 using ShopManagementSystem.Infrastructure.Data.Seed;
 

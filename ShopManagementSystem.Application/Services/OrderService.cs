@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Interfaces.Services;
-using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services

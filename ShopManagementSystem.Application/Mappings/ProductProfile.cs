@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using ShopManagementSystem.Application.DTOs.Product;
-using ShopManagementSystem.Application.DTOs.ProductViewModels;
-using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.Catalog;
 
-namespace ShopManagementSystem.Application.Mappers
+namespace ShopManagementSystem.Application.Mappings
 {
     public class ProductProfile : Profile
     {

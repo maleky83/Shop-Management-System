@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace ShopManagementSystem.Application.DTOs.AccountViweModels
+namespace ShopManagementSystem.Application.DTOs.Account
 {
     public class RegisterViewModel
     {

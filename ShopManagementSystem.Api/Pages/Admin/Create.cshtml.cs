@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ShopManagementSystem.Application.DTOs.Category;
-using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Api.Pages.Admin

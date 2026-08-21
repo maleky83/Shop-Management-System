@@ -1,4 +1,5 @@
-﻿using ShopManagementSystem.Domain.Entities.User;
+﻿
+using ShopManagementSystem.Domain.Entities.Identity;
 
 public class Role : BaseEntity
 {

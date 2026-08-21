@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using ShopManagementSystem.Domain.Entities.Carts;
+using ShopManagementSystem.Domain.Entities.Orders;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ShopManagementSystem.Domain.Entities;
+namespace ShopManagementSystem.Domain.Entities.Catalog;
 
 public class Product : BaseEntity
 {

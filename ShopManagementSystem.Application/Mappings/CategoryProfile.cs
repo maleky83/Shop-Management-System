@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ShopManagementSystem.Application.DTOs.Category;
-using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.Catalog;
 
 namespace ShopManagementSystem.Application.Mappings
 {

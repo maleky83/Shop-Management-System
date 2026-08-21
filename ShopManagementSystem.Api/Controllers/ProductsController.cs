@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.ProductViewModels;
+using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Interfaces.Services;
 
 namespace ShopManagementSystem.Api.Controllers

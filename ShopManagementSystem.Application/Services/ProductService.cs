@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Product;
-using ShopManagementSystem.Application.DTOs.ProductViewModels;
 using ShopManagementSystem.Application.Interfaces.Services;
-using ShopManagementSystem.Domain.Entities;
+using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services

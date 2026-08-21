@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Domain.Entities;
+﻿using ShopManagementSystem.Domain.Entities.Catalog;
+
+namespace ShopManagementSystem.Domain.Entities.Orders;
 
 public class OrderDetail : BaseEntity
 {

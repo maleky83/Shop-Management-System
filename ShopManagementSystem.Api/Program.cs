@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using ShopManagementSystem.Application.Interfaces.Services;
-using ShopManagementSystem.Application.Mappers;
 using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Application.Services;
-using ShopManagementSystem.Domain.Entities.User;
+using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Infrastructure.Data.Context;
 using System.Text;
 
