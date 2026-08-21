@@ -29,6 +29,7 @@ namespace ShopManagementSystem.Application.Services
         public async Task CreateAsync(CreateUserViewModel model)
         {
             var user = _mapper.Map<User>(model);
+            user.CreatedAt = DateTime.UtcNow;
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
         }

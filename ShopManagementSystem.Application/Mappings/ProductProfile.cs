@@ -12,8 +12,12 @@ namespace ShopManagementSystem.Application.Mappers
             CreateMap<Product, ProductViewModel>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
 
+            CreateMap<ProductViewModel, UpdateProductViewModel>();
+
+            CreateMap<Product, UpdateProductViewModel>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
+
             CreateMap<CreateProductViewModel, Product>();
-            CreateMap<UpdateProductViewModel, Product>();
         }
     }
 }
