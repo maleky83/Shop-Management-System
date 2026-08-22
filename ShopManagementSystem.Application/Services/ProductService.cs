@@ -35,6 +35,16 @@ namespace ShopManagementSystem.Application.Services
 
             return _mapper.Map<ProductViewModel>(product);
         }
+        public async Task<Product> GetProductByIdAsync(int id)
+        {
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product is null)
+            {
+                throw new Exception("No product");
+            }
+            return product;
+        }
 
         public async Task<List<ProductViewModel>> GetAllAsync()
         {
@@ -64,30 +74,29 @@ namespace ShopManagementSystem.Application.Services
 
         }
 
-        public async Task UpdateAsync(UpdateProductViewModel model)
+        public async Task UpdateAsync(int id, UpdateProductViewModel model)
         {
-            var product = await GetByIdAsync(model.ProductId);
+            var product = await GetProductByIdAsync(id);
 
-            if (product == null)
+            if (product is null)
                 throw new Exception("No products");
 
-            var productMap = _mapper.Map<Product>(model);
+            _mapper.Map(model, product);
 
             if (model.Picture?.Length > 0)
             {
-                _fileService.DeleleFile(product.ProductId, product.PictureName);
-                product.PictureName = await _fileService.SaveFileAsync(product.ProductId, model.Picture);
+                _fileService.DeleleFile(id, product.PictureName);
+                product.PictureName = await _fileService.SaveFileAsync(id, model.Picture);
             }
 
-            _context.Update(product);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteByIdAsync(int id)
         {
-            var product = await GetByIdAsync(id);
+            var product = await GetProductByIdAsync(id);
 
-            if (product == null)
+            if (product is null)
                 throw new Exception("No products");
 
             _context.Remove(product);

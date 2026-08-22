@@ -102,7 +102,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                     PictureName = "1.jpg",
                     Price = 20000,
                     CategoryId = 1,
-                    QuantityInStock = 10,
+                    Quantity = 10,
                     CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 },
                 new Product()
@@ -113,7 +113,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                     PictureName = "2.jpg",
                     Price = 10000,
                     CategoryId = 2,
-                    QuantityInStock = 30,
+                    Quantity = 30,
                     CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 },
                 new Product()
@@ -124,7 +124,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
                     PictureName = "3.jpg",
                     Price = 30000,
                     CategoryId = 3,
-                    QuantityInStock = 20,
+                    Quantity = 20,
                     CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 });
         }

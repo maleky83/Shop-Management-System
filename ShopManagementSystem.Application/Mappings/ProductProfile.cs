@@ -13,8 +13,9 @@ namespace ShopManagementSystem.Application.Mappings
 
             CreateMap<ProductViewModel, UpdateProductViewModel>();
 
-            CreateMap<Product, UpdateProductViewModel>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
+            CreateMap<Product, UpdateProductViewModel>();
+
+            CreateMap<UpdateProductViewModel, Product>();
 
             CreateMap<CreateProductViewModel, Product>();
         }

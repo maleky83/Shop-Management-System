@@ -12,8 +12,8 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20260819114241_user-entity-updated")]
-    partial class userentityupdated
+    [Migration("20260822072657_initial-mg")]
+    partial class initialmg
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,7 +147,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Carts.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,7 +169,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CartItem", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Carts.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,7 +198,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Catalog.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -250,100 +250,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.OrderDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("OrderDetail");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Payment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("PaidAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TransactionId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.ToTable("Payment");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Catalog.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -364,7 +271,6 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PictureName")
@@ -373,7 +279,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("QuantityInStock")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -393,7 +299,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             Name = "Sumsung Mobile",
                             PictureName = "1.jpg",
                             Price = 20000m,
-                            QuantityInStock = 10
+                            Quantity = 10
                         },
                         new
                         {
@@ -405,7 +311,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             Name = "lenovo laptop",
                             PictureName = "2.jpg",
                             Price = 10000m,
-                            QuantityInStock = 30
+                            Quantity = 30
                         },
                         new
                         {
@@ -417,11 +323,11 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                             Name = "X-200 sport Watch",
                             PictureName = "3.jpg",
                             Price = 30000m,
-                            QuantityInStock = 20
+                            Quantity = 20
                         });
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User.User", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Identity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -464,6 +370,99 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.OrderDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Payment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("PaidAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.ToTable("Payment");
+                });
+
             modelBuilder.Entity("RolePermission", b =>
                 {
                     b.HasOne("Permission", "Permission")
@@ -483,26 +482,26 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Carts.Cart", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Identity.User", "User")
                         .WithOne("Cart")
-                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Cart", "UserId")
+                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Carts.Cart", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.CartItem", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Carts.CartItem", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Cart", "Cart")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Carts.Cart", "Cart")
                         .WithMany("Items")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Product", "Product")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Catalog.Product", "Product")
                         .WithMany("CartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -513,9 +512,31 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Catalog.Product", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.User.User", "User")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Catalog.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Identity.User", b =>
+                {
+                    b.HasOne("Role", "Role")
+                        .WithMany("Users")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
+                {
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Identity.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -524,15 +545,15 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.OrderDetail", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.OrderDetail", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Order", "Order")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Orders.Order", "Order")
                         .WithMany("OrderDetails")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Product", "Product")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Catalog.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -543,37 +564,15 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Payment", b =>
                 {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Order", "Order")
+                    b.HasOne("ShopManagementSystem.Domain.Entities.Orders.Order", "Order")
                         .WithOne("Payment")
-                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Payment", "OrderId")
+                        .HasForeignKey("ShopManagementSystem.Domain.Entities.Orders.Payment", "OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Product", b =>
-                {
-                    b.HasOne("ShopManagementSystem.Domain.Entities.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User.User", b =>
-                {
-                    b.HasOne("Role", "Role")
-                        .WithMany("Users")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Permission", b =>
@@ -588,35 +587,35 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Cart", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Carts.Cart", b =>
                 {
                     b.Navigation("Items");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Category", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Catalog.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-
-                    b.Navigation("Payment");
-                });
-
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Product", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Catalog.Product", b =>
                 {
                     b.Navigation("CartItems");
 
                     b.Navigation("OrderDetails");
                 });
 
-            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.User.User", b =>
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Identity.User", b =>
                 {
                     b.Navigation("Cart");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("ShopManagementSystem.Domain.Entities.Orders.Order", b =>
+                {
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("Payment");
                 });
 #pragma warning restore 612, 618
         }

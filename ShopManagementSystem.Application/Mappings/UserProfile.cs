@@ -13,8 +13,9 @@ namespace ShopManagementSystem.Application.Mappings
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
             CreateMap<User, UpdateUserViewModel>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.NewPassword, opt => opt.Ignore());
+
+            CreateMap<UpdateUserViewModel, User>();
 
             CreateMap<CreateUserViewModel, User>();
 

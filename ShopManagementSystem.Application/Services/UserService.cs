@@ -12,11 +12,11 @@ namespace ShopManagementSystem.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly PasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ProgramContext _context;
         private readonly IMapper _mapper;
         public UserService(
-            PasswordHasher<User> passwordHasher,
+            IPasswordHasher<User> passwordHasher,
             ProgramContext context,
             IMapper mapper
             )
@@ -45,48 +45,32 @@ namespace ShopManagementSystem.Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(UpdateUserViewModel model)
+        public async Task UpdateAsync(int id, UpdateUserViewModel model)
         {
-            var user = await GetByIdAsync(model.UserId);
+            var user = await GetUserByIdAsync(id);
 
             if (user is null)
                 throw new Exception("no users");
 
-            user.Name = model.Name;
-            user.IsActive = model.IsActive;
-            user.RoleId = model.RoleId;
+            _mapper.Map(model, user);
 
             if (!string.IsNullOrEmpty(model.NewPassword))
             {
                 user.PasswordHash = _passwordHasher.HashPassword(user, model.NewPassword);
             }
 
-            _context.Update(user);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<UserViewModel> GetByIdAsync(int id)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             if (user is null)
                 throw new Exception("No Users");
 
-            return user;
+            return _mapper.Map<UserViewModel>(user);
         }
-
-
-        //public async Task<EditUserViewModel> GetUserForUpdateAsync(int? userId)
-        //{
-        //    return await _context.Users
-        //        .Where(u => u.Id == userId)
-        //        .Select(u => new EditUserViewModel()
-        //        {
-        //            Name = u.Name,
-        //            UserId = u.Id,
-        //            IsActive = u.IsActive,
-        //        }).FirstAsync();
-        //}
 
         public async Task<List<UserViewModel>> GetAllAsync()
         {
@@ -95,25 +79,19 @@ namespace ShopManagementSystem.Application.Services
             return _mapper.Map<List<UserViewModel>>(users);
         }
 
-        //public async Task<UserDetailViewModel?> UserDetailAsync(int? userId)
-        //{
-        //    return await _context.Users.Where(u => u.Id == userId)
-        //         .Select(u => new UserDetailViewModel()
-        //         {
-        //             IsActive = u.IsActive,
-        //             Name = u.Name,
-        //             Password = u.Password,
-        //         }).FirstOrDefaultAsync();
-        //}
-
         public async Task<bool> ExistsByNameAsync(string name)
         {
             return await _context.Users.AnyAsync(u => u.Name == name);
         }
 
-        public async Task<User?> GetByNameAsync(string name)
+        public async Task<UserViewModel> GetByNameAsync(string name)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+
+            if (user is null)
+                throw new Exception("No users");
+
+            return _mapper.Map<UserViewModel>(user);
         }
 
         public async Task CreateForRegisterAsync(RegisterViewModel model)
@@ -143,6 +121,28 @@ namespace ShopManagementSystem.Application.Services
             var roles = await _context.Roles.ToListAsync();
 
             return _mapper.Map<List<RoleViewModel>>(roles);
+        }
+
+        public async Task<User> GetUserByNameAsync(string name)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+
+            if (user is null)
+                throw new Exception("No users");
+
+            return user;
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+            if (user is null)
+            {
+                throw new Exception("No users");
+            }
+
+            return user;
         }
     }
 }

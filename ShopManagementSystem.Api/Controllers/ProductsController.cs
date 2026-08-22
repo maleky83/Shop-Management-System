@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductViewModel>>> GetProducts()
+        public async Task<ActionResult<List<ProductViewModel>>> GetAll()
         {
             var products = await _productService.GetAllAsync();
 
@@ -35,14 +35,29 @@ namespace ShopManagementSystem.Api.Controllers
         {
             await _productService.CreateAsync(model);
 
+            return Ok(new
+            {
+                message = "Product Added"
+            });
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productService.DeleteByIdAsync(id);
+
+            return Ok(new
+            {
+                message = "Product deleted"
+            });
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, UpdateProductViewModel model)
+        {
+            await _productService.UpdateAsync(id, model);
             return NoContent();
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> Update(int id, ProductViewModel model)
-        //{
-        //    await _productService.UpdateAsync(model);
-        //    return NoContent();
-        //}
     }
 }

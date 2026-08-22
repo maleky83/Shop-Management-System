@@ -19,7 +19,7 @@ namespace ShopManagementSystem.Application.DTOs.Product
         public decimal Price { get; set; }
 
         [Required]
-        public int QuantityInStock { get; set; }
+        public int Quantity { get; set; }
 
         public bool IsActive { get; set; } = true;
 

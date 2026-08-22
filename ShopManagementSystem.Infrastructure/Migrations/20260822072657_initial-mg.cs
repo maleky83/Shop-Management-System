@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class userentityupdated : Migration
+    public partial class initialmg : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -63,11 +63,11 @@ namespace ShopManagementSystem.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PictureName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    QuantityInStock = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -285,7 +285,7 @@ namespace ShopManagementSystem.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "IsActive", "Name", "PictureName", "Price", "QuantityInStock" },
+                columns: new[] { "Id", "CategoryId", "CreatedAt", "Description", "IsActive", "Name", "PictureName", "Price", "Quantity" },
                 values: new object[,]
                 {
                     { 1, 1, new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "ram 6 , memory 128", true, "Sumsung Mobile", "1.jpg", 20000m, 10 },

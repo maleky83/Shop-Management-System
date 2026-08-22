@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.Interfaces.Services;
 using ShopManagementSystem.Domain.Entities.Identity;
@@ -7,11 +8,12 @@ namespace ShopManagementSystem.Application.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly PasswordHasher<User> _passwordHasher;
+        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly ITokenService _tokenService;
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
         public AccountService(
-            PasswordHasher<User> passwordHasher,
+            IPasswordHasher<User> passwordHasher,
             ITokenService tokenService,
             IUserService userService
             )
@@ -31,9 +33,9 @@ namespace ShopManagementSystem.Application.Services
         }
         public async Task<LoginResponseViewModel> LoginAsync(LoginViewModel model)
         {
-            var user = await _userService.GetByNameAsync(model.Name);
+            var user = await _userService.GetUserByNameAsync(model.Name);
 
-            if (user == null)
+            if (user is null)
                 throw new Exception("Invalid username or password.");
 
             var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
