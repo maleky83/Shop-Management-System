@@ -1,4 +1,4 @@
-﻿using ShopManagementSystem.Api.Exceptions;
+﻿using ShopManagementSystem.Application.Exceptions;
 
 namespace ShopManagementSystem.Api.Middleware
 {

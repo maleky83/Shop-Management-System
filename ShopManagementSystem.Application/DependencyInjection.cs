@@ -1,7 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Authentication;
+using ShopManagementSystem.Application.Interfaces.Catalog;
+using ShopManagementSystem.Application.Interfaces.Common;
+using ShopManagementSystem.Application.Interfaces.Shopping;
+using ShopManagementSystem.Application.Interfaces.Users;
 using ShopManagementSystem.Application.Mappings;
-using ShopManagementSystem.Application.Services;
+using ShopManagementSystem.Application.Services.Authentication;
+using ShopManagementSystem.Application.Services.Catalog;
+using ShopManagementSystem.Application.Services.Common;
+using ShopManagementSystem.Application.Services.Shopping;
+using ShopManagementSystem.Application.Services.Users;
 
 public static class DependencyInjection
 {
@@ -16,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IRoleService, RoleService>();
+        services.AddScoped<ICartService, CartService>();
 
         services.AddAutoMapper(config =>
         {
@@ -23,6 +32,7 @@ public static class DependencyInjection
             config.AddProfile<CategoryProfile>();
             config.AddProfile<UsertProfile>();
             config.AddProfile<RoleProfile>();
+            config.AddProfile<CartProfile>();
         });
 
         return services;

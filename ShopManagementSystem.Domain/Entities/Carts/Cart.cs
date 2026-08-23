@@ -10,7 +10,7 @@ public class Cart : BaseEntity
 
     #region Relations
 
-    public ICollection<CartItem> Items { get; set; }
+    public ICollection<CartItem> CartItems { get; set; }
         = new List<CartItem>();
 
     #endregion
