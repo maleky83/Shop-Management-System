@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Account;
-using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Application.Interfaces.Authentication;
 
 namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
-    [Route("api/account/")]
+    [Route("api/account")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
