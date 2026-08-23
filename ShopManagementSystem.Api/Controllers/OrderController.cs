@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 using System.Security.Claims;
 
 namespace ShopManagementSystem.Api.Controllers

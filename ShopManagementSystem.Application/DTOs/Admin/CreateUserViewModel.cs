@@ -8,6 +8,7 @@ namespace ShopManagementSystem.Application.DTOs.Admin
         public required string Name { get; set; }
         [Required]
         public required string Password { get; set; }
+        [Required]
         public required int RoleId { get; set; }
 
     }

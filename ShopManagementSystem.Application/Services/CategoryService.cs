@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Category;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services
@@ -9,8 +9,8 @@ namespace ShopManagementSystem.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly IMapper _mapper;
-        private readonly ProgramContext _context;
-        public CategoryService(ProgramContext context, IMapper mapper)
+        private readonly ApplicationDbContext _context;
+        public CategoryService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

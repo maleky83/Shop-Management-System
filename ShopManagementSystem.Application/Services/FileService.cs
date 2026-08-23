@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 
 namespace ShopManagementSystem.Application.Services
 {
@@ -12,16 +12,18 @@ namespace ShopManagementSystem.Application.Services
             _environment = environment;
         }
 
-        public async Task<string> SaveFileAsync(int fileId, IFormFile file)
+        public async Task<string> SaveFileAsync(IFormFile file)
         {
-            string fileName = fileId + Path.GetExtension(file.FileName);
+            string fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
-            var filePath = Path.Combine(
-                    Directory.GetCurrentDirectory(),
-                    _environment.WebRootPath,
-                    "images",
-                    fileName
-                    );
+            var directory = Path.Combine(_environment.WebRootPath, "images");
+
+            if (Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            var filePath = Path.Combine(directory, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -31,11 +33,9 @@ namespace ShopManagementSystem.Application.Services
             return fileName;
         }
 
-        public void DeleleFile(int fileId, string pictureName)
+        public void DeleleFile(string pictureName)
         {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), _environment.WebRootPath, "images", fileId +
-                Path.GetExtension(pictureName)
-                );
+            var filePath = Path.Combine(_environment.WebRootPath, "images", pictureName);
 
             if (File.Exists(filePath))
                 File.Delete(filePath);

@@ -21,7 +21,6 @@ namespace ShopManagementSystem.Application.Mappings
 
             CreateMap<RegisterViewModel, User>()
                 .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
-
         }
     }
 }

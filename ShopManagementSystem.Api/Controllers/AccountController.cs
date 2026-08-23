@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Account;
-using ShopManagementSystem.Application.Interfaces.Services;
-
+using ShopManagementSystem.Application.Interfaces;
 
 namespace ShopManagementSystem.Api.Controllers
 {

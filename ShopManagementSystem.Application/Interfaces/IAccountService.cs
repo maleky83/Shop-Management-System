@@ -1,6 +1,6 @@
 ﻿using ShopManagementSystem.Application.DTOs.Account;
 
-namespace ShopManagementSystem.Application.Interfaces.Services
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IAccountService
     {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
 
 namespace ShopManagementSystem.Application.DTOs.Product
 {
@@ -8,8 +7,6 @@ namespace ShopManagementSystem.Application.DTOs.Product
         public string? Name { get; set; }
 
         public string? Description { get; set; }
-
-        public string? PictureName { get; set; }
 
         public IFormFile? Picture { get; set; }
 

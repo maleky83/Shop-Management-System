@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Application.Services;
 
@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<IFileService, FileService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IRoleService, RoleService>();
 
         services.AddAutoMapper(config =>
         {

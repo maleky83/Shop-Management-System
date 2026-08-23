@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Admin;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 
 namespace ShopManagementSystem.Api.Controllers
 {
@@ -15,7 +15,7 @@ namespace ShopManagementSystem.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UserViewModel>>> GetUsers()
+        public async Task<ActionResult<List<UserViewModel>>> GetAll()
         {
             var users = await _userService.GetAllAsync();
             return Ok(users);
@@ -25,6 +25,7 @@ namespace ShopManagementSystem.Api.Controllers
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
             await _userService.CreateAsync(model);
+
             return Ok(new
             {
                 message = "User is created"
@@ -46,7 +47,7 @@ namespace ShopManagementSystem.Api.Controllers
 
             return Ok(new
             {
-                message = "User updated"
+                message = "User is updated"
             });
         }
 

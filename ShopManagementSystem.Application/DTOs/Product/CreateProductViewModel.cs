@@ -6,20 +6,18 @@ namespace ShopManagementSystem.Application.DTOs.Product
     public class CreateProductViewModel
     {
         [Required]
-        public string? Name { get; set; }
+        public required string Name { get; set; }
 
         [Required]
-        public string? Description { get; set; }
-
-        public string? PictureName { get; set; }
+        public required string Description { get; set; }
 
         public IFormFile? Picture { get; set; }
 
         [Required]
-        public decimal Price { get; set; }
+        public required decimal Price { get; set; }
 
         [Required]
-        public int Quantity { get; set; }
+        public required int Quantity { get; set; }
 
         public bool IsActive { get; set; } = true;
 

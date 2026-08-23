@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Api.Exceptions;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.Admin;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -13,22 +13,34 @@ namespace ShopManagementSystem.Application.Services
     public class UserService : IUserService
     {
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly ProgramContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IRoleService _roleService;
         public UserService(
             IPasswordHasher<User> passwordHasher,
-            ProgramContext context,
-            IMapper mapper
+            ApplicationDbContext context,
+            IMapper mapper,
+            IRoleService roleService
             )
         {
             _passwordHasher = passwordHasher;
             _context = context;
             _mapper = mapper;
+            _roleService = roleService;
         }
 
         public async Task CreateAsync(CreateUserViewModel model)
         {
             var user = _mapper.Map<User>(model);
+
+            var roleExists = await _roleService.ExistsRoleByIdAsync(model.RoleId);
+
+            if (roleExists is false)
+            {
+                throw new BadRequestException("Role not found");
+            }
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
             user.CreatedAt = DateTime.UtcNow;
             await _context.AddAsync(user);
             await _context.SaveChangesAsync();
@@ -36,10 +48,10 @@ namespace ShopManagementSystem.Application.Services
 
         public async Task DeleteAsync(int id)
         {
-            var user = await GetByIdAsync(id);
+            var user = await GetUserByIdAsync(id);
 
             if (user == null)
-                throw new Exception("No Users");
+                throw new NotFoundException("User not found");
 
             _context.Remove(user);
             await _context.SaveChangesAsync();
@@ -50,7 +62,7 @@ namespace ShopManagementSystem.Application.Services
             var user = await GetUserByIdAsync(id);
 
             if (user is null)
-                throw new Exception("no users");
+                throw new NotFoundException("User not found");
 
             _mapper.Map(model, user);
 
@@ -67,7 +79,7 @@ namespace ShopManagementSystem.Application.Services
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             if (user is null)
-                throw new Exception("No Users");
+                throw new NotFoundException("User not found");
 
             return _mapper.Map<UserViewModel>(user);
         }
@@ -89,18 +101,21 @@ namespace ShopManagementSystem.Application.Services
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
             if (user is null)
-                throw new Exception("No users");
+                throw new NotFoundException("User not found");
 
             return _mapper.Map<UserViewModel>(user);
         }
 
         public async Task CreateForRegisterAsync(RegisterViewModel model)
         {
+            var userExists = await ExistsByNameAsync(model.Name);
+
+            if (userExists)
+                throw new BadRequestException("Uesr exists");
 
             var user = _mapper.Map<User>(model);
 
-            user.Name = model.Name;
-            user.CreatedAt = DateTime.Now;
+            user.CreatedAt = DateTime.UtcNow;
             user.IsActive = true;
 
             user.PasswordHash = _passwordHasher.HashPassword(user, model.Password);
@@ -116,19 +131,13 @@ namespace ShopManagementSystem.Application.Services
             return _mapper.Map<UpdateUserViewModel>(user);
         }
 
-        public async Task<List<RoleViewModel>> GetAllRolesAsync()
-        {
-            var roles = await _context.Roles.ToListAsync();
-
-            return _mapper.Map<List<RoleViewModel>>(roles);
-        }
 
         public async Task<User> GetUserByNameAsync(string name)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
             if (user is null)
-                throw new Exception("No users");
+                throw new NotFoundException("User not found");
 
             return user;
         }
@@ -139,7 +148,7 @@ namespace ShopManagementSystem.Application.Services
 
             if (user is null)
             {
-                throw new Exception("No users");
+                throw new NotFoundException("User not found");
             }
 
             return user;

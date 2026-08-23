@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Product;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 
 namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
-    [Route("api/products/")]
+    [Route("api/products")]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -41,6 +41,17 @@ namespace ShopManagementSystem.Api.Controllers
             });
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(int id, UpdateProductViewModel model)
+        {
+            await _productService.UpdateAsync(id, model);
+
+            return Ok(new
+            {
+                message = "Product updated"
+            });
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -51,13 +62,5 @@ namespace ShopManagementSystem.Api.Controllers
                 message = "Product deleted"
             });
         }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, UpdateProductViewModel model)
-        {
-            await _productService.UpdateAsync(id, model);
-            return NoContent();
-        }
-
     }
 }

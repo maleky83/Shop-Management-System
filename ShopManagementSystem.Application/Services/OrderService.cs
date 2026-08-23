@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ShopManagementSystem.Api.Exceptions;
 using ShopManagementSystem.Application.DTOs.Order;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -9,9 +10,9 @@ namespace ShopManagementSystem.Application.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly ProgramContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public OrderService(ProgramContext context, IMapper mapper)
+        public OrderService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -36,7 +37,7 @@ namespace ShopManagementSystem.Application.Services
             var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
 
             if (order is null)
-                throw new Exception("No orders");
+                throw new NotFoundException("Order not found");
 
             return order;
         }

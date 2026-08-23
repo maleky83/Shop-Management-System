@@ -11,7 +11,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Infrastructure.Migrations
 {
-    [DbContext(typeof(ProgramContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20260822072657_initial-mg")]
     partial class initialmg
     {

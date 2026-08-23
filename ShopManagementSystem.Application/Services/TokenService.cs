@@ -16,17 +16,16 @@ public class TokenService : ITokenService
 
     public string CreateToken(User user)
     {
-        var claims = new List<Claim>
-{
-    new Claim(
-        ClaimTypes.NameIdentifier,
-        user.Id.ToString()),
+        var claims = new List<Claim>()
+        {
+             new Claim(
+                 ClaimTypes.NameIdentifier,
+                 user.Id.ToString()),
 
-    new Claim(
-        ClaimTypes.Name,
-        user.Name),
-
-};
+             new Claim(
+                 ClaimTypes.Name,
+                 user.Name),
+         };
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(

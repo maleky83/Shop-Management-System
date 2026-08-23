@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ShopManagementSystem.Api.Exceptions;
 using ShopManagementSystem.Application.DTOs.Product;
-using ShopManagementSystem.Application.Interfaces.Services;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -9,14 +10,14 @@ namespace ShopManagementSystem.Application.Services
 {
     public class ProductService : IProductService
     {
-        private readonly ProgramContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IFileService _fileService;
         private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
         public ProductService(
             IFileService fileService,
             IMapper mapper,
-            ProgramContext context,
+            ApplicationDbContext context,
             ICategoryService categoryService)
         {
             _fileService = fileService;
@@ -30,8 +31,8 @@ namespace ShopManagementSystem.Application.Services
             var product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product == null)
-                throw new Exception("No products");
+            if (product is null)
+                throw new NotFoundException("Product not found");
 
             return _mapper.Map<ProductViewModel>(product);
         }
@@ -41,7 +42,7 @@ namespace ShopManagementSystem.Application.Services
 
             if (product is null)
             {
-                throw new Exception("No product");
+                throw new NotFoundException("Product not found");
             }
             return product;
         }
@@ -58,13 +59,13 @@ namespace ShopManagementSystem.Application.Services
             var category = await _categoryService.GetByIdAsync(model.CategoryId);
 
             if (category is null)
-                throw new Exception("No categories");
+                throw new NotFoundException("Category not found");
 
             var product = _mapper.Map<Product>(model);
 
             if (model.Picture is not null)
             {
-                product.PictureName = await _fileService.SaveFileAsync(product.Id, model.Picture);
+                product.PictureName = await _fileService.SaveFileAsync(model.Picture);
             }
 
             product.CreatedAt = DateTime.UtcNow;
@@ -79,14 +80,14 @@ namespace ShopManagementSystem.Application.Services
             var product = await GetProductByIdAsync(id);
 
             if (product is null)
-                throw new Exception("No products");
+                throw new NotFoundException("Product not found");
 
             _mapper.Map(model, product);
 
             if (model.Picture?.Length > 0)
             {
-                _fileService.DeleleFile(id, product.PictureName);
-                product.PictureName = await _fileService.SaveFileAsync(id, model.Picture);
+                _fileService.DeleleFile(product.PictureName);
+                product.PictureName = await _fileService.SaveFileAsync(model.Picture);
             }
 
             await _context.SaveChangesAsync();
@@ -97,7 +98,9 @@ namespace ShopManagementSystem.Application.Services
             var product = await GetProductByIdAsync(id);
 
             if (product is null)
-                throw new Exception("No products");
+                throw new NotFoundException("Product not found");
+
+            _fileService.DeleleFile(product.PictureName);
 
             _context.Remove(product);
             await _context.SaveChangesAsync();

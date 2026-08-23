@@ -1,3 +1,5 @@
+using ShopManagementSystem.Api.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
@@ -12,6 +14,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -1,6 +1,6 @@
 ﻿using ShopManagementSystem.Application.DTOs.Category;
 
-namespace ShopManagementSystem.Application.Interfaces.Services
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface ICategoryService
     {

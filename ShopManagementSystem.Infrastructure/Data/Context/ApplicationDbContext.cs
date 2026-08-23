@@ -8,9 +8,9 @@ using ShopManagementSystem.Infrastructure.Data.Seed;
 
 namespace ShopManagementSystem.Infrastructure.Data.Context
 {
-    public class ProgramContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public ProgramContext(DbContextOptions<ProgramContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }

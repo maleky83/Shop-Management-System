@@ -1,7 +1,7 @@
 ﻿using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Domain.Entities.Catalog;
 
-namespace ShopManagementSystem.Application.Interfaces.Services
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IProductService
     {

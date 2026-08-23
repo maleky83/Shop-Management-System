@@ -1,9 +1,8 @@
-﻿using ShopManagementSystem.Application.DTOs;
-using ShopManagementSystem.Application.DTOs.Account;
+﻿using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.Admin;
 using ShopManagementSystem.Domain.Entities.Identity;
 
-namespace ShopManagementSystem.Application.Interfaces.Services
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IUserService
     {
@@ -14,7 +13,6 @@ namespace ShopManagementSystem.Application.Interfaces.Services
         public Task<User> GetUserByIdAsync(int id);
         public Task<UpdateUserViewModel> GetByIdForUpdateAsync(int id);
         public Task<User> GetUserByNameAsync(string name);
-        public Task<List<RoleViewModel>> GetAllRolesAsync();
         Task CreateAsync(CreateUserViewModel model);
         Task CreateForRegisterAsync(RegisterViewModel model);
         Task DeleteAsync(int id);
