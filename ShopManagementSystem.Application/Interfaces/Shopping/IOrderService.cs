@@ -1,12 +1,11 @@
 ﻿using ShopManagementSystem.Application.DTOs.Order;
-using ShopManagementSystem.Domain.Entities.Orders;
 
 namespace ShopManagementSystem.Application.Interfaces.Shopping
 {
     public interface IOrderService
     {
-        Task CreateAsync(CreateOrderViewModel model);
-        Task DeleteByIdAsync(int id);
-        Task<Order> GetByIdAsync(int id);
+        Task<int> CreateAsync(int userId);
+        Task<OrderViewModel> GetByIdAsync(int userId, int orderId);
+        Task<List<OrderViewModel>> GetAllAsync(int userId);
     }
 }

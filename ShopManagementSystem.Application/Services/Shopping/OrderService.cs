@@ -18,28 +18,101 @@ namespace ShopManagementSystem.Application.Services.Shopping
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(CreateOrderViewModel model)
+        public async Task<int> CreateAsync(int userId)
         {
-            var order = _mapper.Map<Order>(model);
+            var cart = await _context.Carts
+                .Include(c => c.CartItems)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            if (cart == null || !cart.CartItems.Any())
+            {
+                throw new NotFoundException("Cart is empty");
+            }
+
+            var order = new Order
+            {
+                UserId = userId,
+                CreatedAt = DateTime.UtcNow,
+                Status = OrderStatus.Pending,
+            };
+
+            foreach (var cartItem in cart.CartItems)
+            {
+                var orderDetail = new OrderDetail
+                {
+                    UnitPrice = cartItem.Product.Price,
+                    ProductId = cartItem.ProductId,
+                    Quantity = cartItem.Quantity,
+                    TotalPrice = cartItem.Quantity * cartItem.Product.Price,
+                };
+
+                order.OrderDetails.Add(orderDetail);
+            }
+
+            order.TotalPrice = order.OrderDetails.Sum(od => od.TotalPrice);
 
             await _context.Orders.AddAsync(order);
+
             await _context.SaveChangesAsync();
+
+            return order.Id;
         }
 
-        public async Task DeleteByIdAsync(int id)
+        public async Task<List<OrderViewModel>> GetAllAsync(int userId)
         {
-            _context.Remove(await GetByIdAsync(id));
-            await _context.SaveChangesAsync();
+            var orders = await _context.Orders
+                .Where(o => o.UserId == userId)
+                .Include(o => o.OrderDetails)
+                .ThenInclude(o => o.Product)
+                .OrderByDescending(o => o.CreatedAt)
+                .ToListAsync();
+
+            return orders.Select(o => new OrderViewModel
+            {
+                OrderId = o.Id,
+                OrderStatus = o.Status,
+                TotalPrice = o.TotalPrice,
+                UserId = o.UserId,
+
+                OrderDetails = o.OrderDetails.Select(od => new OrderDetailViewModel
+                {
+                    OrderId = od.OrderId,
+                    ProductId = od.ProductId,
+                    OrderDetailId = od.Id,
+                    Quantity = od.Quantity,
+                    UnitPrice = od.UnitPrice,
+                }).ToList(),
+            }).ToList();
         }
 
-        public async Task<Order> GetByIdAsync(int id)
+        public async Task<OrderViewModel> GetByIdAsync(int userId, int orderId)
         {
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _context.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(o => o.Product)
+                .FirstOrDefaultAsync(o => o.UserId == userId && o.Id == orderId);
 
-            if (order is null)
+            if (order == null)
+            {
                 throw new NotFoundException("Order not found");
+            }
 
-            return order;
+            return new OrderViewModel
+            {
+                OrderId = order.Id,
+                OrderStatus = order.Status,
+                TotalPrice = order.TotalPrice,
+                UserId = order.UserId,
+                OrderDetails = order.OrderDetails.Select(od => new OrderDetailViewModel
+                {
+                    OrderId = od.OrderId,
+                    UnitPrice = od.UnitPrice,
+                    Quantity = od.Quantity,
+                    OrderDetailId = od.Id,
+                    ProductId = od.ProductId,
+                }).ToList(),
+            };
         }
     }
 }

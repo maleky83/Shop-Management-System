@@ -23,6 +23,7 @@ namespace ShopManagementSystem.Infrastructure.Data.Context
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         #endregion
 
@@ -41,6 +42,12 @@ namespace ShopManagementSystem.Infrastructure.Data.Context
             SeedData.Seed(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new CartItemConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new PaymentConfiguration());
         }
     }
 }

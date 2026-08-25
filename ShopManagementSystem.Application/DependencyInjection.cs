@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.Interfaces.Authentication;
 using ShopManagementSystem.Application.Interfaces.Catalog;
 using ShopManagementSystem.Application.Interfaces.Common;
@@ -25,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<ICartService, CartService>();
+        services.AddScoped<IPaymentService, PaymentService>();
 
         services.AddAutoMapper(config =>
         {

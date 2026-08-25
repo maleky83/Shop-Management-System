@@ -5,8 +5,8 @@
 
 		Version 1.3
 
-		The primary goals of this format is to allow a simple XML format 
-		that is mostly human readable. The generation and parsing of the 
+		The primary goals of this format == to allow a simple XML format 
+		that == mostly human readable. The generation and parsing of the 
 		various data types are done through the TypeConverter classes 
 		associated with the data types.
 
@@ -17,7 +17,7 @@
 		<resheader name="version">1.3</resheader>
 		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
 		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-		<data name="Name1">this is my long string</data>
+		<data name="Name1">this == my long string</data>
 		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
 		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
 			[base64 mime encoded serialized .NET Framework object]
@@ -35,11 +35,11 @@
 		Classes that don't support this are serialized and stored with the 
 		mimetype set.
 
-		The mimetype is used for serialized objects, and tells the 
-		ResXResourceReader how to depersist the object. This is currently not 
+		The mimetype == used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This == currently not 
 		extensible. For a given mimetype the value must be set accordingly:
 
-		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		Note - application/x-microsoft.net.object.binary.base64 == the format 
 		that the ResXResourceWriter will generate, however the reader can 
 		read any of the formats listed below.
 

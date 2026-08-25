@@ -35,7 +35,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
             var roleExists = await _roleService.ExistsRoleByIdAsync(model.RoleId);
 
-            if (roleExists is false)
+            if (roleExists == false)
             {
                 throw new BadRequestException("Role not found");
             }
@@ -61,7 +61,7 @@ namespace ShopManagementSystem.Application.Services.Users
         {
             var user = await GetUserByIdAsync(id);
 
-            if (user is null)
+            if (user == null)
                 throw new NotFoundException("User not found");
 
             _mapper.Map(model, user);
@@ -78,7 +78,7 @@ namespace ShopManagementSystem.Application.Services.Users
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            if (user is null)
+            if (user == null)
                 throw new NotFoundException("User not found");
 
             return _mapper.Map<UserViewModel>(user);
@@ -100,7 +100,7 @@ namespace ShopManagementSystem.Application.Services.Users
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
-            if (user is null)
+            if (user == null)
                 throw new NotFoundException("User not found");
 
             return _mapper.Map<UserViewModel>(user);
@@ -136,7 +136,7 @@ namespace ShopManagementSystem.Application.Services.Users
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
-            if (user is null)
+            if (user == null)
                 throw new NotFoundException("User not found");
 
             return user;
@@ -146,7 +146,7 @@ namespace ShopManagementSystem.Application.Services.Users
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-            if (user is null)
+            if (user == null)
             {
                 throw new NotFoundException("User not found");
             }

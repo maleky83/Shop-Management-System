@@ -2,11 +2,10 @@
 {
     public class OrderDetailViewModel
     {
-        public int DetailId { get; set; }
+        public int OrderDetailId { get; set; }
+        public int OrderId { get; set; }
         public int ProductId { get; set; }
-        public long Price { get; set; }
-        public int Count { get; set; }
-        public string ProductName { get; set; }
-
+        public decimal UnitPrice { get; set; }
+        public int Quantity { get; set; }
     }
 }

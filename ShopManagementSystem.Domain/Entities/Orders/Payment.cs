@@ -10,7 +10,8 @@ public class Payment : BaseEntity
 
     public PaymentStatus Status { get; set; } = PaymentStatus.Pending;
 
-    public string? TransactionId { get; set; }
+    public string? Authority { get; set; }
+    public string? ReferenceId { get; set; }
 
     public DateTime? PaidAt { get; set; }
 }

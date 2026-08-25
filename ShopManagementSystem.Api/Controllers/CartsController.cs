@@ -20,7 +20,7 @@ namespace ShopManagementSystem.Api.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(userId, out var id))
             {
-                throw new Exception("Invalid user id");
+                throw new UnauthorizedAccessException("Invalid user");
             }
             return id;
         }
@@ -74,7 +74,7 @@ namespace ShopManagementSystem.Api.Controllers
             await _cartService.DeleteAsync(userId);
             return Ok(new
             {
-                message = "Cart is deleted"
+                message = "Cart == deleted"
             });
         }
     }

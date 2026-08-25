@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using ShopManagementSystem.Application.DTOs.Order;
+using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 using System.Security.Claims;
 
@@ -10,79 +11,51 @@ namespace ShopManagementSystem.Api.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        public OrdersController(IOrderService orderService)
+        private readonly IPaymentService _paymentService;
+        public OrdersController(IOrderService orderService, IPaymentService paymentService)
         {
             _orderService = orderService;
+            _paymentService = paymentService;
         }
 
-        [Authorize]
-        [HttpPost("items/{itemId}")]
-        public async Task<IActionResult> AddToOrder(int itemId)
+        [HttpPost]
+        public async Task<IActionResult> Create()
         {
-            int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
-            //await _orderService.AddToOrderAsync(itemId, userId);
-
+            int userId = GetUserId();
+            int orderId = await _orderService.CreateAsync(userId);
             return Ok(new
             {
-                message = "Product added to order."
+                id = orderId,
+                message = "Order is created"
             });
         }
 
-        //[Authorize]
-        //[HttpGet]
-        //public async Task<ActionResult<OrderViewModel>> ShowOrder()
-        //{
-        //int userId = int.Parse(ClaimTypes.NameIdentifier);
+        [HttpGet("{orderId}")]
+        public async Task<ActionResult<OrderViewModel>> GetById(int orderId)
+        {
+            var userId = GetUserId();
 
-        //var order = await _orderService.ShowOrderAsync(userId);
+            var order = await _orderService.GetByIdAsync(userId, orderId);
 
-        //if (order == null)
-        //    return BadRequest(new
-        //    {
-        //        message = "You don't have any orders."
-        //    });
+            return order;
+        }
 
-        //return Ok(order);
-        //}
+        [HttpGet]
+        public async Task<ActionResult<List<OrderViewModel>>> GetAll()
+        {
+            int userId = GetUserId();
+            return await _orderService.GetAllAsync(userId);
+        }
 
-        //[Authorize]
-        //[HttpPatch("items/{detailId}/decrease")]
-        //public async Task<IActionResult> ReduceOrder(int detailId, int userId)
-        //{
-        //    OrderStatus result = await _orderService.ReduceOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
+        private int GetUserId()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        //    if (result == OrderStatus.RemoveOrder)
-        //        await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
-
-        //    if (result == OrderStatus.NotFoundOrderDetail)
-        //        return NotFound(new
-        //        {
-        //            message = "No order details."
-        //        });
-
-        //    return Ok(new
-        //    {
-        //        message = "Order details decreased."
-        //    });
-        //}
-
-        //[Authorize]
-        //[HttpDelete("items/{detailId}")]
-        //public async Task<IActionResult> RemoveOrder(int detailId)
-        //{
-        //    OrderStatus result = await _orderService.RemoveOrderAsync(detailId, int.Parse(ClaimTypes.NameIdentifier));
-
-        //    if (result == OrderStatus.NotFoundOrderDetail)
-        //        return NotFound(new
-        //        {
-        //            message = "No order details."
-        //        });
-
-        //    return Ok(new
-        //    {
-        //        messsage = "Order deleted."
-        //    });
-        //}
+            if (!int.TryParse(userId, out var id))
+            {
+                throw new UnauthorizedAccessException("User invalid");
+            }
+            return id;
+        }
     }
 }

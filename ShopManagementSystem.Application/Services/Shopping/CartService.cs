@@ -20,11 +20,23 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task AddItemAsync(int userId, AddCartiItemViewModel model)
         {
+            if (model.Quantity <= 0)
+            {
+                throw new BadRequestException("Quantity must be greater than 0");
+            }
+
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == model.ProductId);
+
+            if (product == null)
+            {
+                throw new NotFoundException("Product not found");
+            }
+
             var cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
-            if (cart is null)
+            if (cart == null)
             {
                 cart = new Cart
                 {
@@ -35,27 +47,24 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 await _context.SaveChangesAsync();
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == model.ProductId);
+            var cartItem = cart.CartItems
+                .FirstOrDefault(ci => ci.ProductId == model.ProductId);
 
-            if (product is null)
-            {
-                throw new NotFoundException("Product not found");
-            }
-
-            var cartItem = await _context.CartItems
-                .FirstOrDefaultAsync(ci => ci.ProductId == model.ProductId);
-
-            if (cartItem is not null)
+            if (cartItem != null)
             {
                 cartItem.Quantity += model.Quantity;
             }
             else
             {
-                var newCartItem = _mapper.Map<CartItem>(model);
+                cartItem = new CartItem
+                {
+                    Quantity = cartItem.Quantity,
+                    ProductId = cartItem.ProductId,
+                    UnitPrice = cartItem.UnitPrice,
+                    CartId = cartItem.CartId,
+                };
 
-                newCartItem.UnitPrice = product.Price;
-
-                cart.CartItems.Add(newCartItem);
+                cart.CartItems.Add(cartItem);
             }
             await _context.SaveChangesAsync();
         }
@@ -67,18 +76,18 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 .ThenInclude(c => c.Product)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
-            if (cart is null)
+            if (cart == null)
             {
                 throw new NotFoundException("Cart not found");
             }
 
             var result = new CartViewModel
             {
-                Id = cart.Id,
+                CartId = cart.Id,
                 UserId = userId,
                 CartItems = cart.CartItems.Select(item => new CartItemViewModel
                 {
-                    Id = item.Id,
+                    CartItemId = item.Id,
                     ProductName = item.Product.Name,
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
@@ -96,7 +105,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
         public async Task DeleteAsync(int userId)
         {
             var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
-            if (cart is null)
+            if (cart == null)
             {
                 throw new NotFoundException("Cart not found");
             }
@@ -110,7 +119,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 .Include(c => c.Cart)
                 .FirstOrDefaultAsync(c => c.Id == cartItemId && c.Cart.UserId == userId);
 
-            if (cartItem is null)
+            if (cartItem == null)
             {
                 throw new NotFoundException("Cart item not found");
             }
@@ -125,7 +134,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 .Include(c => c.Cart)
                 .FirstOrDefaultAsync(ci => ci.Cart.UserId == userId && ci.Id == cartItemId);
 
-            if (cartItem is null)
+            if (cartItem == null)
             {
                 throw new NotFoundException("Cart item not found");
             }

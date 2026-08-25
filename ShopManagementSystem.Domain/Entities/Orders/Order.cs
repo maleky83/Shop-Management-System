@@ -17,7 +17,7 @@ public class Order : BaseEntity
     public ICollection<OrderDetail> OrderDetails { get; set; }
         = new List<OrderDetail>();
 
-    public Payment? Payment { get; set; }
+    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
 
     #endregion
 }

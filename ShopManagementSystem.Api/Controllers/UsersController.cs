@@ -28,7 +28,7 @@ namespace ShopManagementSystem.Api.Controllers
 
             return Ok(new
             {
-                message = "User is created"
+                message = "User == created"
             });
         }
 
@@ -47,7 +47,7 @@ namespace ShopManagementSystem.Api.Controllers
 
             return Ok(new
             {
-                message = "User is updated"
+                message = "User == updated"
             });
         }
 
@@ -58,7 +58,7 @@ namespace ShopManagementSystem.Api.Controllers
 
             return Ok(new
             {
-                message = "User is Deleted"
+                message = "User == Deleted"
             });
         }
     }

@@ -32,7 +32,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
             var product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product is null)
+            if (product == null)
                 throw new NotFoundException("Product not found");
 
             return _mapper.Map<ProductViewModel>(product);
@@ -41,7 +41,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
         {
             var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
-            if (product is null)
+            if (product == null)
             {
                 throw new NotFoundException("Product not found");
             }
@@ -59,12 +59,12 @@ namespace ShopManagementSystem.Application.Services.Catalog
         {
             var category = await _categoryService.GetByIdAsync(model.CategoryId);
 
-            if (category is null)
+            if (category == null)
                 throw new NotFoundException("Category not found");
 
             var product = _mapper.Map<Product>(model);
 
-            if (model.Picture is not null)
+            if (model.Picture != null)
             {
                 product.PictureName = await _fileService.SaveFileAsync(model.Picture);
             }
@@ -80,7 +80,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
         {
             var product = await GetProductByIdAsync(id);
 
-            if (product is null)
+            if (product == null)
                 throw new NotFoundException("Product not found");
 
             _mapper.Map(model, product);
@@ -98,7 +98,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
         {
             var product = await GetProductByIdAsync(id);
 
-            if (product is null)
+            if (product == null)
                 throw new NotFoundException("Product not found");
 
             _fileService.DeleleFile(product.PictureName);

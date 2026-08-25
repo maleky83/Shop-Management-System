@@ -32,7 +32,7 @@ namespace ShopManagementSystem.Application.Services.Authentication
         {
             var user = await _userService.GetUserByNameAsync(model.Name);
 
-            if (user is null)
+            if (user == null)
                 throw new BadRequestException("Invalid username or password.");
 
             var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
