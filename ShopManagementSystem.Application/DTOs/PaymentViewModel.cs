@@ -9,6 +9,7 @@
     public PaymentStatus Status { get; set; }
 
     public string? ReferenceId { get; set; }
+    public string? Authority { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

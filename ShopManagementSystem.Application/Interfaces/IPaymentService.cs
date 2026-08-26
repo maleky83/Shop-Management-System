@@ -3,6 +3,6 @@
     public interface IPaymentService
     {
         Task<PaymentViewModel> CreatePaymentAsync(int userId, int orderId);
-        Task VerifyPaymentAsync(string authority, bool isSuccess);
+        Task VerifyPaymentAsync(string authority);
     }
 }
