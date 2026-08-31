@@ -11,11 +11,9 @@ namespace ShopManagementSystem.Application.Services.Shopping
     internal class CartService : ICartService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
         public CartService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task AddItemAsync(int userId, AddCartiItemViewModel model)
@@ -58,10 +56,10 @@ namespace ShopManagementSystem.Application.Services.Shopping
             {
                 cartItem = new CartItem
                 {
-                    Quantity = cartItem.Quantity,
-                    ProductId = cartItem.ProductId,
-                    UnitPrice = cartItem.UnitPrice,
-                    CartId = cartItem.CartId,
+                    Quantity = model.Quantity,
+                    ProductId = model.ProductId,
+                    UnitPrice = product.Price,
+                    CartId = cart.Id,
                 };
 
                 cart.CartItems.Add(cartItem);

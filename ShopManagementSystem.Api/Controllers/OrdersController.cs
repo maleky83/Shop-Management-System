@@ -11,11 +11,9 @@ namespace ShopManagementSystem.Api.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly IPaymentService _paymentService;
         public OrdersController(IOrderService orderService, IPaymentService paymentService)
         {
             _orderService = orderService;
-            _paymentService = paymentService;
         }
 
         [HttpPost]

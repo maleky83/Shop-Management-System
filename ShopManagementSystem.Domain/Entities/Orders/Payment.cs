@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Domain.Entities.Orders;
+﻿using ShopManagementSystem.Domain.Enums;
+
+namespace ShopManagementSystem.Domain.Entities.Orders;
 
 public class Payment : BaseEntity
 {

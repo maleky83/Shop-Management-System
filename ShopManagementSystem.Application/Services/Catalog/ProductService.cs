@@ -87,7 +87,10 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
             if (model.Picture?.Length > 0)
             {
-                _fileService.DeleleFile(product.PictureName);
+                if (!string.IsNullOrWhiteSpace(product.PictureName))
+                {
+                    _fileService.DeleleFile(product.PictureName);
+                }
                 product.PictureName = await _fileService.SaveFileAsync(model.Picture);
             }
 
@@ -100,8 +103,11 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
             if (product == null)
                 throw new NotFoundException("Product not found");
-
-            _fileService.DeleleFile(product.PictureName);
+            
+            if (!string.IsNullOrWhiteSpace(product.PictureName))
+            {
+                _fileService.DeleleFile(product.PictureName);
+            }
 
             _context.Remove(product);
             await _context.SaveChangesAsync();

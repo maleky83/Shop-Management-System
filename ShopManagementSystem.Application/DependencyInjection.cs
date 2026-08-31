@@ -12,31 +12,34 @@ using ShopManagementSystem.Application.Services.Common;
 using ShopManagementSystem.Application.Services.Shopping;
 using ShopManagementSystem.Application.Services.Users;
 
-public static class DependencyInjection
+namespace ShopManagementSystem.Application
 {
-    public static IServiceCollection AddApplication(
-        this IServiceCollection services)
+    public static class DependencyInjection
     {
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<IProductService, ProductService>();
-        services.AddScoped<ICategoryService, CategoryService>();
-        services.AddScoped<IOrderService, OrderService>();
-        services.AddScoped<IFileService, FileService>();
-        services.AddScoped<ITokenService, TokenService>();
-        services.AddScoped<IRoleService, RoleService>();
-        services.AddScoped<ICartService, CartService>();
-        services.AddScoped<IPaymentService, PaymentService>();
-
-        services.AddAutoMapper(config =>
+        public static IServiceCollection AddApplication(
+            this IServiceCollection services)
         {
-            config.AddProfile<ProductProfile>();
-            config.AddProfile<CategoryProfile>();
-            config.AddProfile<UsertProfile>();
-            config.AddProfile<RoleProfile>();
-            config.AddProfile<CartProfile>();
-        });
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
-        return services;
+            services.AddAutoMapper(config =>
+            {
+                config.AddProfile<ProductProfile>();
+                config.AddProfile<CategoryProfile>();
+                config.AddProfile<UsertProfile>();
+                config.AddProfile<RoleProfile>();
+                config.AddProfile<CartProfile>();
+            });
+
+            return services;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Application.Interfaces
+﻿using ShopManagementSystem.Application.DTOs;
+
+namespace ShopManagementSystem.Application.Interfaces
 {
     public interface IPaymentService
     {

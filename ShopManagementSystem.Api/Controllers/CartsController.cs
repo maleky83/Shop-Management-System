@@ -7,7 +7,7 @@ namespace ShopManagementSystem.Api.Controllers
 {
     [ApiController]
     [Route("api/carts")]
-    public class CartsController : Controller
+    public class CartsController : ControllerBase
     {
         private readonly ICartService _cartService;
         public CartsController(ICartService cartService)

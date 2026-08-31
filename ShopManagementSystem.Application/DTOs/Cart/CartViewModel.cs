@@ -4,7 +4,7 @@
     {
         public int CartId { get; set; }
         public int UserId { get; set; }
-        public List<CartItemViewModel> CartItems { get; set; }
+        public List<CartItemViewModel> CartItems { get; set; } = [];
         public decimal TotalPrice { get; set; }
     }
 }

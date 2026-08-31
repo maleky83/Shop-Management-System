@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces;
 using System.Security.Claims;

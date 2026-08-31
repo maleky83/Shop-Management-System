@@ -1,9 +1,12 @@
-﻿public enum OrderStatus
+﻿namespace ShopManagementSystem.Domain.Enums
 {
-    Pending = 1,
-    Paid = 2,
-    Processing = 3,
-    Shipped = 4,
-    Delivered = 5,
-    Cancelled = 6
+    public enum OrderStatus
+    {
+        Pending = 1,
+        Paid = 2,
+        Processing = 3,
+        Shipped = 4,
+        Delivered = 5,
+        Cancelled = 6
+    }
 }

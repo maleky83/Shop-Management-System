@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Application.DTOs.Order
+﻿using ShopManagementSystem.Domain.Enums;
+
+namespace ShopManagementSystem.Application.DTOs.Order
 {
     public class OrderViewModel
     {
@@ -6,6 +8,6 @@
         public int UserId { get; set; }
         public decimal TotalPrice { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public List<OrderDetailViewModel> OrderDetails { get; set; }
+        public List<OrderDetailViewModel>? OrderDetails { get; set; }
     }
 }

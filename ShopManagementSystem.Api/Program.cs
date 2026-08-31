@@ -1,4 +1,7 @@
+using ShopManagementSystem.Api;
 using ShopManagementSystem.Api.Middleware;
+using ShopManagementSystem.Application;
+using ShopManagementSystem.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,4 +29,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

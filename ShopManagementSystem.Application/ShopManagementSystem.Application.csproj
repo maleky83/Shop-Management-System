@@ -4,18 +4,22 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AutoMapper"/>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions"/>
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures"/>
-		<PackageReference Include="Microsoft.EntityFrameworkCore"/>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer"/>
-		<PackageReference Include="Microsoft.Extensions.Identity.Core"/>
-		<PackageReference Include="Newtonsoft.Json"/>
-		<PackageReference Include="NuGet.Packaging"/>
-		<PackageReference Include="NuGet.Protocol"/>
-		<PackageReference Include="Swashbuckle.AspNetCore"/>
-		<PackageReference Include="System.Security.Cryptography.Xml"/>
+		<PackageReference Include="AutoMapper" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
+		<PackageReference Include="Microsoft.Extensions.Identity.Core" />
+		<PackageReference Include="Newtonsoft.Json" />
+		<PackageReference Include="NuGet.Packaging" />
+		<PackageReference Include="NuGet.Protocol" />
+		<PackageReference Include="SonarAnalyzer.CSharp">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+		<PackageReference Include="System.Security.Cryptography.Xml" />
 	</ItemGroup>
 
 	<ItemGroup>

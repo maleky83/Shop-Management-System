@@ -1,4 +1,5 @@
-﻿using ShopManagementSystem.Application.Exceptions;
+﻿using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.Exceptions;
 
 namespace ShopManagementSystem.Api.Middleware
 {
@@ -40,7 +41,7 @@ namespace ShopManagementSystem.Api.Middleware
                 Message = exception.Message,
             };
 
-            await context.Response.WriteAsJsonAsync(response);
+            await context.Response.WriteAsJsonAsync(response,context.RequestAborted);
         }
     }
 }

@@ -12,6 +12,10 @@
 		<PackageReference Include="Newtonsoft.Json" />
 		<PackageReference Include="NuGet.Packaging" />
 		<PackageReference Include="NuGet.Protocol" />
+		<PackageReference Include="SonarAnalyzer.CSharp">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="Swashbuckle.AspNetCore" />
 	</ItemGroup>
 

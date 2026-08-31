@@ -35,7 +35,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
             var roleExists = await _roleService.ExistsRoleByIdAsync(model.RoleId);
 
-            if (roleExists == false)
+            if (!roleExists)
             {
                 throw new BadRequestException("Role not found");
             }

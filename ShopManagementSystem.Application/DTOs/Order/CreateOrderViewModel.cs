@@ -1,4 +1,6 @@
-﻿namespace ShopManagementSystem.Application.DTOs.Order
+﻿using ShopManagementSystem.Domain.Enums;
+
+namespace ShopManagementSystem.Application.DTOs.Order
 {
     public class CreateOrderViewModel
     {

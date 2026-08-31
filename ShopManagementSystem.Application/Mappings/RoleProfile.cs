@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Domain.Entities.Identity;
 
 namespace ShopManagementSystem.Application.Mappings
 {

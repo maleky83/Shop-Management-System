@@ -4,6 +4,7 @@ using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 using ShopManagementSystem.Domain.Entities.Orders;
+using ShopManagementSystem.Domain.Enums;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping
@@ -11,11 +12,9 @@ namespace ShopManagementSystem.Application.Services.Shopping
     public class OrderService : IOrderService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
         public OrderService(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<int> CreateAsync(int userId)

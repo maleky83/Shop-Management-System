@@ -25,10 +25,10 @@ public class Product : BaseEntity
     [ForeignKey(nameof(CategoryId))]
     public Category Category { get; set; } = null!;
 
-    public ICollection<OrderDetail> OrderDetails { get; set; }
+    public ICollection<OrderDetail> OrderDetails { get; }
         = new List<OrderDetail>();
 
-    public ICollection<CartItem> CartItems { get; set; }
+    public ICollection<CartItem> CartItems { get; }
         = new List<CartItem>();
 
     #endregion

@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Domain.Entities.Orders;
+using ShopManagementSystem.Domain.Enums;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping

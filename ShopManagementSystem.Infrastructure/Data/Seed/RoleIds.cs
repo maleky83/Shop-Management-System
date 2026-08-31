@@ -1,5 +1,8 @@
-﻿public static class RoleIds
+﻿namespace ShopManagementSystem.Infrastructure.Data.Seed
 {
-    public const int Admin = 1;
-    public const int Customer = 2;
+    public static class RoleIds
+    {
+        public const int Admin = 1;
+        public const int Customer = 2;
+    }
 }

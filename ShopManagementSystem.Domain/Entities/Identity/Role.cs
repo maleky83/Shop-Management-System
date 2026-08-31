@@ -1,12 +1,12 @@
-﻿
-using ShopManagementSystem.Domain.Entities.Identity;
-
-public class Role : BaseEntity
+﻿namespace ShopManagementSystem.Domain.Entities.Identity
 {
-    public string Name { get; set; } = string.Empty;
+    public class Role : BaseEntity
+    {
+        public string Name { get; set; } = string.Empty;
 
-    public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<User> Users { get; } = new List<User>();
 
-    public ICollection<RolePermission> RolePermissions { get; set; }
-        = new List<RolePermission>();
+        public ICollection<RolePermission> RolePermissions { get; }
+            = new List<RolePermission>();
+    }
 }

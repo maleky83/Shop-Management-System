@@ -1,7 +1,10 @@
-﻿public class Permission : BaseEntity
+﻿namespace ShopManagementSystem.Domain.Entities.Identity
 {
-    public string Name { get; set; } = string.Empty;
+    public class Permission : BaseEntity
+    {
+        public string Name { get; set; } = string.Empty;
 
-    public ICollection<RolePermission> RolePermissions { get; set; }
-        = new List<RolePermission>();
+        public ICollection<RolePermission> RolePermissions { get; }
+            = new List<RolePermission>();
+    }
 }

@@ -6,10 +6,10 @@ namespace ShopManagementSystem.Application.DTOs.Account
     {
         [Required]
         [MaxLength(300)]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Required]
         [MaxLength(50)]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public required string Password { get; set; }
     }
 }

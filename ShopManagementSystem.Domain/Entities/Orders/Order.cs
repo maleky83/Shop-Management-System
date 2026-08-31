@@ -1,4 +1,5 @@
 ﻿using ShopManagementSystem.Domain.Entities.Identity;
+using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
@@ -14,10 +15,10 @@ public class Order : BaseEntity
 
     #region Relations
 
-    public ICollection<OrderDetail> OrderDetails { get; set; }
+    public ICollection<OrderDetail> OrderDetails { get; }
         = new List<OrderDetail>();
 
-    public ICollection<Payment> Payments { get; set; } = new List<Payment>();
+    public ICollection<Payment> Payments { get; } = new List<Payment>();
 
     #endregion
 }

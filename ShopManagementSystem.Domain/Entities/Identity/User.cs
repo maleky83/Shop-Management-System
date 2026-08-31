@@ -13,11 +13,11 @@ public class User : BaseEntity
     #region Relations
 
     public int RoleId { get; set; }
-    public Role Role { get; set; }
+    public Role Role { get; set; } = null!;
 
     public Cart? Cart { get; set; }
 
-    public ICollection<Orders.Order> Orders { get; set; }
+    public ICollection<Orders.Order> Orders { get; }
         = new List<Orders.Order>();
 
     #endregion

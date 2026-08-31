@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Domain.Entities.Identity;
 
@@ -159,14 +160,18 @@ namespace ShopManagementSystem.Infrastructure.Data.Seed
 
         private static void SeedUsers(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasData(new User
+            var user = new User()
             {
                 Id = 1,
                 IsActive = true,
                 Name = "a",
-                PasswordHash = "AQAAAAIAAYagAAAAEJFJMLK8RQXhwNCo0C7ahb+wKtLiYnUUiEiKXwbKENtwFN/pYWMLY++k6vhRGmZ9gw==",
                 RoleId = RoleIds.Admin,
-            });
+            };
+
+            user.PasswordHash = new PasswordHasher<User>().HashPassword(user, "123");
+
+            modelBuilder.Entity<User>().HasData(user);
+
         }
 
         #endregion
