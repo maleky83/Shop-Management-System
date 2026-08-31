@@ -1,7 +1,4 @@
-﻿using ShopManagementSystem.Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ShopManagementSystem.Application.DTOs;
 
 namespace ShopManagementSystem.Application.Interfaces.Users
 {

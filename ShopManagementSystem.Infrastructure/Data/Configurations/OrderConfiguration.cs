@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Orders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ShopManagementSystem.Infrastructure.Data.Configurations
 {
