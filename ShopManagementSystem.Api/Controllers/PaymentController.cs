@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces;
-using System.Security.Claims;
 
 namespace ShopManagementSystem.Api.Controllers
 {
@@ -22,7 +22,7 @@ namespace ShopManagementSystem.Api.Controllers
         {
             var userId = GetUserId();
 
-            var payment = await _paymentService.CreatePaymentAsync(
+            PaymentViewModel payment = await _paymentService.CreatePaymentAsync(
                 userId,
                 orderId);
 

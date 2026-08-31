@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Interfaces.Users;
+using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Users
@@ -23,7 +24,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<List<RoleViewModel>> GetAllRolesAsync()
         {
-            var roles = await _context.Roles.ToListAsync();
+            List<Role> roles = await _context.Roles.ToListAsync();
 
             return _mapper.Map<List<RoleViewModel>>(roles);
         }

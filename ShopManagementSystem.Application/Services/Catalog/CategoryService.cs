@@ -1,7 +1,8 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Category;
 using ShopManagementSystem.Application.Interfaces.Catalog;
+using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Catalog
@@ -18,7 +19,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task<List<CategoryViewModel>> GetAllAsync()
         {
-            var categories = await _context.Categories.ToListAsync();
+            List<Category> categories = await _context.Categories.ToListAsync();
 
             return _mapper.Map<List<CategoryViewModel>>(categories);
 
@@ -26,7 +27,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task<CategoryViewModel> GetByIdAsync(int id)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            Category? category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             return _mapper.Map<CategoryViewModel>(category);
         }

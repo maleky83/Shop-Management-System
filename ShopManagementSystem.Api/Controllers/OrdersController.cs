@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.Interfaces.Shopping;
-using System.Security.Claims;
 
 namespace ShopManagementSystem.Api.Controllers
 {
@@ -19,8 +19,8 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create()
         {
-            int userId = GetUserId();
-            int orderId = await _orderService.CreateAsync(userId);
+            var userId = GetUserId();
+            var orderId = await _orderService.CreateAsync(userId);
             return Ok(new
             {
                 id = orderId,
@@ -33,7 +33,7 @@ namespace ShopManagementSystem.Api.Controllers
         {
             var userId = GetUserId();
 
-            var order = await _orderService.GetByIdAsync(userId, orderId);
+            OrderViewModel order = await _orderService.GetByIdAsync(userId, orderId);
 
             return order;
         }
@@ -41,7 +41,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OrderViewModel>>> GetAll()
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
             return await _orderService.GetAllAsync(userId);
         }
 

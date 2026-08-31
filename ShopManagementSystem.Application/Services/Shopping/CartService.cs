@@ -1,9 +1,10 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Cart;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 using ShopManagementSystem.Domain.Entities.Carts;
+using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping
@@ -23,14 +24,14 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 throw new BadRequestException("Quantity must be greater than 0");
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == model.ProductId);
+            Product? product = await _context.Products.FirstOrDefaultAsync(p => p.Id == model.ProductId);
 
             if (product == null)
             {
                 throw new NotFoundException("Product not found");
             }
 
-            var cart = await _context.Carts
+            Cart? cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
 
@@ -45,7 +46,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 await _context.SaveChangesAsync();
             }
 
-            var cartItem = cart.CartItems
+            CartItem? cartItem = cart.CartItems
                 .FirstOrDefault(ci => ci.ProductId == model.ProductId);
 
             if (cartItem != null)
@@ -69,7 +70,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task<CartViewModel> GetAsync(int userId)
         {
-            var cart = await _context.Carts
+            Cart? cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .ThenInclude(c => c.Product)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
@@ -102,7 +103,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task DeleteAsync(int userId)
         {
-            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
+            Cart? cart = await _context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
             if (cart == null)
             {
                 throw new NotFoundException("Cart not found");
@@ -113,7 +114,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task DeleteItemAsync(int userId, int cartItemId)
         {
-            var cartItem = await _context.CartItems
+            CartItem? cartItem = await _context.CartItems
                 .Include(c => c.Cart)
                 .FirstOrDefaultAsync(c => c.Id == cartItemId && c.Cart.UserId == userId);
 
@@ -128,7 +129,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task UpdateItemAsync(int userId, int cartItemId, UpdateCartItemViewModel model)
         {
-            var cartItem = await _context.CartItems
+            CartItem? cartItem = await _context.CartItems
                 .Include(c => c.Cart)
                 .FirstOrDefaultAsync(ci => ci.Cart.UserId == userId && ci.Id == cartItemId);
 

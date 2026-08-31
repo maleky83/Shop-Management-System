@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Interfaces.Catalog;
 
@@ -17,7 +17,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ProductViewModel>>> GetAll()
         {
-            var products = await _productService.GetAllAsync();
+            List<ProductViewModel> products = await _productService.GetAllAsync();
 
             return Ok(products);
         }
@@ -25,7 +25,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductViewModel>> GetById(int id)
         {
-            var products = await _productService.GetByIdAsync(id);
+            ProductViewModel products = await _productService.GetByIdAsync(id);
 
             return Ok(products);
         }

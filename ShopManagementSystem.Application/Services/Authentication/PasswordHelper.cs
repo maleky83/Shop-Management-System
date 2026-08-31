@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace ShopManagementSystem.Application.Services.Authentication
 {
@@ -13,7 +13,7 @@ namespace ShopManagementSystem.Application.Services.Authentication
 
         public static bool VerifyPassword(string hashedPassword, string password)
         {
-            var result = _passwordHasher.VerifyHashedPassword(null!, hashedPassword, password);
+            PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(null!, hashedPassword, password);
 
             return result == PasswordVerificationResult.Success ||
                    result == PasswordVerificationResult.SuccessRehashNeeded;

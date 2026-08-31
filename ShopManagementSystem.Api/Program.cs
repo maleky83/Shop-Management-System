@@ -3,14 +3,14 @@ using ShopManagementSystem.Api.Middleware;
 using ShopManagementSystem.Application;
 using ShopManagementSystem.Infrastructure;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddApplication()
     .AddInfrastructure(builder.Configuration)
     .AddApi(builder.Configuration);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Authentication;
@@ -30,12 +30,12 @@ namespace ShopManagementSystem.Application.Services.Authentication
 
         public async Task<LoginResponseViewModel> LoginAsync(LoginViewModel model)
         {
-            var user = await _userService.GetUserByNameAsync(model.Name);
+            User user = await _userService.GetUserByNameAsync(model.Name);
 
             if (user == null)
                 throw new BadRequestException("Invalid username or password.");
 
-            var passwordResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+            PasswordVerificationResult passwordResult = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
 
             if (passwordResult == PasswordVerificationResult.Failed)
                 throw new BadRequestException("Invalid username or password.");

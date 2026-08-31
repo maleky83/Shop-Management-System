@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces;
+using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Domain.Enums;
 using ShopManagementSystem.Infrastructure.Data.Context;
@@ -21,7 +22,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
             int userId,
             int orderId)
         {
-            var order = await _context.Orders
+            Order? order = await _context.Orders
                 .FirstOrDefaultAsync(o =>
                     o.Id == orderId &&
                     o.UserId == userId);
@@ -37,7 +38,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                     "This order can not be paid");
             }
 
-            var paidPayment = await _context.Payments
+            Payment? paidPayment = await _context.Payments
                 .FirstOrDefaultAsync(p =>
                     p.OrderId == orderId &&
                     p.Status == PaymentStatus.Paid);
@@ -48,7 +49,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                     "This order has already been paid");
             }
 
-            var pendingPayment = await _context.Payments
+            Payment? pendingPayment = await _context.Payments
                 .FirstOrDefaultAsync(p =>
                     p.OrderId == orderId &&
                     p.Status == PaymentStatus.Pending);
@@ -82,7 +83,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                     "Authority is required");
             }
 
-            var payment = await _context.Payments
+            Payment? payment = await _context.Payments
                 .Include(p => p.Order)
                 .FirstOrDefaultAsync(p =>
                     p.Authority == authority);
@@ -129,7 +130,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
             // Clear Cart
             // ==========================================
 
-            var cart = await _context.Carts
+            Cart? cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .FirstOrDefaultAsync(c =>
                     c.UserId == payment.Order.UserId);

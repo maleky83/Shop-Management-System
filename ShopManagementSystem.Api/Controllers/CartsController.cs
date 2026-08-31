@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Cart;
 using ShopManagementSystem.Application.Interfaces.Shopping;
-using System.Security.Claims;
 
 namespace ShopManagementSystem.Api.Controllers
 {
@@ -28,15 +28,15 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<CartViewModel>> Get()
         {
-            int userId = GetUserId();
-            var cart = await _cartService.GetAsync(userId);
+            var userId = GetUserId();
+            CartViewModel cart = await _cartService.GetAsync(userId);
             return Ok(cart);
         }
 
         [HttpPost("items")]
         public async Task<IActionResult> AddItem(AddCartiItemViewModel model)
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
 
             await _cartService.AddItemAsync(userId, model);
             return Ok(new
@@ -48,7 +48,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpPut("items/{id}")]
         public async Task<IActionResult> UpdateItem(int id, UpdateCartItemViewModel model)
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
             await _cartService.UpdateItemAsync(userId, id, model);
             return Ok(new
             {
@@ -59,7 +59,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpDelete("items/{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
             await _cartService.DeleteItemAsync(userId, id);
             return Ok(new
             {
@@ -70,7 +70,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete()
         {
-            int userId = GetUserId();
+            var userId = GetUserId();
             await _cartService.DeleteAsync(userId);
             return Ok(new
             {

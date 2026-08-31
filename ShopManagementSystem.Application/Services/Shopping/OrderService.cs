@@ -1,8 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
+using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Domain.Enums;
 using ShopManagementSystem.Infrastructure.Data.Context;
@@ -19,7 +20,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task<int> CreateAsync(int userId)
         {
-            var cart = await _context.Carts
+            Cart? cart = await _context.Carts
                 .Include(c => c.CartItems)
                 .ThenInclude(c => c.Product)
                 .FirstOrDefaultAsync(c => c.UserId == userId);
@@ -36,7 +37,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
                 Status = OrderStatus.Pending,
             };
 
-            foreach (var cartItem in cart.CartItems)
+            foreach (CartItem cartItem in cart.CartItems)
             {
                 var orderDetail = new OrderDetail
                 {
@@ -60,7 +61,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task<List<OrderViewModel>> GetAllAsync(int userId)
         {
-            var orders = await _context.Orders
+            List<Order> orders = await _context.Orders
                 .Where(o => o.UserId == userId)
                 .Include(o => o.OrderDetails)
                 .ThenInclude(o => o.Product)
@@ -87,7 +88,7 @@ namespace ShopManagementSystem.Application.Services.Shopping
 
         public async Task<OrderViewModel> GetByIdAsync(int userId, int orderId)
         {
-            var order = await _context.Orders
+            Order? order = await _context.Orders
                 .Include(o => o.OrderDetails)
                 .ThenInclude(o => o.Product)
                 .FirstOrDefaultAsync(o => o.UserId == userId && o.Id == orderId);

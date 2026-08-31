@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Users;
 using ShopManagementSystem.Application.Interfaces.Users;
 
@@ -17,7 +17,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<UserViewModel>>> GetAll()
         {
-            var users = await _userService.GetAllAsync();
+            List<UserViewModel> users = await _userService.GetAllAsync();
             return Ok(users);
         }
 
@@ -35,7 +35,7 @@ namespace ShopManagementSystem.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<UserViewModel>> GetById(int id)
         {
-            var user = await _userService.GetByIdAsync(id);
+            UserViewModel user = await _userService.GetByIdAsync(id);
 
             return Ok(user);
         }

@@ -1,5 +1,6 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using ShopManagementSystem.Application.DTOs.Category;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Catalog;
@@ -29,7 +30,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task<ProductViewModel> GetByIdAsync(int id)
         {
-            var product = await _context.Products
+            Product? product = await _context.Products
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
@@ -39,7 +40,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
         }
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+            Product? product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
             {
@@ -50,19 +51,19 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task<List<ProductViewModel>> GetAllAsync()
         {
-            var products = await _context.Products.ToListAsync();
+            List<Product> products = await _context.Products.ToListAsync();
 
             return _mapper.Map<List<ProductViewModel>>(products);
         }
 
         public async Task CreateAsync(CreateProductViewModel model)
         {
-            var category = await _categoryService.GetByIdAsync(model.CategoryId);
+            CategoryViewModel category = await _categoryService.GetByIdAsync(model.CategoryId);
 
             if (category == null)
                 throw new NotFoundException("Category not found");
 
-            var product = _mapper.Map<Product>(model);
+            Product product = _mapper.Map<Product>(model);
 
             if (model.Picture != null)
             {
@@ -78,7 +79,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task UpdateAsync(int id, UpdateProductViewModel model)
         {
-            var product = await GetProductByIdAsync(id);
+            Product product = await GetProductByIdAsync(id);
 
             if (product == null)
                 throw new NotFoundException("Product not found");
@@ -99,11 +100,11 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task DeleteByIdAsync(int id)
         {
-            var product = await GetProductByIdAsync(id);
+            Product product = await GetProductByIdAsync(id);
 
             if (product == null)
                 throw new NotFoundException("Product not found");
-            
+
             if (!string.IsNullOrWhiteSpace(product.PictureName))
             {
                 _fileService.DeleleFile(product.PictureName);
@@ -115,7 +116,7 @@ namespace ShopManagementSystem.Application.Services.Catalog
 
         public async Task<UpdateProductViewModel> GetForUpdateByIdAsync(int id)
         {
-            var product = await GetByIdAsync(id);
+            ProductViewModel product = await GetByIdAsync(id);
 
             return _mapper.Map<UpdateProductViewModel>(product);
         }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Account;
@@ -31,7 +31,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task CreateAsync(CreateUserViewModel model)
         {
-            var user = _mapper.Map<User>(model);
+            User user = _mapper.Map<User>(model);
 
             var roleExists = await _roleService.ExistsRoleByIdAsync(model.RoleId);
 
@@ -48,7 +48,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task DeleteAsync(int id)
         {
-            var user = await GetUserByIdAsync(id);
+            User user = await GetUserByIdAsync(id);
 
             if (user == null)
                 throw new NotFoundException("User not found");
@@ -59,7 +59,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task UpdateAsync(int id, UpdateUserViewModel model)
         {
-            var user = await GetUserByIdAsync(id);
+            User user = await GetUserByIdAsync(id);
 
             if (user == null)
                 throw new NotFoundException("User not found");
@@ -76,7 +76,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<UserViewModel> GetByIdAsync(int id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
                 throw new NotFoundException("User not found");
@@ -86,7 +86,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<List<UserViewModel>> GetAllAsync()
         {
-            var users = await _context.Users.ToListAsync();
+            List<User> users = await _context.Users.ToListAsync();
 
             return _mapper.Map<List<UserViewModel>>(users);
         }
@@ -98,7 +98,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<UserViewModel> GetByNameAsync(string name)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
             if (user == null)
                 throw new NotFoundException("User not found");
@@ -113,7 +113,7 @@ namespace ShopManagementSystem.Application.Services.Users
             if (userExists)
                 throw new BadRequestException("Uesr exists");
 
-            var user = _mapper.Map<User>(model);
+            User user = _mapper.Map<User>(model);
 
             user.CreatedAt = DateTime.UtcNow;
             user.IsActive = true;
@@ -126,7 +126,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<UpdateUserViewModel> GetByIdForUpdateAsync(int id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             return _mapper.Map<UpdateUserViewModel>(user);
         }
@@ -134,7 +134,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<User> GetUserByNameAsync(string name)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
             if (user == null)
                 throw new NotFoundException("User not found");
@@ -144,7 +144,7 @@ namespace ShopManagementSystem.Application.Services.Users
 
         public async Task<User> GetUserByIdAsync(int id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            User? user = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
             {
