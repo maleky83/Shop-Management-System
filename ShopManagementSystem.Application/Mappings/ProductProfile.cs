@@ -1,23 +1,22 @@
-﻿using AutoMapper;
+using AutoMapper;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Domain.Entities.Catalog;
 
-namespace ShopManagementSystem.Application.Mappings
+namespace ShopManagementSystem.Application.Mappings;
+
+public class ProductProfile : Profile
 {
-    public class ProductProfile : Profile
+    public ProductProfile()
     {
-        public ProductProfile()
-        {
-            CreateMap<Product, ProductViewModel>()
-                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
+        CreateMap<Product, ProductViewModel>()
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
 
-            CreateMap<ProductViewModel, UpdateProductViewModel>();
+        CreateMap<ProductViewModel, UpdateProductViewModel>();
 
-            CreateMap<Product, UpdateProductViewModel>();
+        CreateMap<Product, UpdateProductViewModel>();
 
-            CreateMap<UpdateProductViewModel, Product>();
+        CreateMap<UpdateProductViewModel, Product>();
 
-            CreateMap<CreateProductViewModel, Product>();
-        }
+        CreateMap<CreateProductViewModel, Product>();
     }
 }

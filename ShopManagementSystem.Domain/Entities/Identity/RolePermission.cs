@@ -1,13 +1,12 @@
-﻿namespace ShopManagementSystem.Domain.Entities.Identity
+namespace ShopManagementSystem.Domain.Entities.Identity;
+
+public sealed class RolePermission
 {
-    public class RolePermission
-    {
-        public int RoleId { get; set; }
+    public int RoleId { get; set; }
 
-        public Role Role { get; set; } = null!;
+    public Role Role { get; set; } = null!;
 
-        public int PermissionId { get; set; }
+    public int PermissionId { get; set; }
 
-        public Permission Permission { get; set; } = null!;
-    }
+    public Permission Permission { get; set; } = null!;
 }

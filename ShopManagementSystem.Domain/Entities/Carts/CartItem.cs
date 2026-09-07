@@ -1,8 +1,8 @@
-﻿using ShopManagementSystem.Domain.Entities.Catalog;
+using ShopManagementSystem.Domain.Entities.Catalog;
 
 namespace ShopManagementSystem.Domain.Entities.Carts;
 
-public class CartItem : BaseEntity
+public sealed class CartItem : BaseEntity
 {
     public int CartId { get; set; }
 

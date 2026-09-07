@@ -1,47 +1,46 @@
-﻿using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Exceptions;
 
-namespace ShopManagementSystem.Api.Middleware
+namespace ShopManagementSystem.Api.Middleware;
+
+public class GlobalExceptionMiddleware
 {
-    public class GlobalExceptionMiddleware
+    private readonly RequestDelegate _next;
+    public GlobalExceptionMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-        public GlobalExceptionMiddleware(RequestDelegate next)
+        _next = next;
+    }
+
+    public async Task InvokeAsync(HttpContext context)
+    {
+        try
         {
-            _next = next;
+            await _next(context);
         }
-
-        public async Task InvokeAsync(HttpContext context)
+        catch (Exception ex)
         {
-            try
-            {
-                await _next(context);
-            }
-            catch (Exception ex)
-            {
-                await HandleExceptionAsync(context, ex);
-            }
+            await HandleExceptionAsync(context, ex);
         }
+    }
 
-        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+        var statusCode = exception switch
         {
-            var statusCode = exception switch
-            {
-                NotFoundException => StatusCodes.Status404NotFound,
-                BadRequestException => StatusCodes.Status400BadRequest,
-                UnauthorizedException => StatusCodes.Status401Unauthorized,
-                _ => StatusCodes.Status500InternalServerError,
-            };
+            NotFoundException => StatusCodes.Status404NotFound,
+            BadRequestException => StatusCodes.Status400BadRequest,
+            UnauthorizedException => StatusCodes.Status401Unauthorized,
+            _ => StatusCodes.Status500InternalServerError,
+        };
 
-            context.Response.StatusCode = statusCode;
+        context.Response.StatusCode = statusCode;
 
-            var response = new ErrorResponse
-            {
-                StatusCode = statusCode,
-                Message = exception.Message,
-            };
+        var response = new ErrorResponse
+        {
+            StatusCode = statusCode,
+            Message = exception.Message,
+        };
 
-            await context.Response.WriteAsJsonAsync(response,context.RequestAborted);
-        }
+        await context.Response.WriteAsJsonAsync(response, context.RequestAborted);
     }
 }

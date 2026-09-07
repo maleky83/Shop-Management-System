@@ -1,6 +1,6 @@
-﻿namespace ShopManagementSystem.Domain.Entities.Catalog;
+namespace ShopManagementSystem.Domain.Entities.Catalog;
 
-public class Category : BaseEntity
+public sealed class Category : BaseEntity
 {
     public string Name { get; set; } = string.Empty;
 

@@ -4,56 +4,55 @@ using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 
-namespace ShopManagementSystem.Api.Controllers
+namespace ShopManagementSystem.Api.Controllers;
+
+[ApiController]
+[Route("api/orders")]
+public class OrdersController : ControllerBase
 {
-    [ApiController]
-    [Route("api/orders")]
-    public class OrdersController : ControllerBase
+    private readonly IOrderService _orderService;
+    public OrdersController(IOrderService orderService, IPaymentService paymentService)
     {
-        private readonly IOrderService _orderService;
-        public OrdersController(IOrderService orderService, IPaymentService paymentService)
+        _orderService = orderService;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create()
+    {
+        var userId = GetUserId();
+        var orderId = await _orderService.CreateAsync(userId);
+        return Ok(new
         {
-            _orderService = orderService;
-        }
+            id = orderId,
+            message = "Order is created"
+        });
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Create()
+    [HttpGet("{orderId}")]
+    public async Task<ActionResult<OrderViewModel>> GetById(int orderId)
+    {
+        var userId = GetUserId();
+
+        OrderViewModel order = await _orderService.GetByIdAsync(userId, orderId);
+
+        return order;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<List<OrderViewModel>>> GetAll()
+    {
+        var userId = GetUserId();
+        return await _orderService.GetAllAsync(userId);
+    }
+
+    private int GetUserId()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (!int.TryParse(userId, out var id))
         {
-            var userId = GetUserId();
-            var orderId = await _orderService.CreateAsync(userId);
-            return Ok(new
-            {
-                id = orderId,
-                message = "Order is created"
-            });
+            throw new UnauthorizedAccessException("User invalid");
         }
-
-        [HttpGet("{orderId}")]
-        public async Task<ActionResult<OrderViewModel>> GetById(int orderId)
-        {
-            var userId = GetUserId();
-
-            OrderViewModel order = await _orderService.GetByIdAsync(userId, orderId);
-
-            return order;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<List<OrderViewModel>>> GetAll()
-        {
-            var userId = GetUserId();
-            return await _orderService.GetAllAsync(userId);
-        }
-
-        private int GetUserId()
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (!int.TryParse(userId, out var id))
-            {
-                throw new UnauthorizedAccessException("User invalid");
-            }
-            return id;
-        }
+        return id;
     }
 }

@@ -1,28 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ShopManagementSystem.Infrastructure.Migrations
+namespace ShopManagementSystem.Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class UpdatepaymentEntity : Migration
 {
     /// <inheritdoc />
-    public partial class UpdatepaymentEntity : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "TransactionId",
-                table: "Payments",
-                newName: "Authority");
-        }
+        migrationBuilder.RenameColumn(
+            name: "TransactionId",
+            table: "Payments",
+            newName: "Authority");
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.RenameColumn(
-                name: "Authority",
-                table: "Payments",
-                newName: "TransactionId");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.RenameColumn(
+            name: "Authority",
+            table: "Payments",
+            newName: "TransactionId");
     }
 }

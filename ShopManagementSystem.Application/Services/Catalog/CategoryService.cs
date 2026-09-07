@@ -5,31 +5,30 @@ using ShopManagementSystem.Application.Interfaces.Catalog;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
-namespace ShopManagementSystem.Application.Services.Catalog
+namespace ShopManagementSystem.Application.Services.Catalog;
+
+public class CategoryService : ICategoryService
 {
-    public class CategoryService : ICategoryService
+    private readonly IMapper _mapper;
+    private readonly ApplicationDbContext _context;
+    public CategoryService(ApplicationDbContext context, IMapper mapper)
     {
-        private readonly IMapper _mapper;
-        private readonly ApplicationDbContext _context;
-        public CategoryService(ApplicationDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
+        _context = context;
+        _mapper = mapper;
+    }
 
-        public async Task<List<CategoryViewModel>> GetAllAsync()
-        {
-            List<Category> categories = await _context.Categories.ToListAsync();
+    public async Task<List<CategoryViewModel>> GetAllAsync()
+    {
+        List<Category> categories = await _context.Categories.ToListAsync();
 
-            return _mapper.Map<List<CategoryViewModel>>(categories);
+        return _mapper.Map<List<CategoryViewModel>>(categories);
 
-        }
+    }
 
-        public async Task<CategoryViewModel> GetByIdAsync(int id)
-        {
-            Category? category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+    public async Task<CategoryViewModel> GetByIdAsync(int id)
+    {
+        Category? category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
-            return _mapper.Map<CategoryViewModel>(category);
-        }
+        return _mapper.Map<CategoryViewModel>(category);
     }
 }

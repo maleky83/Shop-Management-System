@@ -1,8 +1,7 @@
-﻿namespace ShopManagementSystem.Domain.Entities
+namespace ShopManagementSystem.Domain.Entities;
+
+public abstract class BaseEntity
 {
-    public abstract class BaseEntity
-    {
-        public int Id { get; set; }
-        public DateTime CreatedAt { get; set; }
-    }
+    public int Id { get; set; }
+    public DateTime CreatedAt { get; set; }
 }

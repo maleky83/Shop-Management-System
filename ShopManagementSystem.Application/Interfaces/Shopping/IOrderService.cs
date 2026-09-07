@@ -1,11 +1,10 @@
-﻿using ShopManagementSystem.Application.DTOs.Order;
+using ShopManagementSystem.Application.DTOs.Order;
 
-namespace ShopManagementSystem.Application.Interfaces.Shopping
+namespace ShopManagementSystem.Application.Interfaces.Shopping;
+
+public interface IOrderService
 {
-    public interface IOrderService
-    {
-        Task<int> CreateAsync(int userId);
-        Task<OrderViewModel> GetByIdAsync(int userId, int orderId);
-        Task<List<OrderViewModel>> GetAllAsync(int userId);
-    }
+    Task<int> CreateAsync(int userId);
+    Task<OrderViewModel> GetByIdAsync(int userId, int orderId);
+    Task<List<OrderViewModel>> GetAllAsync(int userId);
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Domain.Entities.Identity;
@@ -6,48 +6,42 @@ using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Infrastructure.Data.Configurations;
 using ShopManagementSystem.Infrastructure.Data.Seed;
 
-namespace ShopManagementSystem.Infrastructure.Data.Context
+namespace ShopManagementSystem.Infrastructure.Data.Context;
+
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public class ApplicationDbContext : DbContext
+    #region Product
+
+    public DbSet<OrderDetail> OrderDetail { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<Cart> Carts { get; set; }
+    public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+
+    #endregion
+
+    #region User
+
+    public DbSet<User> Users { get; set; }
+    public DbSet<Permission> Permissions { get; set; }
+    public DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<Role> Roles { get; set; }
+
+    #endregion
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
+        base.OnModelCreating(modelBuilder);
 
-        }
+        SeedData.Seed(modelBuilder);
 
-        #region Product
-
-        public DbSet<OrderDetail> OrderDetail { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Cart> Carts { get; set; }
-        public DbSet<CartItem> CartItems { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-
-        #endregion
-
-        #region User
-
-        public DbSet<User> Users { get; set; }
-        public DbSet<Permission> Permissions { get; set; }
-        public DbSet<RolePermission> RolePermissions { get; set; }
-        public DbSet<Role> Roles { get; set; }
-
-        #endregion
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            SeedData.Seed(modelBuilder);
-
-            modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
-            modelBuilder.ApplyConfiguration(new ProductConfiguration());
-            modelBuilder.ApplyConfiguration(new CartConfiguration());
-            modelBuilder.ApplyConfiguration(new CartItemConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
-            modelBuilder.ApplyConfiguration(new OrderConfiguration());
-            modelBuilder.ApplyConfiguration(new PaymentConfiguration());
-        }
+        modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
+        modelBuilder.ApplyConfiguration(new ProductConfiguration());
+        modelBuilder.ApplyConfiguration(new CartConfiguration());
+        modelBuilder.ApplyConfiguration(new CartItemConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+        modelBuilder.ApplyConfiguration(new OrderConfiguration());
+        modelBuilder.ApplyConfiguration(new PaymentConfiguration());
     }
 }

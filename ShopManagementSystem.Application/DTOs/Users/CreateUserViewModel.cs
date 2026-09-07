@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace ShopManagementSystem.Application.DTOs.Users
+namespace ShopManagementSystem.Application.DTOs.Users;
+
+public class CreateUserViewModel
 {
-    public class CreateUserViewModel
-    {
-        [Required]
-        public required string Name { get; set; }
-        [Required]
-        public required string Password { get; set; }
-        [Required]
-        public required int RoleId { get; set; }
+    [Required]
+    public required string Name { get; set; }
+    [Required]
+    public required string Password { get; set; }
+    [Required]
+    public required int RoleId { get; set; }
 
-    }
 }

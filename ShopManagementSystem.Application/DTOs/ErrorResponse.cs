@@ -1,8 +1,7 @@
-﻿namespace ShopManagementSystem.Application.DTOs
+namespace ShopManagementSystem.Application.DTOs;
+
+public class ErrorResponse
 {
-    public class ErrorResponse
-    {
-        public int StatusCode { get; set; }
-        public required string Message { get; set; }
-    }
+    public int StatusCode { get; set; }
+    public required string Message { get; set; }
 }

@@ -1,9 +1,8 @@
-﻿using ShopManagementSystem.Domain.Entities.Identity;
+using ShopManagementSystem.Domain.Entities.Identity;
 
-namespace ShopManagementSystem.Application.Interfaces.Authentication
+namespace ShopManagementSystem.Application.Interfaces.Authentication;
+
+public interface ITokenService
 {
-    public interface ITokenService
-    {
-        string CreateToken(User user);
-    }
+    string CreateToken(User user);
 }

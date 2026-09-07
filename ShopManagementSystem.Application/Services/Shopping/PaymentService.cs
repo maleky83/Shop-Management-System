@@ -7,162 +7,161 @@ using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Domain.Enums;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
-namespace ShopManagementSystem.Application.Services.Shopping
+namespace ShopManagementSystem.Application.Services.Shopping;
+
+public class PaymentService : IPaymentService
 {
-    public class PaymentService : IPaymentService
+    private readonly ApplicationDbContext _context;
+
+    public PaymentService(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public PaymentService(ApplicationDbContext context)
+    public async Task<PaymentViewModel> CreatePaymentAsync(
+        int userId,
+        int orderId)
+    {
+        Order? order = await _context.Orders
+            .FirstOrDefaultAsync(o =>
+                o.Id == orderId &&
+                o.UserId == userId);
+
+        if (order == null)
         {
-            _context = context;
+            throw new NotFoundException("Order not found");
         }
 
-        public async Task<PaymentViewModel> CreatePaymentAsync(
-            int userId,
-            int orderId)
+        if (order.Status != OrderStatus.Pending)
         {
-            Order? order = await _context.Orders
-                .FirstOrDefaultAsync(o =>
-                    o.Id == orderId &&
-                    o.UserId == userId);
+            throw new BadRequestException(
+                "This order can not be paid");
+        }
 
-            if (order == null)
-            {
-                throw new NotFoundException("Order not found");
-            }
+        Payment? paidPayment = await _context.Payments
+            .FirstOrDefaultAsync(p =>
+                p.OrderId == orderId &&
+                p.Status == PaymentStatus.Paid);
 
-            if (order.Status != OrderStatus.Pending)
-            {
-                throw new BadRequestException(
-                    "This order can not be paid");
-            }
+        if (paidPayment != null)
+        {
+            throw new BadRequestException(
+                "This order has already been paid");
+        }
 
-            Payment? paidPayment = await _context.Payments
-                .FirstOrDefaultAsync(p =>
-                    p.OrderId == orderId &&
-                    p.Status == PaymentStatus.Paid);
+        Payment? pendingPayment = await _context.Payments
+            .FirstOrDefaultAsync(p =>
+                p.OrderId == orderId &&
+                p.Status == PaymentStatus.Pending);
 
-            if (paidPayment != null)
-            {
-                throw new BadRequestException(
-                    "This order has already been paid");
-            }
+        if (pendingPayment != null)
+        {
+            return MapToViewModel(pendingPayment);
+        }
 
-            Payment? pendingPayment = await _context.Payments
-                .FirstOrDefaultAsync(p =>
-                    p.OrderId == orderId &&
-                    p.Status == PaymentStatus.Pending);
+        var payment = new Payment
+        {
+            OrderId = order.Id,
+            Amount = order.TotalPrice,
+            Status = PaymentStatus.Pending,
+            CreatedAt = DateTime.UtcNow,
 
-            if (pendingPayment != null)
-            {
-                return MapToViewModel(pendingPayment);
-            }
+            Authority = Guid.NewGuid().ToString("N")
+        };
 
-            var payment = new Payment
-            {
-                OrderId = order.Id,
-                Amount = order.TotalPrice,
-                Status = PaymentStatus.Pending,
-                CreatedAt = DateTime.UtcNow,
+        await _context.Payments.AddAsync(payment);
+        await _context.SaveChangesAsync();
 
-                Authority = Guid.NewGuid().ToString("N")
-            };
+        return MapToViewModel(payment);
+    }
 
-            await _context.Payments.AddAsync(payment);
+    public async Task VerifyPaymentAsync(string authority)
+    {
+        if (string.IsNullOrWhiteSpace(authority))
+        {
+            throw new BadRequestException(
+                "Authority is required");
+        }
+
+        Payment? payment = await _context.Payments
+            .Include(p => p.Order)
+            .FirstOrDefaultAsync(p =>
+                p.Authority == authority);
+
+        if (payment == null)
+        {
+            throw new NotFoundException(
+                "Payment not found");
+        }
+
+        if (payment.Status == PaymentStatus.Paid)
+        {
+            throw new BadRequestException(
+                "Payment has already been paid");
+        }
+
+        // ==========================================
+        // Mock Payment
+        // ==========================================
+
+        var isVerified = true;
+
+        if (!isVerified)
+        {
+            payment.Status = PaymentStatus.Failed;
+
             await _context.SaveChangesAsync();
 
-            return MapToViewModel(payment);
+            throw new BadRequestException(
+                "Payment failed");
         }
 
-        public async Task VerifyPaymentAsync(string authority)
+        // ==========================================
+        // Payment Successful
+        // ==========================================
+
+        payment.Status = PaymentStatus.Paid;
+        payment.PaidAt = DateTime.UtcNow;
+        payment.ReferenceId = GenerateReferenceId();
+
+        payment.Order.Status = OrderStatus.Paid;
+
+        // ==========================================
+        // Clear Cart
+        // ==========================================
+
+        Cart? cart = await _context.Carts
+            .Include(c => c.CartItems)
+            .FirstOrDefaultAsync(c =>
+                c.UserId == payment.Order.UserId);
+
+        if (cart != null && cart.CartItems.Any())
         {
-            if (string.IsNullOrWhiteSpace(authority))
-            {
-                throw new BadRequestException(
-                    "Authority is required");
-            }
-
-            Payment? payment = await _context.Payments
-                .Include(p => p.Order)
-                .FirstOrDefaultAsync(p =>
-                    p.Authority == authority);
-
-            if (payment == null)
-            {
-                throw new NotFoundException(
-                    "Payment not found");
-            }
-
-            if (payment.Status == PaymentStatus.Paid)
-            {
-                throw new BadRequestException(
-                    "Payment has already been paid");
-            }
-
-            // ==========================================
-            // Mock Payment
-            // ==========================================
-
-            var isVerified = true;
-
-            if (!isVerified)
-            {
-                payment.Status = PaymentStatus.Failed;
-
-                await _context.SaveChangesAsync();
-
-                throw new BadRequestException(
-                    "Payment failed");
-            }
-
-            // ==========================================
-            // Payment Successful
-            // ==========================================
-
-            payment.Status = PaymentStatus.Paid;
-            payment.PaidAt = DateTime.UtcNow;
-            payment.ReferenceId = GenerateReferenceId();
-
-            payment.Order.Status = OrderStatus.Paid;
-
-            // ==========================================
-            // Clear Cart
-            // ==========================================
-
-            Cart? cart = await _context.Carts
-                .Include(c => c.CartItems)
-                .FirstOrDefaultAsync(c =>
-                    c.UserId == payment.Order.UserId);
-
-            if (cart != null && cart.CartItems.Any())
-            {
-                _context.CartItems.RemoveRange(cart.CartItems);
-            }
-
-            await _context.SaveChangesAsync();
+            _context.CartItems.RemoveRange(cart.CartItems);
         }
 
-        private static PaymentViewModel MapToViewModel(Payment payment)
+        await _context.SaveChangesAsync();
+    }
+
+    private static PaymentViewModel MapToViewModel(Payment payment)
+    {
+        return new PaymentViewModel
         {
-            return new PaymentViewModel
-            {
-                PaymentId = payment.Id,
-                OrderId = payment.OrderId,
-                Amount = payment.Amount,
-                Status = payment.Status,
-                Authority = payment.Authority,
-                ReferenceId = payment.ReferenceId,
-                CreatedAt = payment.CreatedAt,
-                PaidAt = payment.PaidAt
-            };
-        }
+            PaymentId = payment.Id,
+            OrderId = payment.OrderId,
+            Amount = payment.Amount,
+            Status = payment.Status,
+            Authority = payment.Authority,
+            ReferenceId = payment.ReferenceId,
+            CreatedAt = payment.CreatedAt,
+            PaidAt = payment.PaidAt
+        };
+    }
 
-        private static string GenerateReferenceId()
-        {
-            return DateTimeOffset.UtcNow
-                .ToUnixTimeMilliseconds()
-                .ToString();
-        }
+    private static string GenerateReferenceId()
+    {
+        return DateTimeOffset.UtcNow
+            .ToUnixTimeMilliseconds()
+            .ToString();
     }
 }

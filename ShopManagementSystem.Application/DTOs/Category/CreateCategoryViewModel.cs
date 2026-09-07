@@ -1,8 +1,7 @@
-﻿namespace ShopManagementSystem.Application.DTOs.Category
+namespace ShopManagementSystem.Application.DTOs.Category;
+
+public class CreateCategoryViewModel
 {
-    public class CreateCategoryViewModel
-    {
-        public required string Name { get; set; }
-        public required string Description { get; set; }
-    }
+    public required string Name { get; set; }
+    public required string Description { get; set; }
 }

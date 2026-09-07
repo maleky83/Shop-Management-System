@@ -1,10 +1,9 @@
 using ShopManagementSystem.Application.DTOs;
 
-namespace ShopManagementSystem.Application.Interfaces.Users
+namespace ShopManagementSystem.Application.Interfaces.Users;
+
+public interface IRoleService
 {
-    public interface IRoleService
-    {
-        Task<bool> ExistsRoleByIdAsync(int id);
-        public Task<List<RoleViewModel>> GetAllRolesAsync();
-    }
+    Task<bool> ExistsRoleByIdAsync(int id);
+    public Task<List<RoleViewModel>> GetAllRolesAsync();
 }

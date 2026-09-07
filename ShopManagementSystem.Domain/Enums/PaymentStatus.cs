@@ -1,10 +1,9 @@
-﻿namespace ShopManagementSystem.Domain.Enums
+﻿namespace ShopManagementSystem.Domain.Enums;
+
+public enum PaymentStatus
 {
-    public enum PaymentStatus
-    {
-        Pending = 0,
-        Paid = 1,
-        Failed = 2,
-        Cancelled = 3
-    }
+    Pending = 0,
+    Paid = 1,
+    Failed = 2,
+    Cancelled = 3
 }

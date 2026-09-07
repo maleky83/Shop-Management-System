@@ -1,9 +1,9 @@
-﻿using ShopManagementSystem.Domain.Entities.Identity;
+using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
-public class Order : BaseEntity
+public sealed class Order : BaseEntity
 {
     public int UserId { get; set; }
 

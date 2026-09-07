@@ -1,10 +1,9 @@
-﻿using ShopManagementSystem.Application.DTOs;
+using ShopManagementSystem.Application.DTOs;
 
-namespace ShopManagementSystem.Application.Interfaces
+namespace ShopManagementSystem.Application.Interfaces;
+
+public interface IPaymentService
 {
-    public interface IPaymentService
-    {
-        Task<PaymentViewModel> CreatePaymentAsync(int userId, int orderId);
-        Task VerifyPaymentAsync(string authority);
-    }
+    Task<PaymentViewModel> CreatePaymentAsync(int userId, int orderId);
+    Task VerifyPaymentAsync(string authority);
 }

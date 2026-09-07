@@ -1,10 +1,9 @@
-﻿using ShopManagementSystem.Application.DTOs.Category;
+using ShopManagementSystem.Application.DTOs.Category;
 
-namespace ShopManagementSystem.Application.Interfaces.Catalog
+namespace ShopManagementSystem.Application.Interfaces.Catalog;
+
+public interface ICategoryService
 {
-    public interface ICategoryService
-    {
-        Task<List<CategoryViewModel>> GetAllAsync();
-        Task<CategoryViewModel> GetByIdAsync(int id);
-    }
+    Task<List<CategoryViewModel>> GetAllAsync();
+    Task<CategoryViewModel> GetByIdAsync(int id);
 }

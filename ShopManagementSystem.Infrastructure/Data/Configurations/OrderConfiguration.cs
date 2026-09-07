@@ -2,16 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Orders;
 
-namespace ShopManagementSystem.Infrastructure.Data.Configurations
+namespace ShopManagementSystem.Infrastructure.Data.Configurations;
+
+public class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
-    public class OrderConfiguration : IEntityTypeConfiguration<Order>
+    public void Configure(EntityTypeBuilder<Order> builder)
     {
-        public void Configure(EntityTypeBuilder<Order> builder)
-        {
-            builder.HasOne(o => o.User)
-                .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
+        builder.HasOne(o => o.User)
+            .WithMany(u => u.Orders)
+            .HasForeignKey(o => o.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

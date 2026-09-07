@@ -8,13 +8,9 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
-
 [*.cs]
-
 indent_style = space
 indent_size = 4
-
-dotnet_diagnostic.CS1591.severity = none
 
 csharp_style_var_when_type_is_apparent = true:warning
 csharp_style_var_for_built_in_types = true:warning
@@ -38,3 +34,7 @@ dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 
 dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.CS1591.severity = none
+dotnet_diagnostic.CA1852.severity=none
+dotnet_diagnostic.CA1848.severity=none
+dotnet_diagnostic.CA2007.severity = none

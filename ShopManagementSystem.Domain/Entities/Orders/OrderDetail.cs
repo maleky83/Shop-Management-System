@@ -1,8 +1,8 @@
-﻿using ShopManagementSystem.Domain.Entities.Catalog;
+using ShopManagementSystem.Domain.Entities.Catalog;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
-public class OrderDetail : BaseEntity
+public sealed class OrderDetail : BaseEntity
 {
     public int OrderId { get; set; }
 

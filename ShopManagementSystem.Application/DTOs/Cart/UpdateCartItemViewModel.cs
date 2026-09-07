@@ -1,7 +1,6 @@
-﻿namespace ShopManagementSystem.Application.DTOs.Cart
+namespace ShopManagementSystem.Application.DTOs.Cart;
+
+public class UpdateCartItemViewModel
 {
-    public class UpdateCartItemViewModel
-    {
-        public int Quantity { get; set; }
-    }
+    public int Quantity { get; set; }
 }

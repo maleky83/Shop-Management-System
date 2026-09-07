@@ -1,7 +1,6 @@
-﻿namespace ShopManagementSystem.Application.Exceptions
+namespace ShopManagementSystem.Application.Exceptions;
+
+public class UnauthorizedException : Exception
 {
-    public class UnauthorizedException : Exception
-    {
-        public UnauthorizedException(string name) : base(name) { }
-    }
+    public UnauthorizedException(string name) : base(name) { }
 }
