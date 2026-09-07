@@ -3,7 +3,6 @@ using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Domain.Entities.Orders;
-using ShopManagementSystem.Infrastructure.Data.Configurations;
 using ShopManagementSystem.Infrastructure.Data.Seed;
 
 namespace ShopManagementSystem.Infrastructure.Data.Context;
@@ -36,12 +35,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
 
         SeedData.Seed(modelBuilder);
 
-        modelBuilder.ApplyConfiguration(new RolePermissionConfiguration());
-        modelBuilder.ApplyConfiguration(new ProductConfiguration());
-        modelBuilder.ApplyConfiguration(new CartConfiguration());
-        modelBuilder.ApplyConfiguration(new CartItemConfiguration());
-        modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
-        modelBuilder.ApplyConfiguration(new OrderConfiguration());
-        modelBuilder.ApplyConfiguration(new PaymentConfiguration());
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
     }
 }
