@@ -7,26 +7,21 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Users;
 
-public class RoleService : IRoleService
+public class RoleService(
+    ApplicationDbContext context,
+    IMapper mapper
+    ) : IRoleService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IMapper _mapper;
-    public RoleService(ApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<bool> ExistsRoleByIdAsync(int id)
     {
-        return await _context.Roles.AnyAsync(r => r.Id == id);
+        return await context.Roles.AnyAsync(r => r.Id == id);
     }
 
     public async Task<List<RoleViewModel>> GetAllRolesAsync()
     {
-        List<Role> roles = await _context.Roles.ToListAsync();
+        List<Role> roles = await context.Roles.ToListAsync();
 
-        return _mapper.Map<List<RoleViewModel>>(roles);
+        return mapper.Map<List<RoleViewModel>>(roles);
     }
 
 }

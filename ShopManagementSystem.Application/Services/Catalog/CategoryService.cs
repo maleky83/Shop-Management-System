@@ -7,28 +7,20 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Catalog;
 
-public class CategoryService : ICategoryService
+public class CategoryService(IMapper mapper, ApplicationDbContext context) : ICategoryService
 {
-    private readonly IMapper _mapper;
-    private readonly ApplicationDbContext _context;
-    public CategoryService(ApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-        _mapper = mapper;
-    }
-
     public async Task<List<CategoryViewModel>> GetAllAsync()
     {
-        List<Category> categories = await _context.Categories.ToListAsync();
+        List<Category> categories = await context.Categories.ToListAsync();
 
-        return _mapper.Map<List<CategoryViewModel>>(categories);
+        return mapper.Map<List<CategoryViewModel>>(categories);
 
     }
 
     public async Task<CategoryViewModel> GetByIdAsync(int id)
     {
-        Category? category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        Category? category = await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
-        return _mapper.Map<CategoryViewModel>(category);
+        return mapper.Map<CategoryViewModel>(category);
     }
 }

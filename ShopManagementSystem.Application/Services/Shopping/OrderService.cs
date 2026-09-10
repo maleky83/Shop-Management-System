@@ -1,4 +1,3 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Exceptions;
@@ -10,17 +9,11 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping;
 
-public class OrderService : IOrderService
+public class OrderService(ApplicationDbContext context) : IOrderService
 {
-    private readonly ApplicationDbContext _context;
-    public OrderService(ApplicationDbContext context, IMapper mapper)
-    {
-        _context = context;
-    }
-
     public async Task<int> CreateAsync(int userId)
     {
-        Cart? cart = await _context.Carts
+        Cart? cart = await context.Carts
             .Include(c => c.CartItems)
             .ThenInclude(c => c.Product)
             .FirstOrDefaultAsync(c => c.UserId == userId);
@@ -52,16 +45,16 @@ public class OrderService : IOrderService
 
         order.TotalPrice = order.OrderDetails.Sum(od => od.TotalPrice);
 
-        await _context.Orders.AddAsync(order);
+        await context.Orders.AddAsync(order);
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
 
         return order.Id;
     }
 
     public async Task<List<OrderViewModel>> GetAllAsync(int userId)
     {
-        List<Order> orders = await _context.Orders
+        List<Order> orders = await context.Orders
             .Where(o => o.UserId == userId)
             .Include(o => o.OrderDetails)
             .ThenInclude(o => o.Product)
@@ -88,7 +81,7 @@ public class OrderService : IOrderService
 
     public async Task<OrderViewModel> GetByIdAsync(int userId, int orderId)
     {
-        Order? order = await _context.Orders
+        Order? order = await context.Orders
             .Include(o => o.OrderDetails)
             .ThenInclude(o => o.Product)
             .FirstOrDefaultAsync(o => o.UserId == userId && o.Id == orderId);

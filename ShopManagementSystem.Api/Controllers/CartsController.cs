@@ -7,13 +7,8 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("api/carts")]
-public class CartsController : ControllerBase
+public sealed class CartsController(ICartService _cartService) : ControllerBase
 {
-    private readonly ICartService _cartService;
-    public CartsController(ICartService cartService)
-    {
-        _cartService = cartService;
-    }
 
     private int GetUserId()
     {

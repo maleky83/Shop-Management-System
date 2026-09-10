@@ -4,16 +4,16 @@ namespace ShopManagementSystem.Application.Services.Authentication;
 
 public static class PasswordHelper
 {
-    private static readonly PasswordHasher<object> _passwordHasher = new();
+    private static readonly PasswordHasher<object> passwordHasher = new();
 
     public static string HashPassword(string password)
     {
-        return _passwordHasher.HashPassword(null!, password);
+        return passwordHasher.HashPassword(null!, password);
     }
 
     public static bool VerifyPassword(string hashedPassword, string password)
     {
-        PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(null!, hashedPassword, password);
+        PasswordVerificationResult result = passwordHasher.VerifyHashedPassword(null!, hashedPassword, password);
 
         return result == PasswordVerificationResult.Success ||
                result == PasswordVerificationResult.SuccessRehashNeeded;

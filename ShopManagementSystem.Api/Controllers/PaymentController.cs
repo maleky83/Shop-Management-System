@@ -8,15 +8,8 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("api/orders")]
-public class PaymentController : ControllerBase
+public sealed class PaymentController(IPaymentService _paymentService) : ControllerBase
 {
-    private readonly IPaymentService _paymentService;
-
-    public PaymentController(IPaymentService paymentService)
-    {
-        _paymentService = paymentService;
-    }
-
     [HttpPost("{orderId}/payment")]
     public async Task<ActionResult<PaymentViewModel>> Create(int orderId)
     {

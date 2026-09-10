@@ -4,19 +4,13 @@ using ShopManagementSystem.Application.Interfaces.Common;
 
 namespace ShopManagementSystem.Application.Services.Common;
 
-public class FileService : IFileService
+public class FileService(IWebHostEnvironment environment) : IFileService
 {
-    private readonly IWebHostEnvironment _environment;
-    public FileService(IWebHostEnvironment environment)
-    {
-        _environment = environment;
-    }
-
     public async Task<string> SaveFileAsync(IFormFile file)
     {
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
-        var directory = Path.Combine(_environment.WebRootPath, "images");
+        var directory = Path.Combine(environment.WebRootPath, "images");
 
         if (Directory.Exists(directory))
         {
@@ -35,7 +29,7 @@ public class FileService : IFileService
 
     public void DeleleFile(string pictureName)
     {
-        var filePath = Path.Combine(_environment.WebRootPath, "images", pictureName);
+        var filePath = Path.Combine(environment.WebRootPath, "images", pictureName);
 
         if (File.Exists(filePath))
             File.Delete(filePath);

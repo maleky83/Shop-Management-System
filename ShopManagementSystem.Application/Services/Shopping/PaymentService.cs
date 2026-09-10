@@ -9,20 +9,13 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping;
 
-public class PaymentService : IPaymentService
+public class PaymentService(ApplicationDbContext context) : IPaymentService
 {
-    private readonly ApplicationDbContext _context;
-
-    public PaymentService(ApplicationDbContext context)
-    {
-        _context = context;
-    }
-
     public async Task<PaymentViewModel> CreatePaymentAsync(
         int userId,
         int orderId)
     {
-        Order? order = await _context.Orders
+        Order? order = await context.Orders
             .FirstOrDefaultAsync(o =>
                 o.Id == orderId &&
                 o.UserId == userId);
@@ -38,7 +31,7 @@ public class PaymentService : IPaymentService
                 "This order can not be paid");
         }
 
-        Payment? paidPayment = await _context.Payments
+        Payment? paidPayment = await context.Payments
             .FirstOrDefaultAsync(p =>
                 p.OrderId == orderId &&
                 p.Status == PaymentStatus.Paid);
@@ -49,7 +42,7 @@ public class PaymentService : IPaymentService
                 "This order has already been paid");
         }
 
-        Payment? pendingPayment = await _context.Payments
+        Payment? pendingPayment = await context.Payments
             .FirstOrDefaultAsync(p =>
                 p.OrderId == orderId &&
                 p.Status == PaymentStatus.Pending);
@@ -69,8 +62,8 @@ public class PaymentService : IPaymentService
             Authority = Guid.NewGuid().ToString("N")
         };
 
-        await _context.Payments.AddAsync(payment);
-        await _context.SaveChangesAsync();
+        await context.Payments.AddAsync(payment);
+        await context.SaveChangesAsync();
 
         return MapToViewModel(payment);
     }
@@ -83,7 +76,7 @@ public class PaymentService : IPaymentService
                 "Authority is required");
         }
 
-        Payment? payment = await _context.Payments
+        Payment? payment = await context.Payments
             .Include(p => p.Order)
             .FirstOrDefaultAsync(p =>
                 p.Authority == authority);
@@ -110,7 +103,7 @@ public class PaymentService : IPaymentService
         {
             payment.Status = PaymentStatus.Failed;
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
 
             throw new BadRequestException(
                 "Payment failed");
@@ -130,17 +123,17 @@ public class PaymentService : IPaymentService
         // Clear Cart
         // ==========================================
 
-        Cart? cart = await _context.Carts
+        Cart? cart = await context.Carts
             .Include(c => c.CartItems)
             .FirstOrDefaultAsync(c =>
                 c.UserId == payment.Order.UserId);
 
         if (cart != null && cart.CartItems.Any())
         {
-            _context.CartItems.RemoveRange(cart.CartItems);
+            context.CartItems.RemoveRange(cart.CartItems);
         }
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     private static PaymentViewModel MapToViewModel(Payment payment)

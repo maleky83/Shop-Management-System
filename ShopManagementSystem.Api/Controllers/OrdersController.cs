@@ -1,21 +1,14 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Order;
-using ShopManagementSystem.Application.Interfaces;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("api/orders")]
-public class OrdersController : ControllerBase
+public sealed class OrdersController(IOrderService _orderService) : ControllerBase
 {
-    private readonly IOrderService _orderService;
-    public OrdersController(IOrderService orderService, IPaymentService paymentService)
-    {
-        _orderService = orderService;
-    }
-
     [HttpPost]
     public async Task<IActionResult> Create()
     {

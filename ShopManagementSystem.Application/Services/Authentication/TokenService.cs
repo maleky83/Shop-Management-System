@@ -8,15 +8,8 @@ using ShopManagementSystem.Domain.Entities.Identity;
 
 namespace ShopManagementSystem.Application.Services.Authentication;
 
-public class TokenService : ITokenService
+public class TokenService(IConfiguration configuration) : ITokenService
 {
-    private readonly IConfiguration _configuration;
-
-    public TokenService(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public string CreateToken(User user)
     {
         var claims = new List<Claim>()
@@ -32,15 +25,15 @@ public class TokenService : ITokenService
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(
-                _configuration["Jwt:Key"]!));
+                configuration["Jwt:Key"]!));
 
         var credentials = new SigningCredentials(
             key,
             SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
+            issuer: configuration["Jwt:Issuer"],
+            audience: configuration["Jwt:Audience"],
             claims: claims,
             expires: DateTime.UtcNow.AddDays(7),
             signingCredentials: credentials);

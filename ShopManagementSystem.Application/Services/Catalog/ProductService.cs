@@ -10,37 +10,27 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Catalog;
 
-public class ProductService : IProductService
+public class ProductService(
+    ApplicationDbContext context,
+    IFileService fileService,
+    IMapper mapper,
+    ICategoryService categoryService
+    ) : IProductService
 {
-    private readonly ApplicationDbContext _context;
-    private readonly IFileService _fileService;
-    private readonly IMapper _mapper;
-    private readonly ICategoryService _categoryService;
-    public ProductService(
-        IFileService fileService,
-        IMapper mapper,
-        ApplicationDbContext context,
-        ICategoryService categoryService)
-    {
-        _fileService = fileService;
-        _mapper = mapper;
-        _context = context;
-        _categoryService = categoryService;
-    }
 
     public async Task<ProductViewModel> GetByIdAsync(int id)
     {
-        Product? product = await _context.Products
+        Product? product = await context.Products
             .FirstOrDefaultAsync(p => p.Id == id);
 
         if (product == null)
             throw new NotFoundException("Product not found");
 
-        return _mapper.Map<ProductViewModel>(product);
+        return mapper.Map<ProductViewModel>(product);
     }
     public async Task<Product> GetProductByIdAsync(int id)
     {
-        Product? product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
+        Product? product = await context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
         if (product == null)
         {
@@ -51,29 +41,29 @@ public class ProductService : IProductService
 
     public async Task<List<ProductViewModel>> GetAllAsync()
     {
-        List<Product> products = await _context.Products.ToListAsync();
+        List<Product> products = await context.Products.ToListAsync();
 
-        return _mapper.Map<List<ProductViewModel>>(products);
+        return mapper.Map<List<ProductViewModel>>(products);
     }
 
     public async Task CreateAsync(CreateProductViewModel model)
     {
-        CategoryViewModel category = await _categoryService.GetByIdAsync(model.CategoryId);
+        CategoryViewModel category = await categoryService.GetByIdAsync(model.CategoryId);
 
         if (category == null)
             throw new NotFoundException("Category not found");
 
-        Product product = _mapper.Map<Product>(model);
+        Product product = mapper.Map<Product>(model);
 
         if (model.Picture != null)
         {
-            product.PictureName = await _fileService.SaveFileAsync(model.Picture);
+            product.PictureName = await fileService.SaveFileAsync(model.Picture);
         }
 
         product.CreatedAt = DateTime.UtcNow;
 
-        await _context.AddAsync(product);
-        await _context.SaveChangesAsync();
+        await context.AddAsync(product);
+        await context.SaveChangesAsync();
 
     }
 
@@ -84,18 +74,18 @@ public class ProductService : IProductService
         if (product == null)
             throw new NotFoundException("Product not found");
 
-        _mapper.Map(model, product);
+        mapper.Map(model, product);
 
         if (model.Picture?.Length > 0)
         {
             if (!string.IsNullOrWhiteSpace(product.PictureName))
             {
-                _fileService.DeleleFile(product.PictureName);
+                fileService.DeleleFile(product.PictureName);
             }
-            product.PictureName = await _fileService.SaveFileAsync(model.Picture);
+            product.PictureName = await fileService.SaveFileAsync(model.Picture);
         }
 
-        await _context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 
     public async Task DeleteByIdAsync(int id)
@@ -107,17 +97,17 @@ public class ProductService : IProductService
 
         if (!string.IsNullOrWhiteSpace(product.PictureName))
         {
-            _fileService.DeleleFile(product.PictureName);
+            fileService.DeleleFile(product.PictureName);
         }
 
-        _context.Remove(product);
-        await _context.SaveChangesAsync();
+        context.Remove(product);
+        await context.SaveChangesAsync();
     }
 
     public async Task<UpdateProductViewModel> GetForUpdateByIdAsync(int id)
     {
         ProductViewModel product = await GetByIdAsync(id);
 
-        return _mapper.Map<UpdateProductViewModel>(product);
+        return mapper.Map<UpdateProductViewModel>(product);
     }
 }

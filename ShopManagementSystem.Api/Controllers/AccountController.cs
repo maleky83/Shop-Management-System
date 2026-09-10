@@ -6,13 +6,8 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("api/account")]
-public class AccountController : ControllerBase
+public sealed class AccountController(IAccountService _accountService) : ControllerBase
 {
-    private readonly IAccountService _accountService;
-    public AccountController(IAccountService userService)
-    {
-        _accountService = userService;
-    }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterViewModel model)
