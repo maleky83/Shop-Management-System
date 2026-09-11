@@ -1,9 +1,9 @@
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public class UpdateUserViewModel
+public record UpdateUserViewModel
 {
-    public required string Name { get; set; }
-    public string? NewPassword { get; set; }
-    public int RoleId { get; set; }
-    public bool IsActive { get; set; }
+    public required string Name { get; init; }
+    public string? NewPassword { get; init; }
+    public int RoleId { get; init; }
+    public bool IsActive { get; init; }
 }

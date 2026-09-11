@@ -1,11 +1,11 @@
 namespace ShopManagementSystem.Application.DTOs.Cart;
 
-public class CartItemViewModel
+public record CartItemViewModel
 {
-    public int CartItemId { get; set; }
-    public decimal TotalPrice { get; set; }
-    public int ProductId { get; set; }
-    public string? ProductName { get; set; }
-    public decimal UnitPrice { get; set; }
-    public int Quantity { get; set; }
+    public int CartItemId { get; init; }
+    public decimal TotalPrice { get; init; }
+    public int ProductId { get; init; }
+    public string? ProductName { get; init; }
+    public decimal UnitPrice { get; init; }
+    public int Quantity { get; init; }
 }

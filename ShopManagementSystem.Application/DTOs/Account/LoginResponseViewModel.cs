@@ -1,6 +1,6 @@
 namespace ShopManagementSystem.Application.DTOs.Account;
 
-public class LoginResponseViewModel
+public record LoginResponseViewModel
 {
-    public string Token { get; set; } = string.Empty;
+    public string Token { get; init; } = string.Empty;
 }

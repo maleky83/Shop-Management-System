@@ -2,19 +2,19 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public class ProductDetailsViewModel
+public record ProductDetailsViewModel
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; init; } = string.Empty;
 
-    public string? Description { get; set; }
+    public string? Description { get; init; }
 
-    public string? PictureName { get; set; }
+    public string? PictureName { get; init; }
 
-    public IFormFile? Picture { get; set; }
+    public IFormFile? Picture { get; init; }
 
-    public decimal Price { get; set; }
+    public decimal Price { get; init; }
 
-    public int Quantity { get; set; }
+    public int Quantity { get; init; }
 
-    public bool IsActive { get; set; } = true;
+    public bool IsActive { get; init; } = true;
 }

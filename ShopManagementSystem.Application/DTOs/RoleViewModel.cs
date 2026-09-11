@@ -1,7 +1,7 @@
 namespace ShopManagementSystem.Application.DTOs;
 
-public class RoleViewModel
+public record RoleViewModel
 {
-    public int RoleId { get; set; }
-    public required string Name { get; set; }
+    public int RoleId { get; init; }
+    public required string Name { get; init; }
 }

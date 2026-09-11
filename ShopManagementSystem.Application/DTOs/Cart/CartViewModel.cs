@@ -1,9 +1,9 @@
 namespace ShopManagementSystem.Application.DTOs.Cart;
 
-public class CartViewModel
+public record CartViewModel
 {
-    public int CartId { get; set; }
-    public int UserId { get; set; }
-    public List<CartItemViewModel> CartItems { get; set; } = [];
-    public decimal TotalPrice { get; set; }
+    public int CartId { get; init; }
+    public int UserId { get; init; }
+    public List<CartItemViewModel> CartItems { get; init; } = [];
+    public decimal TotalPrice { get; init; }
 }

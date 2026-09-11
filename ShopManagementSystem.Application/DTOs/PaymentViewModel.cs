@@ -2,20 +2,20 @@ using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Application.DTOs;
 
-public class PaymentViewModel
+public record PaymentViewModel
 {
-    public int PaymentId { get; set; }
+    public int PaymentId { get; init; }
 
-    public int OrderId { get; set; }
+    public int OrderId { get; init; }
 
-    public decimal Amount { get; set; }
+    public decimal Amount { get; init; }
 
-    public PaymentStatus Status { get; set; }
+    public PaymentStatus Status { get; init; }
 
-    public string? ReferenceId { get; set; }
-    public string? Authority { get; set; }
+    public string? ReferenceId { get; init; }
+    public string? Authority { get; init; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; init; }
 
-    public DateTime? PaidAt { get; set; }
+    public DateTime? PaidAt { get; init; }
 }

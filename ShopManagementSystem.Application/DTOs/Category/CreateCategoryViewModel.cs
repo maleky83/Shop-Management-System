@@ -1,7 +1,7 @@
 namespace ShopManagementSystem.Application.DTOs.Category;
 
-public class CreateCategoryViewModel
+public record CreateCategoryViewModel
 {
-    public required string Name { get; set; }
-    public required string Description { get; set; }
+    public required string Name { get; init; }
+    public required string Description { get; init; }
 }

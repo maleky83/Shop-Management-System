@@ -1,9 +1,9 @@
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public class UserDetailViewModel
+public record UserDetailViewModel
 {
-    public int? UserId { get; set; }
-    public string? Name { get; set; }
-    public string? Password { get; set; }
-    public bool IsActive { get; set; }
+    public int? UserId { get; init; }
+    public string? Name { get; init; }
+    public string? Password { get; init; }
+    public bool IsActive { get; init; }
 }

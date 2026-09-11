@@ -73,25 +73,23 @@ internal class CartService(ApplicationDbContext context) : ICartService
             throw new NotFoundException("Cart not found");
         }
 
-        var result = new CartViewModel
+        var cartItems = cart.CartItems.Select(item => new CartItemViewModel
+        {
+            CartItemId = item.Id,
+            ProductName = item.Product.Name,
+            ProductId = item.ProductId,
+            Quantity = item.Quantity,
+            UnitPrice = item.UnitPrice,
+            TotalPrice = item.UnitPrice * item.Quantity
+        }).ToList();
+
+        return new CartViewModel
         {
             CartId = cart.Id,
             UserId = userId,
-            CartItems = cart.CartItems.Select(item => new CartItemViewModel
-            {
-                CartItemId = item.Id,
-                ProductName = item.Product.Name,
-                ProductId = item.ProductId,
-                Quantity = item.Quantity,
-                UnitPrice = item.UnitPrice,
-                TotalPrice = item.UnitPrice * item.Quantity
-            }).ToList()
+            CartItems = cartItems,
+            TotalPrice = cartItems.Sum(item => item.TotalPrice)
         };
-
-        result.TotalPrice = result.CartItems.Sum(ci => ci.TotalPrice);
-
-        return result;
-
     }
 
     public async Task DeleteAsync(int userId)

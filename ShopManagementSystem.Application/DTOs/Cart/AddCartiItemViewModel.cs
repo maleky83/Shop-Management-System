@@ -1,7 +1,7 @@
 namespace ShopManagementSystem.Application.DTOs.Cart;
 
-public class AddCartiItemViewModel
+public record AddCartiItemViewModel
 {
-    public int ProductId { get; set; }
-    public int Quantity { get; set; }
+    public int ProductId { get; init; }
+    public int Quantity { get; init; }
 }

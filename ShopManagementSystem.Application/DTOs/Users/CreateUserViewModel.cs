@@ -2,13 +2,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public class CreateUserViewModel
+public record CreateUserViewModel
 {
     [Required]
-    public required string Name { get; set; }
+    public required string Name { get; init; }
     [Required]
-    public required string Password { get; set; }
+    public required string Password { get; init; }
     [Required]
-    public required int RoleId { get; set; }
+    public required int RoleId { get; init; }
 
 }

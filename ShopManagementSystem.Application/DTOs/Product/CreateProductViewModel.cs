@@ -3,24 +3,24 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public class CreateProductViewModel
+public record CreateProductViewModel
 {
     [Required]
-    public required string Name { get; set; }
+    public required string Name { get; init; }
 
     [Required]
-    public required string Description { get; set; }
+    public required string Description { get; init; }
 
-    public IFormFile? Picture { get; set; }
-
-    [Required]
-    public required decimal Price { get; set; }
+    public IFormFile? Picture { get; init; }
 
     [Required]
-    public required int Quantity { get; set; }
-
-    public bool IsActive { get; set; } = true;
+    public required decimal Price { get; init; }
 
     [Required]
-    public int CategoryId { get; set; }
+    public required int Quantity { get; init; }
+
+    public bool IsActive { get; init; } = true;
+
+    [Required]
+    public int CategoryId { get; init; }
 }

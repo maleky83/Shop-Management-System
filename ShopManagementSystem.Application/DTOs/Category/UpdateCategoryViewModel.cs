@@ -1,8 +1,8 @@
 namespace ShopManagementSystem.Application.DTOs.Category;
 
-public class UpdateCategoryViewModel
+public record UpdateCategoryViewModel
 {
-    public int CategoryId { get; set; }
-    public required string Name { get; set; }
-    public required string Description { get; set; }
+    public int CategoryId { get; init; }
+    public required string Name { get; init; }
+    public required string Description { get; init; }
 }

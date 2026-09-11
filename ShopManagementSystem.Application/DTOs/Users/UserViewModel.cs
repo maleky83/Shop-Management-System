@@ -1,11 +1,11 @@
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public class UserViewModel
+public record UserViewModel
 {
-    public int? UserId { get; set; }
-    public int RoleId { get; set; }
-    public required string PasswordHash { get; set; }
-    public required string Name { get; set; }
-    public bool IsActive { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public int? UserId { get; init; }
+    public int RoleId { get; init; }
+    public required string PasswordHash { get; init; }
+    public required string Name { get; init; }
+    public bool IsActive { get; init; }
+    public DateTime CreatedAt { get; init; }
 }

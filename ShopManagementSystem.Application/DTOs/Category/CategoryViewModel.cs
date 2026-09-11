@@ -1,11 +1,11 @@
 namespace ShopManagementSystem.Application.DTOs.Category;
 
-public class CategoryViewModel
+public record CategoryViewModel
 {
-    public int CategoryId { get; set; }
-    public string Name { get; set; } = string.Empty;
+    public int CategoryId { get; init; }
+    public string Name { get; init; } = string.Empty;
 
-    public string? Description { get; set; }
+    public string? Description { get; init; }
 
-    public bool IsActive { get; set; } = true;
+    public bool IsActive { get; init; } = true;
 }

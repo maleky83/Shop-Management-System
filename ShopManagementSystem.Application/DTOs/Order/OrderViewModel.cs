@@ -2,11 +2,11 @@ using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Application.DTOs.Order;
 
-public class OrderViewModel
+public record OrderViewModel
 {
-    public int OrderId { get; set; }
-    public int UserId { get; set; }
-    public decimal TotalPrice { get; set; }
-    public OrderStatus OrderStatus { get; set; }
-    public List<OrderDetailViewModel>? OrderDetails { get; set; }
+    public int OrderId { get; init; }
+    public int UserId { get; init; }
+    public decimal TotalPrice { get; init; }
+    public OrderStatus OrderStatus { get; init; }
+    public List<OrderDetailViewModel>? OrderDetails { get; init; }
 }
