@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public record ProductDetailsViewModel
+public record ProductDetailsDto
 {
     public string Name { get; init; } = string.Empty;
 

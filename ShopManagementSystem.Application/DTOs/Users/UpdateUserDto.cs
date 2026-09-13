@@ -1,6 +1,6 @@
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public record UpdateUserViewModel
+public record UpdateUserDto
 {
     public required string Name { get; init; }
     public string? NewPassword { get; init; }

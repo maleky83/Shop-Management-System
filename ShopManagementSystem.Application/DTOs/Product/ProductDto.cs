@@ -1,6 +1,11 @@
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public record ProductViewModel
+public sealed record ProductsCollectionDto
+{
+    public required IReadOnlyCollection<ProductDto> Data { get; init; }
+}
+
+public sealed record ProductDto
 {
     public int ProductId { get; init; }
     public required string Name { get; init; }

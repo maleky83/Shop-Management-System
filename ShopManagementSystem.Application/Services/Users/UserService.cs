@@ -17,7 +17,7 @@ public class UserService(
     IRoleService roleService
     ) : IUserService
 {
-    public async Task CreateAsync(CreateUserViewModel model)
+    public async Task CreateAsync(CreateUserDto model)
     {
         User user = mapper.Map<User>(model);
 
@@ -45,7 +45,7 @@ public class UserService(
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(int id, UpdateUserViewModel model)
+    public async Task UpdateAsync(int id, UpdateUserDto model)
     {
         User user = await GetUserByIdAsync(id);
 
@@ -62,21 +62,21 @@ public class UserService(
         await context.SaveChangesAsync();
     }
 
-    public async Task<UserViewModel> GetByIdAsync(int id)
+    public async Task<UserDto> GetByIdAsync(int id)
     {
         User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
             throw new NotFoundException("User not found");
 
-        return mapper.Map<UserViewModel>(user);
+        return mapper.Map<UserDto>(user);
     }
 
-    public async Task<List<UserViewModel>> GetAllAsync()
+    public async Task<List<UserDto>> GetAllAsync()
     {
         List<User> users = await context.Users.ToListAsync();
 
-        return mapper.Map<List<UserViewModel>>(users);
+        return mapper.Map<List<UserDto>>(users);
     }
 
     public async Task<bool> ExistsByNameAsync(string name)
@@ -84,17 +84,17 @@ public class UserService(
         return await context.Users.AnyAsync(u => u.Name == name);
     }
 
-    public async Task<UserViewModel> GetByNameAsync(string name)
+    public async Task<UserDto> GetByNameAsync(string name)
     {
         User? user = await context.Users.FirstOrDefaultAsync(u => u.Name == name);
 
         if (user == null)
             throw new NotFoundException("User not found");
 
-        return mapper.Map<UserViewModel>(user);
+        return mapper.Map<UserDto>(user);
     }
 
-    public async Task CreateForRegisterAsync(RegisterViewModel model)
+    public async Task CreateForRegisterAsync(RegisterDto model)
     {
         var userExists = await ExistsByNameAsync(model.Name);
 
@@ -112,11 +112,11 @@ public class UserService(
         await context.SaveChangesAsync();
     }
 
-    public async Task<UpdateUserViewModel> GetByIdForUpdateAsync(int id)
+    public async Task<UpdateUserDto> GetByIdForUpdateAsync(int id)
     {
         User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
-        return mapper.Map<UpdateUserViewModel>(user);
+        return mapper.Map<UpdateUserDto>(user);
     }
 
 

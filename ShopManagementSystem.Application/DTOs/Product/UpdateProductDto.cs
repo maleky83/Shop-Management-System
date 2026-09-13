@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public record UpdateProductViewModel
+public record UpdateProductDto
 {
     public string? Name { get; init; }
 

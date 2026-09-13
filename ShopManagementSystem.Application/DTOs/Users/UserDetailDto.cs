@@ -1,6 +1,6 @@
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public record UserDetailViewModel
+public record UserDetailDto
 {
     public int? UserId { get; init; }
     public string? Name { get; init; }

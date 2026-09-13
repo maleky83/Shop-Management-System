@@ -13,12 +13,12 @@ public class AccountService(
     IUserService userService
     ) : IAccountService
 {
-    public async Task RegisterAsync(RegisterViewModel model)
+    public async Task RegisterAsync(RegisterDto model)
     {
         await userService.CreateForRegisterAsync(model);
     }
 
-    public async Task<LoginResponseViewModel> LoginAsync(LoginViewModel model)
+    public async Task<LoginResponseDto> LoginAsync(LoginDto model)
     {
         User user = await userService.GetUserByNameAsync(model.Name);
 
@@ -32,7 +32,7 @@ public class AccountService(
 
         var token = tokenService.CreateToken(user);
 
-        return new LoginResponseViewModel()
+        return new LoginResponseDto()
         {
             Token = token
         };

@@ -1,6 +1,6 @@
 namespace ShopManagementSystem.Application.DTOs.Order;
 
-public record OrderDetailViewModel
+public record OrderDetailDto
 {
     public int OrderDetailId { get; init; }
     public int OrderId { get; init; }

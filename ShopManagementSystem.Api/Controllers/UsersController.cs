@@ -5,18 +5,24 @@ using ShopManagementSystem.Application.Interfaces.Users;
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
-[Route("api/users")]
+[Route("users")]
 public sealed class UsersController(IUserService userService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<UserViewModel>>> GetAll()
+    public async Task<ActionResult<List<UserDto>>> GetUsers()
     {
-        List<UserViewModel> users = await userService.GetAllAsync();
-        return Ok(users);
+        List<UserDto> users = await userService.GetAllAsync();
+
+        var usersCollectionDto = new UsersCollectionDto
+        {
+            Data = users
+        };
+
+        return Ok(usersCollectionDto);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateUserViewModel model)
+    public async Task<IActionResult> Create(CreateUserDto model)
     {
         await userService.CreateAsync(model);
 
@@ -27,15 +33,15 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserViewModel>> GetById(int id)
+    public async Task<ActionResult<UserDto>> GetUser(int id)
     {
-        UserViewModel user = await userService.GetByIdAsync(id);
+        UserDto user = await userService.GetByIdAsync(id);
 
         return Ok(user);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, UpdateUserViewModel model)
+    public async Task<IActionResult> Update(int id, UpdateUserDto model)
     {
         await userService.UpdateAsync(id, model);
 

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ShopManagementSystem.Application.DTOs.Account;
 
-public record RegisterViewModel
+public record RegisterDto
 {
     [MaxLength(300)]
     [Required]

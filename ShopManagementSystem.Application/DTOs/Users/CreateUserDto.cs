@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public record CreateUserViewModel
+public record CreateUserDto
 {
     [Required]
     public required string Name { get; init; }

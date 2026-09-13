@@ -9,17 +9,17 @@ public class UsertProfile : Profile
 {
     public UsertProfile()
     {
-        CreateMap<User, UserViewModel>()
+        CreateMap<User, UserDto>()
             .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id));
 
-        CreateMap<User, UpdateUserViewModel>()
+        CreateMap<User, UpdateUserDto>()
             .ForMember(dest => dest.NewPassword, opt => opt.Ignore());
 
-        CreateMap<UpdateUserViewModel, User>();
+        CreateMap<UpdateUserDto, User>();
 
-        CreateMap<CreateUserViewModel, User>();
+        CreateMap<CreateUserDto, User>();
 
-        CreateMap<RegisterViewModel, User>()
+        CreateMap<RegisterDto, User>()
             .ForMember(dest => dest.PasswordHash, opt => opt.MapFrom(src => src.Password));
     }
 }

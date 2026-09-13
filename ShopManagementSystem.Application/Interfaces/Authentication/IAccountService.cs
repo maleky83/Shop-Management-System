@@ -4,7 +4,7 @@ namespace ShopManagementSystem.Application.Interfaces.Authentication;
 
 public interface IAccountService
 {
-    Task RegisterAsync(RegisterViewModel model);
-    Task<LoginResponseViewModel> LoginAsync(LoginViewModel model);
+    Task RegisterAsync(RegisterDto model);
+    Task<LoginResponseDto> LoginAsync(LoginDto model);
 
 }

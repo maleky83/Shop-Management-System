@@ -17,11 +17,11 @@ public class RoleService(
         return await context.Roles.AnyAsync(r => r.Id == id);
     }
 
-    public async Task<List<RoleViewModel>> GetAllRolesAsync()
+    public async Task<List<RoleDto>> GetAllRolesAsync()
     {
         List<Role> roles = await context.Roles.ToListAsync();
 
-        return mapper.Map<List<RoleViewModel>>(roles);
+        return mapper.Map<List<RoleDto>>(roles);
     }
 
 }

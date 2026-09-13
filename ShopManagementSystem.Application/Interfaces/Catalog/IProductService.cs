@@ -5,12 +5,12 @@ namespace ShopManagementSystem.Application.Interfaces.Catalog;
 
 public interface IProductService
 {
-    Task<List<ProductViewModel>> GetAllAsync();
-    Task<ProductViewModel> GetByIdAsync(int id);
+    Task<List<ProductDto>> GetAllAsync();
+    Task<ProductDto> GetByIdAsync(int id);
     Task<Product> GetProductByIdAsync(int id);
-    Task<UpdateProductViewModel> GetForUpdateByIdAsync(int id);
-    Task CreateAsync(CreateProductViewModel model);
-    Task UpdateAsync(int id, UpdateProductViewModel model);
+    Task<UpdateProductDto> GetForUpdateByIdAsync(int id);
+    Task CreateAsync(CreateProductDto model);
+    Task UpdateAsync(int id, UpdateProductDto model);
     Task DeleteByIdAsync(int id);
 
 }

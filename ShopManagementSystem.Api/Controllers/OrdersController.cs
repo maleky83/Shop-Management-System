@@ -6,7 +6,7 @@ using ShopManagementSystem.Application.Interfaces.Shopping;
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
-[Route("api/orders")]
+[Route("orders")]
 public sealed class OrdersController(IOrderService _orderService) : ControllerBase
 {
     [HttpPost]
@@ -22,17 +22,17 @@ public sealed class OrdersController(IOrderService _orderService) : ControllerBa
     }
 
     [HttpGet("{orderId}")]
-    public async Task<ActionResult<OrderViewModel>> GetById(int orderId)
+    public async Task<ActionResult<OrderDto>> GetById(int orderId)
     {
         var userId = GetUserId();
 
-        OrderViewModel order = await _orderService.GetByIdAsync(userId, orderId);
+        OrderDto order = await _orderService.GetByIdAsync(userId, orderId);
 
         return order;
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<OrderViewModel>>> GetAll()
+    public async Task<ActionResult<List<OrderDto>>> GetAll()
     {
         var userId = GetUserId();
         return await _orderService.GetAllAsync(userId);

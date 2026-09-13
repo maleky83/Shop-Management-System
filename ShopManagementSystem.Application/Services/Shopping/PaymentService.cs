@@ -11,7 +11,7 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 
 public class PaymentService(ApplicationDbContext context) : IPaymentService
 {
-    public async Task<PaymentViewModel> CreatePaymentAsync(
+    public async Task<PaymentDto> CreatePaymentAsync(
         int userId,
         int orderId)
     {
@@ -136,9 +136,9 @@ public class PaymentService(ApplicationDbContext context) : IPaymentService
         await context.SaveChangesAsync();
     }
 
-    private static PaymentViewModel MapToViewModel(Payment payment)
+    private static PaymentDto MapToViewModel(Payment payment)
     {
-        return new PaymentViewModel
+        return new PaymentDto
         {
             PaymentId = payment.Id,
             OrderId = payment.OrderId,

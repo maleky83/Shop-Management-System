@@ -8,11 +8,11 @@ public class CategoryProfile : Profile
 {
     public CategoryProfile()
     {
-        CreateMap<Category, CategoryViewModel>()
+        CreateMap<Category, CategoryDto>()
             .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id));
 
-        CreateMap<CreateCategoryViewModel, Category>();
+        CreateMap<CreateCategoryDto, Category>();
 
-        CreateMap<UpdateCategoryViewModel, Category>();
+        CreateMap<UpdateCategoryDto, Category>();
     }
 }

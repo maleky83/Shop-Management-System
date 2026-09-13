@@ -1,6 +1,11 @@
 namespace ShopManagementSystem.Application.DTOs.Users;
 
-public record UserViewModel
+public sealed record UsersCollectionDto
+{
+    public required IReadOnlyCollection<UserDto> Data { get; init; }
+}
+
+public sealed record UserDto
 {
     public int? UserId { get; init; }
     public int RoleId { get; init; }

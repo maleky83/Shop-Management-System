@@ -1,6 +1,6 @@
 namespace ShopManagementSystem.Application.DTOs.Category;
 
-public record CategoryViewModel
+public record CategoryDto
 {
     public int CategoryId { get; init; }
     public string Name { get; init; } = string.Empty;

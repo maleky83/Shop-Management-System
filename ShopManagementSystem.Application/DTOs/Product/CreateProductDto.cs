@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public record CreateProductViewModel
+public record CreateProductDto
 {
     [Required]
     public required string Name { get; init; }

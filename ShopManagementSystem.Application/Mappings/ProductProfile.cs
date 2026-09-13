@@ -8,15 +8,15 @@ public class ProductProfile : Profile
 {
     public ProductProfile()
     {
-        CreateMap<Product, ProductViewModel>()
+        CreateMap<Product, ProductDto>()
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id));
 
-        CreateMap<ProductViewModel, UpdateProductViewModel>();
+        CreateMap<ProductDto, UpdateProductDto>();
 
-        CreateMap<Product, UpdateProductViewModel>();
+        CreateMap<Product, UpdateProductDto>();
 
-        CreateMap<UpdateProductViewModel, Product>();
+        CreateMap<UpdateProductDto, Product>();
 
-        CreateMap<CreateProductViewModel, Product>();
+        CreateMap<CreateProductDto, Product>();
     }
 }

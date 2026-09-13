@@ -8,9 +8,9 @@ public class CartProfile : Profile
 {
     public CartProfile()
     {
-        CreateMap<Cart, CartViewModel>();
+        CreateMap<Cart, CartDto>();
 
-        CreateMap<AddCartiItemViewModel, CartItem>()
+        CreateMap<AddCartiItemDto, CartItem>()
             .ForMember(dest => dest.UnitPrice, opt => opt.Ignore());
     }
 }

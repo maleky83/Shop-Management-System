@@ -5,27 +5,31 @@ using ShopManagementSystem.Application.Interfaces.Catalog;
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
-[Route("api/products")]
+[Route("products")]
 public sealed class ProductsController(IProductService _productService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<ProductViewModel>>> GetAll()
+    public async Task<ActionResult<List<ProductDto>>> GetProducts()
     {
-        List<ProductViewModel> products = await _productService.GetAllAsync();
+        List<ProductDto> products = await _productService.GetAllAsync();
 
-        return Ok(products);
+        var productsCollectionDto = new ProductsCollectionDto
+        {
+            Data = products
+        };
+        return Ok(productsCollectionDto);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductViewModel>> GetById(int id)
+    public async Task<ActionResult<ProductDto>> GetById(int id)
     {
-        ProductViewModel products = await _productService.GetByIdAsync(id);
+        ProductDto products = await _productService.GetByIdAsync(id);
 
         return Ok(products);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateProductViewModel model)
+    public async Task<IActionResult> Create([FromForm] CreateProductDto model)
     {
         await _productService.CreateAsync(model);
 
@@ -36,7 +40,7 @@ public sealed class ProductsController(IProductService _productService) : Contro
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, UpdateProductViewModel model)
+    public async Task<ActionResult> Update(int id, UpdateProductDto model)
     {
         await _productService.UpdateAsync(id, model);
 

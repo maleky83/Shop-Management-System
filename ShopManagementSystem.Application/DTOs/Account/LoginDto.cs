@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ShopManagementSystem.Application.DTOs.Account;
 
-public record LoginViewModel
+public record LoginDto
 {
     [Required]
     [MaxLength(300)]

@@ -10,7 +10,7 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 
 internal class CartService(ApplicationDbContext context) : ICartService
 {
-    public async Task AddItemAsync(int userId, AddCartiItemViewModel model)
+    public async Task AddItemAsync(int userId, AddCartiItemDto model)
     {
         if (model.Quantity <= 0)
         {
@@ -61,7 +61,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         await context.SaveChangesAsync();
     }
 
-    public async Task<CartViewModel> GetAsync(int userId)
+    public async Task<CartDto> GetAsync(int userId)
     {
         Cart? cart = await context.Carts
             .Include(c => c.CartItems)
@@ -73,7 +73,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
             throw new NotFoundException("Cart not found");
         }
 
-        var cartItems = cart.CartItems.Select(item => new CartItemViewModel
+        var cartItems = cart.CartItems.Select(item => new CartItemDto
         {
             CartItemId = item.Id,
             ProductName = item.Product.Name,
@@ -83,7 +83,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
             TotalPrice = item.UnitPrice * item.Quantity
         }).ToList();
 
-        return new CartViewModel
+        return new CartDto
         {
             CartId = cart.Id,
             UserId = userId,
@@ -118,7 +118,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateItemAsync(int userId, int cartItemId, UpdateCartItemViewModel model)
+    public async Task UpdateItemAsync(int userId, int cartItemId, UpdateCartItemDto model)
     {
         CartItem? cartItem = await context.CartItems
             .Include(c => c.Cart)

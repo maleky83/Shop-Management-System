@@ -6,10 +6,9 @@ using ShopManagementSystem.Application.Interfaces.Shopping;
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
-[Route("api/carts")]
+[Route("carts")]
 public sealed class CartsController(ICartService _cartService) : ControllerBase
 {
-
     private int GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -21,15 +20,15 @@ public sealed class CartsController(ICartService _cartService) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<CartViewModel>> Get()
+    public async Task<ActionResult<CartDto>> Get()
     {
         var userId = GetUserId();
-        CartViewModel cart = await _cartService.GetAsync(userId);
+        CartDto cart = await _cartService.GetAsync(userId);
         return Ok(cart);
     }
 
     [HttpPost("items")]
-    public async Task<IActionResult> AddItem(AddCartiItemViewModel model)
+    public async Task<IActionResult> AddItem(AddCartiItemDto model)
     {
         var userId = GetUserId();
 
@@ -41,7 +40,7 @@ public sealed class CartsController(ICartService _cartService) : ControllerBase
     }
 
     [HttpPut("items/{id}")]
-    public async Task<IActionResult> UpdateItem(int id, UpdateCartItemViewModel model)
+    public async Task<IActionResult> UpdateItem(int id, UpdateCartItemDto model)
     {
         var userId = GetUserId();
         await _cartService.UpdateItemAsync(userId, id, model);

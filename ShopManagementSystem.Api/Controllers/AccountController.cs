@@ -5,12 +5,12 @@ using ShopManagementSystem.Application.Interfaces.Authentication;
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
-[Route("api/account")]
+[Route("account")]
 public sealed class AccountController(IAccountService _accountService) : ControllerBase
 {
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterViewModel model)
+    public async Task<IActionResult> Register(RegisterDto model)
     {
         await _accountService.RegisterAsync(model);
 
@@ -21,9 +21,9 @@ public sealed class AccountController(IAccountService _accountService) : Control
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginViewModel model)
+    public async Task<IActionResult> Login(LoginDto model)
     {
-        LoginResponseViewModel user = await _accountService.LoginAsync(model);
+        LoginResponseDto user = await _accountService.LoginAsync(model);
 
         return Ok(user);
 

@@ -52,7 +52,7 @@ public class OrderService(ApplicationDbContext context) : IOrderService
         return order.Id;
     }
 
-    public async Task<List<OrderViewModel>> GetAllAsync(int userId)
+    public async Task<List<OrderDto>> GetAllAsync(int userId)
     {
         List<Order> orders = await context.Orders
             .Where(o => o.UserId == userId)
@@ -61,14 +61,14 @@ public class OrderService(ApplicationDbContext context) : IOrderService
             .OrderByDescending(o => o.CreatedAt)
             .ToListAsync();
 
-        return orders.Select(o => new OrderViewModel
+        return orders.Select(o => new OrderDto
         {
             OrderId = o.Id,
             OrderStatus = o.Status,
             TotalPrice = o.TotalPrice,
             UserId = o.UserId,
 
-            OrderDetails = o.OrderDetails.Select(od => new OrderDetailViewModel
+            OrderDetails = o.OrderDetails.Select(od => new OrderDetailDto
             {
                 OrderId = od.OrderId,
                 ProductId = od.ProductId,
@@ -79,7 +79,7 @@ public class OrderService(ApplicationDbContext context) : IOrderService
         }).ToList();
     }
 
-    public async Task<OrderViewModel> GetByIdAsync(int userId, int orderId)
+    public async Task<OrderDto> GetByIdAsync(int userId, int orderId)
     {
         Order? order = await context.Orders
             .Include(o => o.OrderDetails)
@@ -91,13 +91,13 @@ public class OrderService(ApplicationDbContext context) : IOrderService
             throw new NotFoundException("Order not found");
         }
 
-        return new OrderViewModel
+        return new OrderDto
         {
             OrderId = order.Id,
             OrderStatus = order.Status,
             TotalPrice = order.TotalPrice,
             UserId = order.UserId,
-            OrderDetails = order.OrderDetails.Select(od => new OrderDetailViewModel
+            OrderDetails = order.OrderDetails.Select(od => new OrderDetailDto
             {
                 OrderId = od.OrderId,
                 UnitPrice = od.UnitPrice,

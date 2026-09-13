@@ -7,15 +7,15 @@ using ShopManagementSystem.Application.Interfaces;
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
-[Route("api/orders")]
+[Route("orders")]
 public sealed class PaymentController(IPaymentService _paymentService) : ControllerBase
 {
     [HttpPost("{orderId}/payment")]
-    public async Task<ActionResult<PaymentViewModel>> Create(int orderId)
+    public async Task<ActionResult<PaymentDto>> Create(int orderId)
     {
         var userId = GetUserId();
 
-        PaymentViewModel payment = await _paymentService.CreatePaymentAsync(
+        PaymentDto payment = await _paymentService.CreatePaymentAsync(
             userId,
             orderId);
 

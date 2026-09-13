@@ -1,6 +1,6 @@
 namespace ShopManagementSystem.Application.DTOs.Cart;
 
-public record CartItemViewModel
+public record CartItemDto
 {
     public int CartItemId { get; init; }
     public decimal TotalPrice { get; init; }

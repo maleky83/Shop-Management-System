@@ -2,7 +2,7 @@ using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Application.DTOs;
 
-public record PaymentViewModel
+public record PaymentDto
 {
     public int PaymentId { get; init; }
 

@@ -4,6 +4,6 @@ namespace ShopManagementSystem.Application.Interfaces.Catalog;
 
 public interface ICategoryService
 {
-    Task<List<CategoryViewModel>> GetAllAsync();
-    Task<CategoryViewModel> GetByIdAsync(int id);
+    Task<List<CategoryDto>> GetAllAsync();
+    Task<CategoryDto> GetByIdAsync(int id);
 }
