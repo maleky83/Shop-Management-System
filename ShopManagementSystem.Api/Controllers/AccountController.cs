@@ -6,13 +6,13 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("account")]
-public sealed class AccountController(IAccountService _accountService) : ControllerBase
+public sealed class AccountController(IAccountService accountService) : ControllerBase
 {
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto model)
     {
-        await _accountService.RegisterAsync(model);
+        await accountService.RegisterAsync(model);
 
         return Ok(new
         {
@@ -23,7 +23,7 @@ public sealed class AccountController(IAccountService _accountService) : Control
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginDto model)
     {
-        LoginResponseDto user = await _accountService.LoginAsync(model);
+        LoginResponseDto user = await accountService.LoginAsync(model);
 
         return Ok(user);
 

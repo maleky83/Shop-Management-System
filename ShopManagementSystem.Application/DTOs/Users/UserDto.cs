@@ -7,7 +7,7 @@ public sealed record UsersCollectionDto
 
 public sealed record UserDto
 {
-    public int? UserId { get; init; }
+    public required string UserId { get; init; }
     public int RoleId { get; init; }
     public required string PasswordHash { get; init; }
     public required string Name { get; init; }

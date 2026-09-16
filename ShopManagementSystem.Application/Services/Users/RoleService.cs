@@ -1,15 +1,13 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Interfaces.Users;
-using ShopManagementSystem.Domain.Entities.Identity;
+using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Users;
 
 public class RoleService(
-    ApplicationDbContext context,
-    IMapper mapper
+    ApplicationDbContext context
     ) : IRoleService
 {
     public async Task<bool> ExistsRoleByIdAsync(int id)
@@ -17,11 +15,18 @@ public class RoleService(
         return await context.Roles.AnyAsync(r => r.Id == id);
     }
 
-    public async Task<List<RoleDto>> GetAllRolesAsync()
+    public async Task<RolesCollectionDto> GetAllRolesAsync()
     {
-        List<Role> roles = await context.Roles.ToListAsync();
+        List<RoleDto> roles = await context
+            .Roles
+            .Select(RoleQueries.ProjectToDto())
+            .ToListAsync();
 
-        return mapper.Map<List<RoleDto>>(roles);
+        var rolesCollectionDto = new RolesCollectionDto
+        {
+            Data = roles
+        };
+        return rolesCollectionDto;
     }
 
 }

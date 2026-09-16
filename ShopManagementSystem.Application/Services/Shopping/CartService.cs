@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Cart;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
+using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
@@ -10,7 +11,7 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 
 internal class CartService(ApplicationDbContext context) : ICartService
 {
-    public async Task AddItemAsync(int userId, AddCartiItemDto model)
+    public async Task AddItemAsync(string userId, AddCartiItemDto model)
     {
         if (model.Quantity <= 0)
         {
@@ -61,7 +62,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         await context.SaveChangesAsync();
     }
 
-    public async Task<CartDto> GetAsync(int userId)
+    public async Task<CartDto> GetAsync(string userId)
     {
         Cart? cart = await context.Carts
             .Include(c => c.CartItems)
@@ -73,15 +74,10 @@ internal class CartService(ApplicationDbContext context) : ICartService
             throw new NotFoundException("Cart not found");
         }
 
-        var cartItems = cart.CartItems.Select(item => new CartItemDto
-        {
-            CartItemId = item.Id,
-            ProductName = item.Product.Name,
-            ProductId = item.ProductId,
-            Quantity = item.Quantity,
-            UnitPrice = item.UnitPrice,
-            TotalPrice = item.UnitPrice * item.Quantity
-        }).ToList();
+        List<CartItemDto> cartItems = await context
+            .CartItems
+            .Where(ci => ci.CartId == cart.Id)
+            .Select(CartQueries.ProjectToDto()).ToListAsync();
 
         return new CartDto
         {
@@ -92,7 +88,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         };
     }
 
-    public async Task DeleteAsync(int userId)
+    public async Task DeleteAsync(string userId)
     {
         Cart? cart = await context.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
         if (cart == null)
@@ -103,7 +99,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         await context.SaveChangesAsync();
     }
 
-    public async Task DeleteItemAsync(int userId, int cartItemId)
+    public async Task DeleteItemAsync(string userId, string cartItemId)
     {
         CartItem? cartItem = await context.CartItems
             .Include(c => c.Cart)
@@ -118,7 +114,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateItemAsync(int userId, int cartItemId, UpdateCartItemDto model)
+    public async Task UpdateItemAsync(string userId, string cartItemId, UpdateCartItemDto model)
     {
         CartItem? cartItem = await context.CartItems
             .Include(c => c.Cart)

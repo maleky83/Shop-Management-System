@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public record CreateProductDto
+public sealed record CreateProductDto
 {
     [Required]
     public required string Name { get; init; }
@@ -22,5 +22,5 @@ public record CreateProductDto
     public bool IsActive { get; init; } = true;
 
     [Required]
-    public int CategoryId { get; init; }
+    public required string CategoryId { get; init; }
 }

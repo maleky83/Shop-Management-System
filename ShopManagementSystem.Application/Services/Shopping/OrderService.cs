@@ -11,7 +11,7 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 
 public class OrderService(ApplicationDbContext context) : IOrderService
 {
-    public async Task<int> CreateAsync(int userId)
+    public async Task<string> CreateAsync(string userId)
     {
         Cart? cart = await context.Carts
             .Include(c => c.CartItems)
@@ -52,34 +52,35 @@ public class OrderService(ApplicationDbContext context) : IOrderService
         return order.Id;
     }
 
-    public async Task<List<OrderDto>> GetAllAsync(int userId)
+    public async Task<OrdersCollectionDto> GetAllAsync(string userId)
     {
-        List<Order> orders = await context.Orders
+        List<OrderDto> orders = await context.Orders
             .Where(o => o.UserId == userId)
-            .Include(o => o.OrderDetails)
-            .ThenInclude(o => o.Product)
             .OrderByDescending(o => o.CreatedAt)
-            .ToListAsync();
-
-        return orders.Select(o => new OrderDto
-        {
-            OrderId = o.Id,
-            OrderStatus = o.Status,
-            TotalPrice = o.TotalPrice,
-            UserId = o.UserId,
-
-            OrderDetails = o.OrderDetails.Select(od => new OrderDetailDto
+            .Select(o => new OrderDto
             {
-                OrderId = od.OrderId,
-                ProductId = od.ProductId,
-                OrderDetailId = od.Id,
-                Quantity = od.Quantity,
-                UnitPrice = od.UnitPrice,
-            }).ToList(),
-        }).ToList();
+                OrderId = o.Id,
+                OrderStatus = o.Status,
+                TotalPrice = o.TotalPrice,
+                UserId = o.UserId,
+                OrderDetails = o.OrderDetails.Select(od => new OrderDetailDto
+                {
+                    OrderId = od.OrderId,
+                    ProductId = od.ProductId,
+                    OrderDetailId = od.Id,
+                    Quantity = od.Quantity,
+                    UnitPrice = od.UnitPrice,
+                }).ToList()
+            }).ToListAsync();
+
+        var ordersCollectionDto = new OrdersCollectionDto
+        {
+            Data = orders
+        };
+        return ordersCollectionDto;
     }
 
-    public async Task<OrderDto> GetByIdAsync(int userId, int orderId)
+    public async Task<OrderDto> GetByIdAsync(string userId, string orderId)
     {
         Order? order = await context.Orders
             .Include(o => o.OrderDetails)

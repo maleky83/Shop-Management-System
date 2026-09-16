@@ -4,9 +4,9 @@ namespace ShopManagementSystem.Application.DTOs;
 
 public record PaymentDto
 {
-    public int PaymentId { get; init; }
+    public required string PaymentId { get; init; }
 
-    public int OrderId { get; init; }
+    public required string OrderId { get; init; }
 
     public decimal Amount { get; init; }
 

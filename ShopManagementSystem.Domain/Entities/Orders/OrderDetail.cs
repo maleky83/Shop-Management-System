@@ -4,11 +4,11 @@ namespace ShopManagementSystem.Domain.Entities.Orders;
 
 public sealed class OrderDetail : BaseEntity
 {
-    public int OrderId { get; set; }
+    public string OrderId { get; set; } = string.Empty;
 
     public Order Order { get; set; } = null!;
 
-    public int ProductId { get; set; }
+    public required string ProductId { get; set; }
 
     public Product Product { get; set; } = null!;
 

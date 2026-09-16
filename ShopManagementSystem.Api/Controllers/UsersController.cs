@@ -11,14 +11,9 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<UserDto>>> GetUsers()
     {
-        List<UserDto> users = await userService.GetAllAsync();
+        UsersCollectionDto users = await userService.GetAllAsync();
 
-        var usersCollectionDto = new UsersCollectionDto
-        {
-            Data = users
-        };
-
-        return Ok(usersCollectionDto);
+        return Ok(users);
     }
 
     [HttpPost]
@@ -33,7 +28,7 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetUser(int id)
+    public async Task<ActionResult<UserDto>> GetUser(string id)
     {
         UserDto user = await userService.GetByIdAsync(id);
 
@@ -41,7 +36,7 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, UpdateUserDto model)
+    public async Task<IActionResult> Update(string id, UpdateUserDto model)
     {
         await userService.UpdateAsync(id, model);
 
@@ -52,7 +47,7 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(string id)
     {
         await userService.DeleteAsync(id);
 

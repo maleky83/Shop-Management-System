@@ -5,7 +5,6 @@ using ShopManagementSystem.Application.Interfaces.Catalog;
 using ShopManagementSystem.Application.Interfaces.Common;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 using ShopManagementSystem.Application.Interfaces.Users;
-using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Application.Services.Authentication;
 using ShopManagementSystem.Application.Services.Catalog;
 using ShopManagementSystem.Application.Services.Common;
@@ -29,15 +28,6 @@ public static class DependencyInjection
         services.AddScoped<IRoleService, RoleService>();
         services.AddScoped<ICartService, CartService>();
         services.AddScoped<IPaymentService, PaymentService>();
-
-        services.AddAutoMapper(config =>
-        {
-            config.AddProfile<ProductProfile>();
-            config.AddProfile<CategoryProfile>();
-            config.AddProfile<UsertProfile>();
-            config.AddProfile<RoleProfile>();
-            config.AddProfile<CartProfile>();
-        });
 
         return services;
     }

@@ -4,7 +4,7 @@ namespace ShopManagementSystem.Domain.Entities.Orders;
 
 public sealed class Payment : BaseEntity
 {
-    public int OrderId { get; set; }
+    public required string OrderId { get; set; }
 
     public Order Order { get; set; } = null!;
 

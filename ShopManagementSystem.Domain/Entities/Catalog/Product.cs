@@ -6,22 +6,22 @@ namespace ShopManagementSystem.Domain.Entities.Catalog;
 
 public sealed class Product : BaseEntity
 {
-    public string? Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
     public string? Description { get; set; }
 
-    public string? PictureName { get; set; }
+    public string PictureName { get; set; } = string.Empty;
 
     public decimal Price { get; set; }
 
     public int Quantity { get; set; }
 
     public bool IsActive { get; set; } = true;
+    public required string CategoryId { get; set; }
 
 
     #region Relations
 
-    public int CategoryId { get; set; }
     [ForeignKey(nameof(CategoryId))]
     public Category Category { get; set; } = null!;
 

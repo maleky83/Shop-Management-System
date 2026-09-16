@@ -4,7 +4,7 @@ namespace ShopManagementSystem.Application.DTOs.Product;
 
 public record UpdateProductDto
 {
-    public string? Name { get; init; }
+    public required string Name { get; init; }
 
     public string? Description { get; init; }
 
@@ -16,5 +16,5 @@ public record UpdateProductDto
 
     public bool IsActive { get; init; } = true;
 
-    public int CategoryId { get; init; }
+    public required string CategoryId { get; init; }
 }

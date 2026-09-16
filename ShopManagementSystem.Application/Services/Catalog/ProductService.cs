@@ -1,10 +1,10 @@
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Category;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Catalog;
 using ShopManagementSystem.Application.Interfaces.Common;
+using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -13,12 +13,11 @@ namespace ShopManagementSystem.Application.Services.Catalog;
 public class ProductService(
     ApplicationDbContext dbContext,
     IFileService fileService,
-    IMapper mapper,
     ICategoryService categoryService
     ) : IProductService
 {
 
-    public async Task<ProductDto> GetByIdAsync(int id)
+    public async Task<ProductDto> GetByIdAsync(string id)
     {
         Product? product = await dbContext.Products
             .FirstOrDefaultAsync(p => p.Id == id);
@@ -26,9 +25,9 @@ public class ProductService(
         if (product == null)
             throw new NotFoundException("Product not found");
 
-        return mapper.Map<ProductDto>(product);
+        return product.ToDto();
     }
-    public async Task<Product> GetProductByIdAsync(int id)
+    public async Task<Product> GetProductByIdAsync(string id)
     {
         Product? product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
 
@@ -41,40 +40,40 @@ public class ProductService(
 
     public async Task<List<ProductDto>> GetAllAsync()
     {
-        List<Product> products = await dbContext.Products.ToListAsync();
+        List<ProductDto> products = await dbContext
+            .Products
+            .Select(ProductQueries.ProjectToDto())
+            .ToListAsync();
 
-        return mapper.Map<List<ProductDto>>(products);
+        return products;
     }
 
-    public async Task CreateAsync(CreateProductDto model)
+    public async Task<ProductDto> CreateAsync(CreateProductDto model)
     {
         CategoryDto category = await categoryService.GetByIdAsync(model.CategoryId);
 
-        if (category == null)
-            throw new NotFoundException("Category not found");
-
-        Product product = mapper.Map<Product>(model);
+        Product product = model.ToEntity();
 
         if (model.Picture != null)
         {
             product.PictureName = await fileService.SaveFileAsync(model.Picture);
         }
 
-        product.CreatedAt = DateTime.UtcNow;
+        category.ToEntity().Products.Add(product);
 
         await dbContext.AddAsync(product);
         await dbContext.SaveChangesAsync();
-
+        return product.ToDto();
     }
 
-    public async Task UpdateAsync(int id, UpdateProductDto model)
+    public async Task UpdateAsync(string id, UpdateProductDto model)
     {
         Product product = await GetProductByIdAsync(id);
 
         if (product == null)
             throw new NotFoundException("Product not found");
 
-        mapper.Map(model, product);
+        product.UpdateFromDto(model);
 
         if (model.Picture?.Length > 0)
         {
@@ -88,7 +87,7 @@ public class ProductService(
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task DeleteByIdAsync(int id)
+    public async Task DeleteByIdAsync(string id)
     {
         Product product = await GetProductByIdAsync(id);
 
@@ -102,12 +101,5 @@ public class ProductService(
 
         dbContext.Remove(product);
         await dbContext.SaveChangesAsync();
-    }
-
-    public async Task<UpdateProductDto> GetForUpdateByIdAsync(int id)
-    {
-        ProductDto product = await GetByIdAsync(id);
-
-        return mapper.Map<UpdateProductDto>(product);
     }
 }

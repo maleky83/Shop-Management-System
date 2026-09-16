@@ -4,6 +4,6 @@ namespace ShopManagementSystem.Application.Interfaces;
 
 public interface IPaymentService
 {
-    Task<PaymentDto> CreatePaymentAsync(int userId, int orderId);
+    Task<PaymentDto> CreatePaymentAsync(string userId, string orderId);
     Task VerifyPaymentAsync(string authority);
 }

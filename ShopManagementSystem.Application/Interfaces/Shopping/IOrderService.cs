@@ -4,7 +4,7 @@ namespace ShopManagementSystem.Application.Interfaces.Shopping;
 
 public interface IOrderService
 {
-    Task<int> CreateAsync(int userId);
-    Task<OrderDto> GetByIdAsync(int userId, int orderId);
-    Task<List<OrderDto>> GetAllAsync(int userId);
+    Task<string> CreateAsync(string userId);
+    Task<OrderDto> GetByIdAsync(string userId, string orderId);
+    Task<OrdersCollectionDto> GetAllAsync(string userId);
 }

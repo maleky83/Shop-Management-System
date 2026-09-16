@@ -1,10 +1,10 @@
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.Users;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Users;
+using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Domain.Entities.Identity;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -13,14 +13,11 @@ namespace ShopManagementSystem.Application.Services.Users;
 public class UserService(
     IPasswordHasher<User> passwordHasher,
     ApplicationDbContext context,
-    IMapper mapper,
     IRoleService roleService
     ) : IUserService
 {
     public async Task CreateAsync(CreateUserDto model)
     {
-        User user = mapper.Map<User>(model);
-
         var roleExists = await roleService.ExistsRoleByIdAsync(model.RoleId);
 
         if (!roleExists)
@@ -28,13 +25,14 @@ public class UserService(
             throw new BadRequestException("Role not found");
         }
 
+        User user = model.ToEntity();
+
         user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
-        user.CreatedAt = DateTime.UtcNow;
         await context.AddAsync(user);
         await context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(string id)
     {
         User user = await GetUserByIdAsync(id);
 
@@ -45,14 +43,14 @@ public class UserService(
         await context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(int id, UpdateUserDto model)
+    public async Task UpdateAsync(string id, UpdateUserDto model)
     {
         User user = await GetUserByIdAsync(id);
 
         if (user == null)
             throw new NotFoundException("User not found");
 
-        mapper.Map(model, user);
+        user.UpdateFromDto(model);
 
         if (!string.IsNullOrEmpty(model.NewPassword))
         {
@@ -62,21 +60,29 @@ public class UserService(
         await context.SaveChangesAsync();
     }
 
-    public async Task<UserDto> GetByIdAsync(int id)
+    public async Task<UserDto> GetByIdAsync(string id)
     {
         User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
         if (user == null)
             throw new NotFoundException("User not found");
 
-        return mapper.Map<UserDto>(user);
+        return user.ToDto();
     }
 
-    public async Task<List<UserDto>> GetAllAsync()
+    public async Task<UsersCollectionDto> GetAllAsync()
     {
-        List<User> users = await context.Users.ToListAsync();
+        List<UserDto> users = await context
+            .Users
+            .Select(UserQureies.ProjectToDto())
+            .ToListAsync();
 
-        return mapper.Map<List<UserDto>>(users);
+        var usersCollectionDto = new UsersCollectionDto
+        {
+            Data = users
+        };
+
+        return usersCollectionDto;
     }
 
     public async Task<bool> ExistsByNameAsync(string name)
@@ -91,7 +97,7 @@ public class UserService(
         if (user == null)
             throw new NotFoundException("User not found");
 
-        return mapper.Map<UserDto>(user);
+        return user.ToDto();
     }
 
     public async Task CreateForRegisterAsync(RegisterDto model)
@@ -101,24 +107,13 @@ public class UserService(
         if (userExists)
             throw new BadRequestException("Uesr exists");
 
-        User user = mapper.Map<User>(model);
-
-        user.CreatedAt = DateTime.UtcNow;
-        user.IsActive = true;
+        User user = model.RegisterDtoToEntity();
 
         user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
 
         await context.Users.AddAsync(user);
         await context.SaveChangesAsync();
     }
-
-    public async Task<UpdateUserDto> GetByIdForUpdateAsync(int id)
-    {
-        User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-        return mapper.Map<UpdateUserDto>(user);
-    }
-
 
     public async Task<User> GetUserByNameAsync(string name)
     {
@@ -130,7 +125,7 @@ public class UserService(
         return user;
     }
 
-    public async Task<User> GetUserByIdAsync(int id)
+    public async Task<User> GetUserByIdAsync(string id)
     {
         User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
 

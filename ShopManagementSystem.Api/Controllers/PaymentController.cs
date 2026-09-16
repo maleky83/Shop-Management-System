@@ -11,7 +11,7 @@ namespace ShopManagementSystem.Api.Controllers;
 public sealed class PaymentController(IPaymentService _paymentService) : ControllerBase
 {
     [HttpPost("{orderId}/payment")]
-    public async Task<ActionResult<PaymentDto>> Create(int orderId)
+    public async Task<ActionResult<PaymentDto>> Create(string orderId)
     {
         var userId = GetUserId();
 
@@ -33,15 +33,15 @@ public sealed class PaymentController(IPaymentService _paymentService) : Control
         });
     }
 
-    private int GetUserId()
+    private string GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (!int.TryParse(userId, out var id))
+        if (userId is null)
         {
             throw new UnauthorizedException("User invalid");
         }
 
-        return id;
+        return userId;
     }
 }

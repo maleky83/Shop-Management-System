@@ -22,7 +22,7 @@ public sealed class OrdersController(IOrderService _orderService) : ControllerBa
     }
 
     [HttpGet("{orderId}")]
-    public async Task<ActionResult<OrderDto>> GetById(int orderId)
+    public async Task<ActionResult<OrderDto>> GetById(string orderId)
     {
         var userId = GetUserId();
 
@@ -32,20 +32,20 @@ public sealed class OrdersController(IOrderService _orderService) : ControllerBa
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<OrderDto>>> GetAll()
+    public async Task<ActionResult<OrdersCollectionDto>> GetAll()
     {
         var userId = GetUserId();
         return await _orderService.GetAllAsync(userId);
     }
 
-    private int GetUserId()
+    private string GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (!int.TryParse(userId, out var id))
+        if (userId is null)
         {
             throw new UnauthorizedAccessException("User invalid");
         }
-        return id;
+        return userId;
     }
 }

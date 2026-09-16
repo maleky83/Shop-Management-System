@@ -1,10 +1,10 @@
 namespace ShopManagementSystem.Application.DTOs.Order;
 
-public record OrderDetailDto
+public sealed record OrderDetailDto
 {
-    public int OrderDetailId { get; init; }
-    public int OrderId { get; init; }
-    public int ProductId { get; init; }
+    public required string OrderDetailId { get; init; }
+    public required string OrderId { get; init; }
+    public required string ProductId { get; init; }
     public decimal UnitPrice { get; init; }
     public int Quantity { get; init; }
 }

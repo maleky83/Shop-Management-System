@@ -12,8 +12,8 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 public class PaymentService(ApplicationDbContext context) : IPaymentService
 {
     public async Task<PaymentDto> CreatePaymentAsync(
-        int userId,
-        int orderId)
+        string userId,
+        string orderId)
     {
         Order? order = await context.Orders
             .FirstOrDefaultAsync(o =>

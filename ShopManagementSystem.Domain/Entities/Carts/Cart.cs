@@ -4,7 +4,7 @@ namespace ShopManagementSystem.Domain.Entities.Carts;
 
 public sealed class Cart : BaseEntity
 {
-    public int UserId { get; set; }
+    public required string UserId { get; set; }
 
     public User User { get; set; } = null!;
 

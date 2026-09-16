@@ -5,7 +5,7 @@ namespace ShopManagementSystem.Domain.Entities.Orders;
 
 public sealed class Order : BaseEntity
 {
-    public int UserId { get; set; }
+    public required string UserId { get; set; }
 
     public User User { get; set; } = null!;
 

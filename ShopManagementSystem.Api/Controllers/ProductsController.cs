@@ -6,58 +6,53 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("products")]
-public sealed class ProductsController(IProductService _productService) : ControllerBase
+public sealed class ProductsController(IProductService productService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<ProductDto>>> GetProducts()
+    public async Task<ActionResult<ProductsCollectionDto>> GetProducts()
     {
-        List<ProductDto> products = await _productService.GetAllAsync();
+        List<ProductDto> products = await productService.GetAllAsync();
 
-        var productsCollectionDto = new ProductsCollectionDto
+        return Ok(new ProductsCollectionDto
         {
             Data = products
-        };
-        return Ok(productsCollectionDto);
+        });
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductDto>> GetById(int id)
+    public async Task<ActionResult<ProductDto>> GetProduct(string id)
     {
-        ProductDto products = await _productService.GetByIdAsync(id);
+        ProductDto product = await productService.GetByIdAsync(id);
 
-        return Ok(products);
+        return Ok(product);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromForm] CreateProductDto model)
+    public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] CreateProductDto model)
     {
-        await _productService.CreateAsync(model);
+        ProductDto product = await productService.CreateAsync(model);
 
-        return Ok(new
-        {
-            message = "Product Added"
-        });
+        return CreatedAtAction(
+            nameof(GetProduct),
+            new { id = product.ProductId },
+            product);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, UpdateProductDto model)
+    public async Task<IActionResult> Update(
+        string id,
+        [FromBody] UpdateProductDto model)
     {
-        await _productService.UpdateAsync(id, model);
+        await productService.UpdateAsync(id, model);
 
-        return Ok(new
-        {
-            message = "Product updated"
-        });
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(string id)
     {
-        await _productService.DeleteByIdAsync(id);
+        await productService.DeleteByIdAsync(id);
 
-        return Ok(new
-        {
-            message = "Product deleted"
-        });
+        return NoContent();
     }
 }

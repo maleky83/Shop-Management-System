@@ -5,5 +5,5 @@ namespace ShopManagementSystem.Application.Interfaces.Users;
 public interface IRoleService
 {
     Task<bool> ExistsRoleByIdAsync(int id);
-    public Task<List<RoleDto>> GetAllRolesAsync();
+    public Task<RolesCollectionDto> GetAllRolesAsync();
 }

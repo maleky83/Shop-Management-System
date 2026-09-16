@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Domain.Entities.Identity;
@@ -97,34 +96,34 @@ public static class SeedData
         modelBuilder.Entity<Product>().HasData(
             new Product()
             {
-                Id = 1,
+                Id = $"p_jasdf99-8-asd98asdf",
                 Name = "Sumsung Mobile",
                 Description = "ram 6 , memory 128",
                 PictureName = "1.jpg",
                 Price = 20000,
-                CategoryId = 1,
+                CategoryId = "c_jasdf99-8-asdf98098asdf",
                 Quantity = 10,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new Product()
             {
-                Id = 2,
+                Id = $"p_jasdf99-8-asf",
                 Name = "lenovo laptop",
                 Description = "ram 16 , memory 1T",
                 PictureName = "2.jpg",
                 Price = 10000,
-                CategoryId = 2,
+                CategoryId = "c_jasdf99-8-asdf98098asdsdf",
                 Quantity = 30,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             },
             new Product()
             {
-                Id = 3,
+                Id = $"p_sdf23r23-asdf",
                 Name = "X-200 sport Watch",
                 Description = " AMOLED،GPS ",
                 PictureName = "3.jpg",
                 Price = 30000,
-                CategoryId = 3,
+                CategoryId = "c_jasdf99-8-asdf9df",
                 Quantity = 20,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
             });
@@ -138,17 +137,17 @@ public static class SeedData
     {
         modelBuilder.Entity<Category>().HasData(new Category
         {
-            Id = 1,
+            Id = $"c_jasdf99-8-asdf98098asdf",
             Name = "Mobile",
             Description = "for call and plaing"
         }, new Category
         {
-            Id = 2,
+            Id = $"c_jasdf99-8-asdf98098asdsdf",
             Name = "laptop",
             Description = "for programming , suding and game"
         }, new Category
         {
-            Id = 3,
+            Id = $"c_jasdf99-8-asdf9df",
             Name = "Accessory",
             Description = "for example watch and sock"
         });
@@ -162,13 +161,13 @@ public static class SeedData
     {
         var user = new User()
         {
-            Id = 1,
+            Id = $"u_jasdf99-8-asdf9df",
             IsActive = true,
             Name = "a",
             RoleId = RoleIds.Admin,
         };
 
-        user.PasswordHash = new PasswordHasher<User>().HashPassword(user, "123");
+        user.PasswordHash = "AQAAAAIAAYagAAAAEGXenaaSLxper4UJoQ+gez+Olv2R2siuXVFVzUk4rVVfRukD/vbVe17dsaU8PNLtgw==";
 
         modelBuilder.Entity<User>().HasData(user);
 

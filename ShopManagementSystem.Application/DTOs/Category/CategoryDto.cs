@@ -1,8 +1,13 @@
 namespace ShopManagementSystem.Application.DTOs.Category;
 
-public record CategoryDto
+public sealed record CategoriesCollectionDto
 {
-    public int CategoryId { get; init; }
+    public required IReadOnlyCollection<CategoryDto> Data { get; init; }
+}
+
+public sealed record CategoryDto
+{
+    public required string CategoryId { get; init; }
     public string Name { get; init; } = string.Empty;
 
     public string? Description { get; init; }

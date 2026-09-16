@@ -7,23 +7,23 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("carts")]
-public sealed class CartsController(ICartService _cartService) : ControllerBase
+public sealed class CartsController(ICartService cartService) : ControllerBase
 {
-    private int GetUserId()
+    private string GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (!int.TryParse(userId, out var id))
+        if (userId == null)
         {
             throw new UnauthorizedAccessException("Invalid user");
         }
-        return id;
+        return userId;
     }
 
     [HttpGet]
     public async Task<ActionResult<CartDto>> Get()
     {
         var userId = GetUserId();
-        CartDto cart = await _cartService.GetAsync(userId);
+        CartDto cart = await cartService.GetAsync(userId);
         return Ok(cart);
     }
 
@@ -32,7 +32,7 @@ public sealed class CartsController(ICartService _cartService) : ControllerBase
     {
         var userId = GetUserId();
 
-        await _cartService.AddItemAsync(userId, model);
+        await cartService.AddItemAsync(userId, model);
         return Ok(new
         {
             message = "CartItem is added"
@@ -40,10 +40,10 @@ public sealed class CartsController(ICartService _cartService) : ControllerBase
     }
 
     [HttpPut("items/{id}")]
-    public async Task<IActionResult> UpdateItem(int id, UpdateCartItemDto model)
+    public async Task<IActionResult> UpdateItem(string id, UpdateCartItemDto model)
     {
         var userId = GetUserId();
-        await _cartService.UpdateItemAsync(userId, id, model);
+        await cartService.UpdateItemAsync(userId, id, model);
         return Ok(new
         {
             message = "Cart item is updated"
@@ -51,10 +51,10 @@ public sealed class CartsController(ICartService _cartService) : ControllerBase
     }
 
     [HttpDelete("items/{id}")]
-    public async Task<IActionResult> DeleteItem(int id)
+    public async Task<IActionResult> DeleteItem(string id)
     {
         var userId = GetUserId();
-        await _cartService.DeleteItemAsync(userId, id);
+        await cartService.DeleteItemAsync(userId, id);
         return Ok(new
         {
             message = "Cart item is deleted"
@@ -65,7 +65,7 @@ public sealed class CartsController(ICartService _cartService) : ControllerBase
     public async Task<IActionResult> Delete()
     {
         var userId = GetUserId();
-        await _cartService.DeleteAsync(userId);
+        await cartService.DeleteAsync(userId);
         return Ok(new
         {
             message = "Cart == deleted"
