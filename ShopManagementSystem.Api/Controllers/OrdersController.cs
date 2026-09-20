@@ -7,35 +7,34 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("orders")]
-public sealed class OrdersController(IOrderService _orderService) : ControllerBase
+public sealed class OrdersController(IOrderService orderService) : ControllerBase
 {
-    [HttpPost]
-    public async Task<IActionResult> Create()
+    [HttpGet]
+    public async Task<ActionResult<OrdersCollectionDto>> GetOrders()
     {
         var userId = GetUserId();
-        var orderId = await _orderService.CreateAsync(userId);
-        return Ok(new
-        {
-            id = orderId,
-            message = "Order is created"
-        });
+
+        return Ok(await orderService.GetAllAsync(userId));
     }
 
     [HttpGet("{orderId}")]
-    public async Task<ActionResult<OrderDto>> GetById(string orderId)
+    public async Task<ActionResult<OrderDto>> GetOrder(string orderId)
     {
         var userId = GetUserId();
 
-        OrderDto order = await _orderService.GetByIdAsync(userId, orderId);
+        OrderDto order = await orderService.GetByIdAsync(userId, orderId);
 
-        return order;
+        return Ok(order);
     }
 
-    [HttpGet]
-    public async Task<ActionResult<OrdersCollectionDto>> GetAll()
+    [HttpPost]
+    public async Task<ActionResult> CreateOrder()
     {
         var userId = GetUserId();
-        return await _orderService.GetAllAsync(userId);
+
+        OrderDto order = await orderService.CreateAsync(userId);
+
+        return CreatedAtAction(nameof(GetOrder), new { id = order.OrderId }, order);
     }
 
     private string GetUserId()

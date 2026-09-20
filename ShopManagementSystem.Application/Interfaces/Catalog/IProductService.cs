@@ -5,7 +5,7 @@ namespace ShopManagementSystem.Application.Interfaces.Catalog;
 
 public interface IProductService
 {
-    Task<List<ProductDto>> GetAllAsync();
+    Task<ProductsCollectionDto> GetAllAsync();
     Task<ProductDto> GetByIdAsync(string id);
     Task<Product> GetProductByIdAsync(string id);
     Task<ProductDto> CreateAsync(CreateProductDto model);

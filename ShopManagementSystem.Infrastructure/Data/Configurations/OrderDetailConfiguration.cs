@@ -4,10 +4,12 @@ using ShopManagementSystem.Domain.Entities.Orders;
 
 namespace ShopManagementSystem.Infrastructure.Data.Configurations;
 
-public class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
+public sealed class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
 {
     public void Configure(EntityTypeBuilder<OrderDetail> builder)
     {
+        builder.HasKey(od => od.Id);
+
         builder.HasOne(od => od.Order)
             .WithMany(o => o.OrderDetails)
             .HasForeignKey(od => od.OrderId)

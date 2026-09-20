@@ -2,8 +2,10 @@ using ShopManagementSystem.Domain.Entities.Catalog;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
-public sealed class OrderDetail : BaseEntity
+public sealed class OrderDetail 
 {
+    public string Id { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
     public string OrderId { get; set; } = string.Empty;
 
     public Order Order { get; set; } = null!;

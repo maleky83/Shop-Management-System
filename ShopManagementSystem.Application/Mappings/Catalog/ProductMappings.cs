@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Domain.Entities.Catalog;
 
-namespace ShopManagementSystem.Application.Mappings;
+namespace ShopManagementSystem.Application.Mappings.Catalog;
 
 internal static class ProductMappings
 {

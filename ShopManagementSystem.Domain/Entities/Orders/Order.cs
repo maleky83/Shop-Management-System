@@ -3,8 +3,10 @@ using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
-public sealed class Order : BaseEntity
+public sealed class Order
 {
+    public string Id { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
     public required string UserId { get; set; }
 
     public User User { get; set; } = null!;

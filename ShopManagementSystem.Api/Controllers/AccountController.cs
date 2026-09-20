@@ -10,7 +10,7 @@ public sealed class AccountController(IAccountService accountService) : Controll
 {
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(RegisterDto model)
+    public async Task<ActionResult> Register(RegisterDto model)
     {
         await accountService.RegisterAsync(model);
 
@@ -21,7 +21,7 @@ public sealed class AccountController(IAccountService accountService) : Controll
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginDto model)
+    public async Task<ActionResult> Login(LoginDto model)
     {
         LoginResponseDto user = await accountService.LoginAsync(model);
 

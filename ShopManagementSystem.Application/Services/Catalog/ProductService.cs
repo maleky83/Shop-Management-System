@@ -5,6 +5,7 @@ using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Catalog;
 using ShopManagementSystem.Application.Interfaces.Common;
 using ShopManagementSystem.Application.Mappings;
+using ShopManagementSystem.Application.Mappings.Catalog;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 
@@ -38,14 +39,18 @@ public class ProductService(
         return product;
     }
 
-    public async Task<List<ProductDto>> GetAllAsync()
+    public async Task<ProductsCollectionDto> GetAllAsync()
     {
         List<ProductDto> products = await dbContext
             .Products
             .Select(ProductQueries.ProjectToDto())
             .ToListAsync();
 
-        return products;
+        var productsCollectionDto = new ProductsCollectionDto
+        {
+            Data = products
+        };
+        return productsCollectionDto;
     }
 
     public async Task<ProductDto> CreateAsync(CreateProductDto model)

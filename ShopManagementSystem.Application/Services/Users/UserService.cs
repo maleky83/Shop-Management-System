@@ -16,7 +16,7 @@ public class UserService(
     IRoleService roleService
     ) : IUserService
 {
-    public async Task CreateAsync(CreateUserDto model)
+    public async Task<UserDto> CreateAsync(CreateUserDto model)
     {
         var roleExists = await roleService.ExistsRoleByIdAsync(model.RoleId);
 
@@ -30,6 +30,8 @@ public class UserService(
         user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
         await context.AddAsync(user);
         await context.SaveChangesAsync();
+
+        return user.ToDto();
     }
 
     public async Task DeleteAsync(string id)

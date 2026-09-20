@@ -4,10 +4,14 @@ using ShopManagementSystem.Domain.Entities.Carts;
 
 namespace ShopManagementSystem.Infrastructure.Data.Configurations;
 
-public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
+public sealed class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
 {
     public void Configure(EntityTypeBuilder<CartItem> builder)
     {
+        builder.HasKey(ci => ci.Id);
+
+        builder.Property(ci => new { ci.ProductId, ci.CartId }).IsRequired();
+
         builder.HasOne(ci => ci.Cart)
             .WithMany(c => c.CartItems)
             .HasForeignKey(ci => ci.CartId)

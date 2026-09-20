@@ -9,13 +9,13 @@ namespace ShopManagementSystem.Api.Controllers;
 public class CategoriesController(ICategoryService categoryService) : ControllerBase
 {
     [HttpGet]
-    public async Task<CategoriesCollectionDto> GetCategories()
+    public async Task<ActionResult<CategoriesCollectionDto>> GetCategories()
     {
         var categoriesCollectionDto = new CategoriesCollectionDto
         {
             Data = await categoryService.GetAllAsync()
         };
 
-        return categoriesCollectionDto;
+        return Ok(categoriesCollectionDto);
     }
 }

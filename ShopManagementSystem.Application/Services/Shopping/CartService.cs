@@ -3,6 +3,7 @@ using ShopManagementSystem.Application.DTOs.Cart;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 using ShopManagementSystem.Application.Mappings;
+using ShopManagementSystem.Application.Mappings.Shopping;
 using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
@@ -11,7 +12,7 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 
 internal class CartService(ApplicationDbContext context) : ICartService
 {
-    public async Task AddItemAsync(string userId, AddCartiItemDto model)
+    public async Task<CartItemDto> AddItemAsync(string userId, AddCartiItemDto model)
     {
         if (model.Quantity <= 0)
         {
@@ -47,6 +48,7 @@ internal class CartService(ApplicationDbContext context) : ICartService
         {
             cartItem.Quantity += model.Quantity;
         }
+
         else
         {
             cartItem = new CartItem
@@ -59,7 +61,9 @@ internal class CartService(ApplicationDbContext context) : ICartService
 
             cart.CartItems.Add(cartItem);
         }
+
         await context.SaveChangesAsync();
+        return cartItem.ToDto();
     }
 
     public async Task<CartDto> GetAsync(string userId)

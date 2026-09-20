@@ -4,7 +4,7 @@ using ShopManagementSystem.Domain.Entities.Orders;
 
 namespace ShopManagementSystem.Infrastructure.Data.Configurations;
 
-public class OrderConfiguration : IEntityTypeConfiguration<Order>
+public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
@@ -12,5 +12,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .WithMany(u => u.Orders)
             .HasForeignKey(o => o.UserId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasKey(o => o.Id);
     }
 }

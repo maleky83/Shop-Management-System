@@ -2,9 +2,11 @@ using ShopManagementSystem.Domain.Entities.Carts;
 
 namespace ShopManagementSystem.Domain.Entities.Identity;
 
-public sealed class User : BaseEntity
+public sealed class User
 {
-    public string Name { get; set; } = string.Empty;
+    public string Id { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public required string Name { get; set; }
 
     public string PasswordHash { get; set; } = string.Empty;
 

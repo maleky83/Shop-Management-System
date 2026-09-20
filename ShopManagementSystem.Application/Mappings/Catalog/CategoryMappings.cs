@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using ShopManagementSystem.Application.DTOs.Category;
 using ShopManagementSystem.Domain.Entities.Catalog;
 
-namespace ShopManagementSystem.Application.Mappings;
+namespace ShopManagementSystem.Application.Mappings.Catalog;
 
 internal static class CategoryMappings
 {

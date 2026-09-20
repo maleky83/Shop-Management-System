@@ -12,7 +12,7 @@ public interface IUserService
     public Task<UserDto> GetByNameAsync(string name);
     public Task<User> GetUserByIdAsync(string id);
     public Task<User> GetUserByNameAsync(string name);
-    Task CreateAsync(CreateUserDto model);
+    Task<UserDto> CreateAsync(CreateUserDto model);
     Task CreateForRegisterAsync(RegisterDto model);
     Task DeleteAsync(string id);
     Task UpdateAsync(string id, UpdateUserDto model);

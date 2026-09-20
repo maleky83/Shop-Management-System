@@ -20,7 +20,7 @@ public sealed class CartsController(ICartService cartService) : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<CartDto>> Get()
+    public async Task<ActionResult<CartDto>> GetCart()
     {
         var userId = GetUserId();
         CartDto cart = await cartService.GetAsync(userId);
@@ -28,47 +28,36 @@ public sealed class CartsController(ICartService cartService) : ControllerBase
     }
 
     [HttpPost("items")]
-    public async Task<IActionResult> AddItem(AddCartiItemDto model)
+    public async Task<ActionResult> AddCartItem(AddCartiItemDto model)
     {
         var userId = GetUserId();
 
-        await cartService.AddItemAsync(userId, model);
-        return Ok(new
-        {
-            message = "CartItem is added"
-        });
+        CartItemDto cartItem = await cartService.AddItemAsync(userId, model);
+
+        return CreatedAtAction(nameof(GetCart), cartItem);
     }
 
     [HttpPut("items/{id}")]
-    public async Task<IActionResult> UpdateItem(string id, UpdateCartItemDto model)
+    public async Task<ActionResult> UpdateCartItem(string id, UpdateCartItemDto model)
     {
         var userId = GetUserId();
         await cartService.UpdateItemAsync(userId, id, model);
-        return Ok(new
-        {
-            message = "Cart item is updated"
-        });
+        return NoContent();
     }
 
     [HttpDelete("items/{id}")]
-    public async Task<IActionResult> DeleteItem(string id)
+    public async Task<ActionResult> DeleteCartItem(string id)
     {
         var userId = GetUserId();
         await cartService.DeleteItemAsync(userId, id);
-        return Ok(new
-        {
-            message = "Cart item is deleted"
-        });
+        return NoContent();
     }
 
     [HttpDelete]
-    public async Task<IActionResult> Delete()
+    public async Task<ActionResult> DeleteCart()
     {
         var userId = GetUserId();
         await cartService.DeleteAsync(userId);
-        return Ok(new
-        {
-            message = "Cart == deleted"
-        });
+        return NoContent();
     }
 }

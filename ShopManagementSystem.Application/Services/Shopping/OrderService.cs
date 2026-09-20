@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
+using ShopManagementSystem.Application.Mappings.Shopping;
 using ShopManagementSystem.Domain.Entities.Carts;
 using ShopManagementSystem.Domain.Entities.Orders;
 using ShopManagementSystem.Domain.Enums;
@@ -11,7 +12,7 @@ namespace ShopManagementSystem.Application.Services.Shopping;
 
 public class OrderService(ApplicationDbContext context) : IOrderService
 {
-    public async Task<string> CreateAsync(string userId)
+    public async Task<OrderDto> CreateAsync(string userId)
     {
         Cart? cart = await context.Carts
             .Include(c => c.CartItems)
@@ -49,7 +50,7 @@ public class OrderService(ApplicationDbContext context) : IOrderService
 
         await context.SaveChangesAsync();
 
-        return order.Id;
+        return order.ToDto();
     }
 
     public async Task<OrdersCollectionDto> GetAllAsync(string userId)

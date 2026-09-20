@@ -8,14 +8,14 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("orders")]
-public sealed class PaymentController(IPaymentService _paymentService) : ControllerBase
+public sealed class PaymentController(IPaymentService paymentService) : ControllerBase
 {
     [HttpPost("{orderId}/payment")]
-    public async Task<ActionResult<PaymentDto>> Create(string orderId)
+    public async Task<ActionResult<PaymentDto>> CreatePayment(string orderId)
     {
         var userId = GetUserId();
 
-        PaymentDto payment = await _paymentService.CreatePaymentAsync(
+        PaymentDto payment = await paymentService.CreatePaymentAsync(
             userId,
             orderId);
 
@@ -23,9 +23,9 @@ public sealed class PaymentController(IPaymentService _paymentService) : Control
     }
 
     [HttpGet("payment/verify")]
-    public async Task<IActionResult> Verify(string authority)
+    public async Task<ActionResult> Verify(string authority)
     {
-        await _paymentService.VerifyPaymentAsync(authority);
+        await paymentService.VerifyPaymentAsync(authority);
 
         return Ok(new
         {

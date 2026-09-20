@@ -9,22 +9,11 @@ namespace ShopManagementSystem.Api.Controllers;
 public sealed class UsersController(IUserService userService) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<List<UserDto>>> GetUsers()
+    public async Task<ActionResult<UsersCollectionDto>> GetUsers()
     {
         UsersCollectionDto users = await userService.GetAllAsync();
 
         return Ok(users);
-    }
-
-    [HttpPost]
-    public async Task<IActionResult> Create(CreateUserDto model)
-    {
-        await userService.CreateAsync(model);
-
-        return Ok(new
-        {
-            message = "User == created"
-        });
     }
 
     [HttpGet("{id}")]
@@ -35,25 +24,27 @@ public sealed class UsersController(IUserService userService) : ControllerBase
         return Ok(user);
     }
 
+    [HttpPost]
+    public async Task<ActionResult> CreateUser(CreateUserDto model)
+    {
+        UserDto user = await userService.CreateAsync(model);
+
+        return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+    }
+
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(string id, UpdateUserDto model)
+    public async Task<ActionResult> UpdateUser(string id, UpdateUserDto model)
     {
         await userService.UpdateAsync(id, model);
 
-        return Ok(new
-        {
-            message = "User == updated"
-        });
+        return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<ActionResult> DeleteUser(string id)
     {
         await userService.DeleteAsync(id);
 
-        return Ok(new
-        {
-            message = "User == Deleted"
-        });
+        return NoContent();
     }
 }

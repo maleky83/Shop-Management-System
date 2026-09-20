@@ -4,13 +4,15 @@ using ShopManagementSystem.Domain.Entities.Orders;
 
 namespace ShopManagementSystem.Domain.Entities.Catalog;
 
-public sealed class Product : BaseEntity
+public sealed class Product
 {
-    public string Name { get; set; } = string.Empty;
+    public string Id { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
+    public required string Name { get; set; }
 
     public string? Description { get; set; }
 
-    public string PictureName { get; set; } = string.Empty;
+    public string? PictureName { get; set; }
 
     public decimal Price { get; set; }
 

@@ -2,21 +2,7 @@ using System.Linq.Expressions;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Domain.Entities.Orders;
 
-namespace ShopManagementSystem.Application.Mappings;
-
-internal static class OrderMappings
-{
-    public static OrderDto OrderToDto(this Order order)
-    {
-        return new OrderDto
-        {
-            OrderId = order.Id,
-            OrderStatus = order.Status,
-            TotalPrice = order.TotalPrice,
-            UserId = order.UserId,
-        };
-    }
-}
+namespace ShopManagementSystem.Application.Mappings.Shopping;
 
 internal static class OrderQueries
 {

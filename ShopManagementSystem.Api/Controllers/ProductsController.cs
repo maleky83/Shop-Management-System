@@ -11,12 +11,9 @@ public sealed class ProductsController(IProductService productService) : Control
     [HttpGet]
     public async Task<ActionResult<ProductsCollectionDto>> GetProducts()
     {
-        List<ProductDto> products = await productService.GetAllAsync();
+        ProductsCollectionDto products = await productService.GetAllAsync();
 
-        return Ok(new ProductsCollectionDto
-        {
-            Data = products
-        });
+        return Ok(products);
     }
 
     [HttpGet("{id}")]
@@ -39,7 +36,7 @@ public sealed class ProductsController(IProductService productService) : Control
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(
+    public async Task<ActionResult> UpdateProduct(
         string id,
         [FromBody] UpdateProductDto model)
     {
@@ -49,7 +46,7 @@ public sealed class ProductsController(IProductService productService) : Control
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(string id)
+    public async Task<ActionResult> DeleteProduct(string id)
     {
         await productService.DeleteByIdAsync(id);
 

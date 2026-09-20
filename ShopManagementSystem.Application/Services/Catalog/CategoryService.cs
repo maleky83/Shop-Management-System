@@ -3,6 +3,7 @@ using ShopManagementSystem.Application.DTOs.Category;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Catalog;
 using ShopManagementSystem.Application.Mappings;
+using ShopManagementSystem.Application.Mappings.Catalog;
 using ShopManagementSystem.Domain.Entities.Catalog;
 using ShopManagementSystem.Infrastructure.Data.Context;
 

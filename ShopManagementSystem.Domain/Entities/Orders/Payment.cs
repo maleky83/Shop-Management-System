@@ -2,8 +2,10 @@ using ShopManagementSystem.Domain.Enums;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
-public sealed class Payment : BaseEntity
+public sealed class Payment
 {
+    public string Id { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
     public required string OrderId { get; set; }
 
     public Order Order { get; set; } = null!;
