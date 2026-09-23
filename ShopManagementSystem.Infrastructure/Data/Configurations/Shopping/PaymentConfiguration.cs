@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Orders;
 
-namespace ShopManagementSystem.Infrastructure.Data.Configurations;
+namespace ShopManagementSystem.Infrastructure.Data.Configurations.Shopping;
 
 public sealed class PaymentConfiguration : IEntityTypeConfiguration<Payment>
 {

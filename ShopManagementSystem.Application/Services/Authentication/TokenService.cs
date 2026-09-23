@@ -8,7 +8,7 @@ using ShopManagementSystem.Domain.Entities.Identity;
 
 namespace ShopManagementSystem.Application.Services.Authentication;
 
-public class TokenService(IConfiguration configuration) : ITokenService
+internal sealed class TokenService(IConfiguration configuration) : ITokenService
 {
     public string CreateToken(User user)
     {

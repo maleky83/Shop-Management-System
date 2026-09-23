@@ -9,7 +9,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Catalog;
 
-public class CategoryService(ApplicationDbContext context) : ICategoryService
+internal sealed class CategoryService(ApplicationDbContext context) : ICategoryService
 {
     public async Task<List<CategoryDto>> GetAllAsync()
     {

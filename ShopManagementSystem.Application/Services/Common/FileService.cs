@@ -4,7 +4,7 @@ using ShopManagementSystem.Application.Interfaces.Common;
 
 namespace ShopManagementSystem.Application.Services.Common;
 
-public class FileService(IWebHostEnvironment environment) : IFileService
+internal sealed class FileService(IWebHostEnvironment environment) : IFileService
 {
     public async Task<string> SaveFileAsync(IFormFile file)
     {

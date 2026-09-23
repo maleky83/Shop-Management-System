@@ -7,7 +7,7 @@ using ShopManagementSystem.Domain.Entities.Identity;
 
 namespace ShopManagementSystem.Application.Services.Authentication;
 
-public class AccountService(
+internal sealed class AccountService(
     IPasswordHasher<User> passwordHasher,
     ITokenService tokenService,
     IUserService userService

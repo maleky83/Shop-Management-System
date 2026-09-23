@@ -6,7 +6,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Users;
 
-public class RoleService(
+internal sealed class RoleService(
     ApplicationDbContext context
     ) : IRoleService
 {

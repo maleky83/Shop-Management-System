@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Identity;
 
-namespace ShopManagementSystem.Infrastructure.Data.Configurations;
+namespace ShopManagementSystem.Infrastructure.Data.Configurations.Users;
 
 public sealed class RoleConfiguration : IEntityTypeConfiguration<Role>
 {

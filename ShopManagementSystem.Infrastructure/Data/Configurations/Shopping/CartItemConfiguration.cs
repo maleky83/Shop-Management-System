@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Carts;
 
-namespace ShopManagementSystem.Infrastructure.Data.Configurations;
+namespace ShopManagementSystem.Infrastructure.Data.Configurations.Shopping;
 
 public sealed class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
 {
@@ -10,7 +10,9 @@ public sealed class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
     {
         builder.HasKey(ci => ci.Id);
 
-        builder.Property(ci => new { ci.ProductId, ci.CartId }).IsRequired();
+        builder.Property(ci => ci.ProductId).IsRequired();
+
+        builder.Property(ci => ci.CartId).IsRequired();
 
         builder.HasOne(ci => ci.Cart)
             .WithMany(c => c.CartItems)
@@ -19,5 +21,9 @@ public sealed class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
 
         builder.HasIndex(ci => new { ci.ProductId, ci.CartId })
             .IsUnique();
+
+        builder.HasOne(ci => ci.Product)
+            .WithMany(p => p.CartItems)
+            .HasForeignKey(ci => ci.ProductId);
     }
 }

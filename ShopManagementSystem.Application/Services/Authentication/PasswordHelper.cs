@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ShopManagementSystem.Application.Services.Authentication;
 
-public static class PasswordHelper
+internal static class PasswordHelper
 {
     private static readonly PasswordHasher<object> passwordHasher = new();
 

@@ -12,8 +12,7 @@ public sealed class Cart
 
     #region Relations
 
-    public ICollection<CartItem> CartItems { get; }
-        = new List<CartItem>();
+    public ICollection<CartItem> CartItems { get; set; } = null!;
 
     #endregion
 }

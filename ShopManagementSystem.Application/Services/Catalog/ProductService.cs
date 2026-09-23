@@ -11,7 +11,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Catalog;
 
-public class ProductService(
+internal sealed class ProductService(
     ApplicationDbContext dbContext,
     IFileService fileService,
     ICategoryService categoryService

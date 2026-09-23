@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Orders;
 
-namespace ShopManagementSystem.Infrastructure.Data.Configurations;
+namespace ShopManagementSystem.Infrastructure.Data.Configurations.Shopping;
 
 public sealed class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDetail>
 {
@@ -14,5 +14,9 @@ public sealed class OrderDetailConfiguration : IEntityTypeConfiguration<OrderDet
             .WithMany(o => o.OrderDetails)
             .HasForeignKey(od => od.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(od => od.Product)
+            .WithMany(p => p.OrderDetails)
+            .HasForeignKey(od => od.ProductId);
     }
 }

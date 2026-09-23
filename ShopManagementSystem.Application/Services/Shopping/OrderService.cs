@@ -10,7 +10,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping;
 
-public class OrderService(ApplicationDbContext context) : IOrderService
+internal sealed class OrderService(ApplicationDbContext context) : IOrderService
 {
     public async Task<OrderDto> CreateAsync(string userId)
     {

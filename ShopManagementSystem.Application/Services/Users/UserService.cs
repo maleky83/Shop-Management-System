@@ -10,7 +10,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Users;
 
-public class UserService(
+internal sealed class UserService(
     IPasswordHasher<User> passwordHasher,
     ApplicationDbContext context,
     IRoleService roleService

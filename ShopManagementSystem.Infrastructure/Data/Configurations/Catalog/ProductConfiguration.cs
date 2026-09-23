@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ShopManagementSystem.Domain.Entities.Catalog;
 
-namespace ShopManagementSystem.Infrastructure.Data.Configurations;
+namespace ShopManagementSystem.Infrastructure.Data.Configurations.Catalog;
 
 public class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
@@ -16,5 +16,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.Price)
             .HasPrecision(18, 2);
+
+        builder.HasOne(p => p.Category)
+            .WithMany(c => c.Products)
+            .HasForeignKey(p => p.CategoryId);
     }
 }

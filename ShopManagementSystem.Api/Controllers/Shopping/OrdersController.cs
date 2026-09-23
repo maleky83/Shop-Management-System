@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Order;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 
-namespace ShopManagementSystem.Api.Controllers;
+namespace ShopManagementSystem.Api.Controllers.Shopping;
 
 [ApiController]
 [Route("orders")]

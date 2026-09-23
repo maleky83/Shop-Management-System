@@ -17,10 +17,10 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                 Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                IsActive = table.Column<bool>(type: "bit", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                IsActive = table.Column<bool>(type: "bit", nullable: false)
             },
             constraints: table =>
             {
@@ -33,7 +33,7 @@ public partial class InitMig : Migration
             {
                 Id = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
             },
             constraints: table =>
@@ -47,7 +47,7 @@ public partial class InitMig : Migration
             {
                 Id = table.Column<int>(type: "int", nullable: false)
                     .Annotation("SqlServer:Identity", "1, 1"),
-                Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
             },
             constraints: table =>
@@ -60,14 +60,14 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                 Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                PictureName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                PictureName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                 Quantity = table.Column<int>(type: "int", nullable: false),
                 IsActive = table.Column<bool>(type: "bit", nullable: false),
-                CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: false)
             },
             constraints: table =>
             {
@@ -109,11 +109,11 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                 PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                 IsActive = table.Column<bool>(type: "bit", nullable: false),
-                RoleId = table.Column<int>(type: "int", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                RoleId = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table =>
             {
@@ -131,8 +131,8 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
             },
             constraints: table =>
             {
@@ -150,10 +150,10 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                 UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 Status = table.Column<int>(type: "int", nullable: false),
-                TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
             },
             constraints: table =>
             {
@@ -171,11 +171,11 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                 CartId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 ProductId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 Quantity = table.Column<int>(type: "int", nullable: false),
-                UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
             },
             constraints: table =>
             {
@@ -199,12 +199,12 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                 OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 ProductId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 Quantity = table.Column<int>(type: "int", nullable: false),
                 UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
             },
             constraints: table =>
             {
@@ -228,13 +228,13 @@ public partial class InitMig : Migration
             columns: table => new
             {
                 Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                 OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                 Status = table.Column<int>(type: "int", nullable: false),
                 Authority = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 ReferenceId = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                PaidAt = table.Column<DateTime>(type: "datetime2", nullable: true),
-                CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                PaidAt = table.Column<DateTime>(type: "datetime2", nullable: true)
             },
             constraints: table =>
             {
@@ -322,6 +322,12 @@ public partial class InitMig : Migration
             unique: true);
 
         migrationBuilder.CreateIndex(
+            name: "IX_Categories_Name",
+            table: "Categories",
+            column: "Name",
+            unique: true);
+
+        migrationBuilder.CreateIndex(
             name: "IX_OrderDetail_OrderId",
             table: "OrderDetail",
             column: "OrderId");
@@ -342,14 +348,38 @@ public partial class InitMig : Migration
             column: "OrderId");
 
         migrationBuilder.CreateIndex(
+            name: "IX_Permissions_Name",
+            table: "Permissions",
+            column: "Name",
+            unique: true);
+
+        migrationBuilder.CreateIndex(
             name: "IX_Products_CategoryId",
             table: "Products",
             column: "CategoryId");
 
         migrationBuilder.CreateIndex(
+            name: "IX_Products_Name",
+            table: "Products",
+            column: "Name",
+            unique: true);
+
+        migrationBuilder.CreateIndex(
             name: "IX_RolePermissions_PermissionId",
             table: "RolePermissions",
             column: "PermissionId");
+
+        migrationBuilder.CreateIndex(
+            name: "IX_Roles_Name",
+            table: "Roles",
+            column: "Name",
+            unique: true);
+
+        migrationBuilder.CreateIndex(
+            name: "IX_Users_Name",
+            table: "Users",
+            column: "Name",
+            unique: true);
 
         migrationBuilder.CreateIndex(
             name: "IX_Users_RoleId",

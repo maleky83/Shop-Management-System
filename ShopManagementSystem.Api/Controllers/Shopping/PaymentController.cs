@@ -4,7 +4,7 @@ using ShopManagementSystem.Application.DTOs;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces;
 
-namespace ShopManagementSystem.Api.Controllers;
+namespace ShopManagementSystem.Api.Controllers.Shopping;
 
 [ApiController]
 [Route("orders")]

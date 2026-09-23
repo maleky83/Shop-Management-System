@@ -9,7 +9,7 @@ using ShopManagementSystem.Infrastructure.Data.Context;
 
 namespace ShopManagementSystem.Application.Services.Shopping;
 
-public class PaymentService(ApplicationDbContext context) : IPaymentService
+internal sealed class PaymentService(ApplicationDbContext context) : IPaymentService
 {
     public async Task<PaymentDto> CreatePaymentAsync(
         string userId,
