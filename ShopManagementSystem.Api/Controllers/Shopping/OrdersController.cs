@@ -18,7 +18,7 @@ public sealed class OrdersController(IOrderService orderService) : ControllerBas
     }
 
     [HttpGet("{orderId}")]
-    public async Task<ActionResult<OrderDto>> GetOrder(string orderId)
+    public async Task<ActionResult<OrderDto>> GetOrder(Guid orderId)
     {
         var userId = GetUserId();
 
@@ -32,12 +32,12 @@ public sealed class OrdersController(IOrderService orderService) : ControllerBas
     {
         var userId = GetUserId();
 
-        OrderDto order = await orderService.CreateAsync(userId);
+        Guid id = await orderService.CreateAsync(userId);
 
-        return CreatedAtAction(nameof(GetOrder), new { id = order.OrderId }, order);
+        return CreatedAtAction(nameof(GetOrder), new { id });
     }
 
-    private string GetUserId()
+    private Guid GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -45,6 +45,7 @@ public sealed class OrdersController(IOrderService orderService) : ControllerBas
         {
             throw new UnauthorizedAccessException("User invalid");
         }
-        return userId;
+
+        return Guid.Parse(userId);
     }
 }

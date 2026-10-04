@@ -1,61 +1,22 @@
-using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Order;
-using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Shopping;
-using ShopManagementSystem.Application.Mappings.Shopping;
-using ShopManagementSystem.Domain.Entities.Carts;
-using ShopManagementSystem.Domain.Entities.Orders;
-using ShopManagementSystem.Domain.Enums;
-using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Domain.Repositories.Shopping;
 
 namespace ShopManagementSystem.Application.Services.Shopping;
 
-internal sealed class OrderService(ApplicationDbContext context) : IOrderService
+public sealed class OrderService(IOrderRepository orderRepository) : IOrderService
 {
-    public async Task<OrderDto> CreateAsync(string userId)
+    public async Task<Guid> CreateAsync(Guid userId)
     {
-        Cart? cart = await context.Carts
-            .Include(c => c.CartItems)
-            .ThenInclude(c => c.Product)
-            .FirstOrDefaultAsync(c => c.UserId == userId);
-
-        if (cart == null || !cart.CartItems.Any())
-        {
-            throw new NotFoundException("Cart is empty");
-        }
-
-        var order = new Order
-        {
-            UserId = userId,
-            CreatedAt = DateTime.UtcNow,
-            Status = OrderStatus.Pending,
-        };
-
-        foreach (CartItem cartItem in cart.CartItems)
-        {
-            var orderDetail = new OrderDetail
-            {
-                UnitPrice = cartItem.Product.Price,
-                ProductId = cartItem.ProductId,
-                Quantity = cartItem.Quantity,
-                TotalPrice = cartItem.Quantity * cartItem.Product.Price,
-            };
-
-            order.OrderDetails.Add(orderDetail);
-        }
-
-        order.TotalPrice = order.OrderDetails.Sum(od => od.TotalPrice);
-
-        await context.Orders.AddAsync(order);
-
-        await context.SaveChangesAsync();
-
-        return order.ToDto();
+        var id = await orderRepository.CreateAsync(userId);
+        return id;
     }
 
-    public async Task<OrdersCollectionDto> GetAllAsync(string userId)
+    public async Task<OrdersCollectionDto> GetAllAsync(Guid userId)
     {
-        List<OrderDto> orders = await context.Orders
+        var orders = await orderRepository.GetAllAsync(userId);
+
+        var orderDtos = orders
             .Where(o => o.UserId == userId)
             .OrderByDescending(o => o.CreatedAt)
             .Select(o => new OrderDto
@@ -72,26 +33,18 @@ internal sealed class OrderService(ApplicationDbContext context) : IOrderService
                     Quantity = od.Quantity,
                     UnitPrice = od.UnitPrice,
                 }).ToList()
-            }).ToListAsync();
+            }).ToList();
 
         var ordersCollectionDto = new OrdersCollectionDto
         {
-            Data = orders
+            Data = orderDtos
         };
         return ordersCollectionDto;
     }
 
-    public async Task<OrderDto> GetByIdAsync(string userId, string orderId)
+    public async Task<OrderDto> GetByIdAsync(Guid userId, Guid orderId)
     {
-        Order? order = await context.Orders
-            .Include(o => o.OrderDetails)
-            .ThenInclude(o => o.Product)
-            .FirstOrDefaultAsync(o => o.UserId == userId && o.Id == orderId);
-
-        if (order == null)
-        {
-            throw new NotFoundException("Order not found");
-        }
+        var order = await orderRepository.GetByIdAsync(userId, orderId);
 
         return new OrderDto
         {

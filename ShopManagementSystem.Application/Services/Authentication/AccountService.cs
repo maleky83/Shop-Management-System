@@ -1,34 +1,40 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Authentication;
-using ShopManagementSystem.Application.Interfaces.Users;
 using ShopManagementSystem.Domain.Entities.Identity;
+using ShopManagementSystem.Domain.Repositories;
 
 namespace ShopManagementSystem.Application.Services.Authentication;
 
-internal sealed class AccountService(
+public sealed class AccountService(
     IPasswordHasher<User> passwordHasher,
     ITokenService tokenService,
-    IUserService userService
+    IMapper mapper,
+    IUserRepository userRepository
     ) : IAccountService
 {
-    public async Task RegisterAsync(RegisterDto model)
+    public async Task RegisterAsync(RegisterDto dto)
     {
-        await userService.CreateForRegisterAsync(model);
+        User user = mapper.Map<User>(dto);
+
+        user.PasswordHash = passwordHasher.HashPassword(user, dto.Password);
+
+        await userRepository.CreateAsync(user);
     }
 
-    public async Task<LoginResponseDto> LoginAsync(LoginDto model)
+    public async Task<LoginResponseDto> LoginAsync(LoginDto dto)
     {
-        User user = await userService.GetUserByNameAsync(model.Name);
+        User user = await userRepository.GetUserByNameAsync(dto.Name);
 
         if (user == null)
-            throw new BadRequestException("Invalid username or password.");
+            throw new NotFoundException("Invalid username or password.");
 
-        PasswordVerificationResult passwordResult = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, model.Password);
+        PasswordVerificationResult passwordResult = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
 
         if (passwordResult == PasswordVerificationResult.Failed)
-            throw new BadRequestException("Invalid username or password.");
+            throw new NotFoundException("Invalid username or password.");
 
         var token = tokenService.CreateToken(user);
 

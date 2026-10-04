@@ -2,15 +2,15 @@ using ShopManagementSystem.Domain.Entities.Catalog;
 
 namespace ShopManagementSystem.Domain.Entities.Orders;
 
-public sealed class OrderDetail 
+public sealed class OrderDetail
 {
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; } = Guid.Empty;
     public DateTime CreatedAt { get; set; }
-    public string OrderId { get; set; } = string.Empty;
+    public Guid OrderId { get; set; } = Guid.Empty;
 
     public Order Order { get; set; } = null!;
 
-    public required string ProductId { get; set; }
+    public required Guid ProductId { get; set; }
 
     public Product Product { get; set; } = null!;
 

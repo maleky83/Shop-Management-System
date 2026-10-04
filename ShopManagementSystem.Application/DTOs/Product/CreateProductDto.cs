@@ -1,26 +1,16 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-
 namespace ShopManagementSystem.Application.DTOs.Product;
 
-public sealed record CreateProductDto
+public sealed class CreateProductDto
 {
-    [Required]
-    public required string Name { get; init; }
+    public required string Name { get; set; }
 
-    [Required]
-    public required string Description { get; init; }
+    public string? Description { get; set; }
 
-    public IFormFile? Picture { get; init; }
+    public required decimal Price { get; set; }
 
-    [Required]
-    public required decimal Price { get; init; }
+    public required int Quantity { get; set; }
 
-    [Required]
-    public required int Quantity { get; init; }
+    public bool IsActive { get; set; } = true;
 
-    public bool IsActive { get; init; } = true;
-
-    [Required]
-    public required string CategoryId { get; init; }
+    public required string CategoryId { get; set; }
 }

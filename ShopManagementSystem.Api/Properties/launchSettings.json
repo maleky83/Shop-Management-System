@@ -2,7 +2,7 @@
     "profiles": {
         "ShopManagementSystem.Api": {
             "commandName": "Project",
-            "launchBrowser": true,
+            "launchBrowser": false,
             "launchUrl": "openapi/v1.json",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"

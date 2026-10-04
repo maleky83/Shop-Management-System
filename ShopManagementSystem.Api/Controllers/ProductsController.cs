@@ -1,3 +1,4 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Interfaces.Catalog;
@@ -6,7 +7,9 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("products")]
-public sealed class ProductsController(IProductService productService) : ControllerBase
+public sealed class ProductsController(
+    IProductService productService
+    ) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<ProductsCollectionDto>> GetProducts()
@@ -17,7 +20,7 @@ public sealed class ProductsController(IProductService productService) : Control
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ProductDto>> GetProduct(string id)
+    public async Task<ActionResult<ProductDto>> GetProduct([FromRoute] Guid id)
     {
         ProductDto product = await productService.GetByIdAsync(id);
 
@@ -25,30 +28,33 @@ public sealed class ProductsController(IProductService productService) : Control
     }
 
     [HttpPost]
-    public async Task<ActionResult<ProductDto>> CreateProduct([FromBody] CreateProductDto model)
+    public async Task<ActionResult<ProductDto>> CreateProduct(
+       [FromBody] CreateProductDto createProductDto,
+       [FromServices] IValidator<CreateProductDto> validator)
     {
-        ProductDto product = await productService.CreateAsync(model);
+        await validator.ValidateAndThrowAsync(createProductDto);
+
+        Guid productId = await productService.CreateAsync(createProductDto);
 
         return CreatedAtAction(
             nameof(GetProduct),
-            new { id = product.ProductId },
-            product);
+            new { id = productId });
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateProduct(
-        string id,
-        [FromBody] UpdateProductDto model)
+        [FromRoute] Guid id,
+        [FromBody] UpdateProductDto updateProductDto)
     {
-        await productService.UpdateAsync(id, model);
+        await productService.UpdateAsync(id, updateProductDto);
 
         return NoContent();
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteProduct(string id)
+    public async Task<ActionResult> DeleteProduct([FromRoute] Guid id)
     {
-        await productService.DeleteByIdAsync(id);
+        await productService.DeleteAsync(id);
 
         return NoContent();
     }

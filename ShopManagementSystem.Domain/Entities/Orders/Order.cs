@@ -5,9 +5,9 @@ namespace ShopManagementSystem.Domain.Entities.Orders;
 
 public sealed class Order
 {
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; } = Guid.Empty;
     public DateTime CreatedAt { get; set; }
-    public required string UserId { get; set; }
+    public required Guid UserId { get; set; }
 
     public User User { get; set; } = null!;
 
@@ -20,7 +20,6 @@ public sealed class Order
     public ICollection<OrderDetail> OrderDetails { get; }
         = new List<OrderDetail>();
 
-    public ICollection<Payment> Payments { get; } = new List<Payment>();
 
     #endregion
 }

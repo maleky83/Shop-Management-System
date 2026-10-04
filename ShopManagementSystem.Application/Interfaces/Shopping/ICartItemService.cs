@@ -4,8 +4,7 @@ namespace ShopManagementSystem.Application.Interfaces.Shopping;
 
 public interface ICartItemService
 {
-    Task AddAsync(string userId, AddCartiItemDto model);
-    Task UpdateAsync(string userId, string cartItemId, UpdateCartItemDto model);
-    Task DeleteAsync(string userId, string cartItemId);
-
+    Task DeleteAsync(Guid userId, Guid cartItemId);
+    Task UpdateAsync(Guid userId, Guid cartItemId, UpdateCartItemDto updateCartItemDto);
+    Task AddAsync(Guid userId, AddCartiItemDto addCartItemDto);
 }

@@ -1,141 +1,78 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.DTOs.Users;
-using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Users;
-using ShopManagementSystem.Application.Mappings;
 using ShopManagementSystem.Domain.Entities.Identity;
-using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Domain.Repositories;
 
 namespace ShopManagementSystem.Application.Services.Users;
 
-internal sealed class UserService(
+public sealed class UserService(
     IPasswordHasher<User> passwordHasher,
-    ApplicationDbContext context,
-    IRoleService roleService
+    IUserRepository userRepository,
+    IMapper mapper
     ) : IUserService
 {
-    public async Task<UserDto> CreateAsync(CreateUserDto model)
+    public async Task<UserDto> CreateAsync(CreateUserDto createUserDto)
     {
-        var roleExists = await roleService.ExistsRoleByIdAsync(model.RoleId);
+        User user = mapper.Map<User>(createUserDto);
 
-        if (!roleExists)
+        user.PasswordHash = passwordHasher.HashPassword(user, createUserDto.Password);
+
+        await userRepository.CreateAsync(user);
+
+        var userDto = mapper.Map<UserDto>(user);
+        return userDto;
+    }
+
+    public async Task DeleteAsync(Guid id)
+    {
+        await userRepository.DeleteAsync(id);
+    }
+
+    public async Task UpdateAsync(Guid id, UpdateUserDto updateUserDto)
+    {
+        var user = mapper.Map<User>(updateUserDto);
+
+        if (!string.IsNullOrEmpty(updateUserDto.NewPassword))
         {
-            throw new BadRequestException("Role not found");
+            user.PasswordHash = passwordHasher.HashPassword(user, updateUserDto.NewPassword);
         }
 
-        User user = model.ToEntity();
+        await userRepository.UpdateAsync(id, user);
 
-        user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
-        await context.AddAsync(user);
-        await context.SaveChangesAsync();
-
-        return user.ToDto();
     }
 
-    public async Task DeleteAsync(string id)
+    public async Task<UserDto> GetByIdAsync(Guid id)
     {
-        User user = await GetUserByIdAsync(id);
+        var user = await userRepository.GetByIdAsync(id);
 
-        if (user == null)
-            throw new NotFoundException("User not found");
+        var userDto = mapper.Map<UserDto>(user);
 
-        context.Remove(user);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(string id, UpdateUserDto model)
-    {
-        User user = await GetUserByIdAsync(id);
-
-        if (user == null)
-            throw new NotFoundException("User not found");
-
-        user.UpdateFromDto(model);
-
-        if (!string.IsNullOrEmpty(model.NewPassword))
-        {
-            user.PasswordHash = passwordHasher.HashPassword(user, model.NewPassword);
-        }
-
-        await context.SaveChangesAsync();
-    }
-
-    public async Task<UserDto> GetByIdAsync(string id)
-    {
-        User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-        if (user == null)
-            throw new NotFoundException("User not found");
-
-        return user.ToDto();
+        return userDto;
     }
 
     public async Task<UsersCollectionDto> GetAllAsync()
     {
-        List<UserDto> users = await context
-            .Users
-            .Select(UserQureies.ProjectToDto())
-            .ToListAsync();
+        var users = await userRepository.GetAllAsync();
+
+        var userDtos = mapper.Map<IReadOnlyCollection<UserDto>>(users);
 
         var usersCollectionDto = new UsersCollectionDto
         {
-            Data = users
+            Data = userDtos
         };
 
         return usersCollectionDto;
     }
 
-    public async Task<bool> ExistsByNameAsync(string name)
+    public async Task CreateForRegisterAsync(RegisterDto registerDto)
     {
-        return await context.Users.AnyAsync(u => u.Name == name);
-    }
+        User user = mapper.Map<User>(registerDto);
 
-    public async Task<UserDto> GetByNameAsync(string name)
-    {
-        User? user = await context.Users.FirstOrDefaultAsync(u => u.Name == name);
+        user.PasswordHash = passwordHasher.HashPassword(user, registerDto.Password);
 
-        if (user == null)
-            throw new NotFoundException("User not found");
-
-        return user.ToDto();
-    }
-
-    public async Task CreateForRegisterAsync(RegisterDto model)
-    {
-        var userExists = await ExistsByNameAsync(model.Name);
-
-        if (userExists)
-            throw new BadRequestException("Uesr exists");
-
-        User user = model.RegisterDtoToEntity();
-
-        user.PasswordHash = passwordHasher.HashPassword(user, model.Password);
-
-        await context.Users.AddAsync(user);
-        await context.SaveChangesAsync();
-    }
-
-    public async Task<User> GetUserByNameAsync(string name)
-    {
-        User? user = await context.Users.FirstOrDefaultAsync(u => u.Name == name);
-
-        if (user == null)
-            throw new NotFoundException("User not found");
-
-        return user;
-    }
-
-    public async Task<User> GetUserByIdAsync(string id)
-    {
-        User? user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-        if (user == null)
-        {
-            throw new NotFoundException("User not found");
-        }
-
-        return user;
+        await userRepository.RegisterAsync(user);
     }
 }

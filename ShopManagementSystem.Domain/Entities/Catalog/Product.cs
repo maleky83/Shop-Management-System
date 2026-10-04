@@ -6,20 +6,18 @@ namespace ShopManagementSystem.Domain.Entities.Catalog;
 
 public sealed class Product
 {
-    public string Id { get; set; } = string.Empty;
+    public Guid Id { get; set; } = Guid.Empty;
     public DateTime CreatedAt { get; set; }
     public required string Name { get; set; }
 
     public string? Description { get; set; }
-
-    public string? PictureName { get; set; }
 
     public decimal Price { get; set; }
 
     public int Quantity { get; set; }
 
     public bool IsActive { get; set; } = true;
-    public required string CategoryId { get; set; }
+    public required Guid CategoryId { get; set; }
 
 
     #region Relations

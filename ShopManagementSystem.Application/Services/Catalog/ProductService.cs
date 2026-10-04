@@ -1,110 +1,61 @@
-using Microsoft.EntityFrameworkCore;
-using ShopManagementSystem.Application.DTOs.Category;
+using AutoMapper;
 using ShopManagementSystem.Application.DTOs.Product;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Catalog;
-using ShopManagementSystem.Application.Interfaces.Common;
-using ShopManagementSystem.Application.Mappings;
-using ShopManagementSystem.Application.Mappings.Catalog;
 using ShopManagementSystem.Domain.Entities.Catalog;
-using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Domain.Repositories;
 
 namespace ShopManagementSystem.Application.Services.Catalog;
 
-internal sealed class ProductService(
-    ApplicationDbContext dbContext,
-    IFileService fileService,
-    ICategoryService categoryService
+public sealed class ProductService(
+    IProductRepository productRepository,
+    IMapper mapper
     ) : IProductService
 {
 
-    public async Task<ProductDto> GetByIdAsync(string id)
+    public async Task<ProductDto> GetByIdAsync(Guid id)
     {
-        Product? product = await dbContext.Products
-            .FirstOrDefaultAsync(p => p.Id == id);
+        Product? product = await productRepository.GetByIdAsync(id);
 
         if (product == null)
             throw new NotFoundException("Product not found");
 
-        return product.ToDto();
-    }
-    public async Task<Product> GetProductByIdAsync(string id)
-    {
-        Product? product = await dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
+        ProductDto productDto = mapper.Map<ProductDto>(product);
 
-        if (product == null)
-        {
-            throw new NotFoundException("Product not found");
-        }
-        return product;
+        return productDto;
     }
 
     public async Task<ProductsCollectionDto> GetAllAsync()
     {
-        List<ProductDto> products = await dbContext
-            .Products
-            .Select(ProductQueries.ProjectToDto())
-            .ToListAsync();
+        IEnumerable<Product> products = await productRepository.GetAllAsync();
+
+        IReadOnlyCollection<ProductDto> productDto = mapper.Map<IReadOnlyCollection<ProductDto>>(products);
 
         var productsCollectionDto = new ProductsCollectionDto
         {
-            Data = products
+            Data = productDto
         };
         return productsCollectionDto;
     }
 
-    public async Task<ProductDto> CreateAsync(CreateProductDto model)
+    public async Task<Guid> CreateAsync(CreateProductDto createProductDto)
     {
-        CategoryDto category = await categoryService.GetByIdAsync(model.CategoryId);
+        Product product = mapper.Map<Product>(createProductDto);
 
-        Product product = model.ToEntity();
+        Guid id = await productRepository.CreateAsync(product);
 
-        if (model.Picture != null)
-        {
-            product.PictureName = await fileService.SaveFileAsync(model.Picture);
-        }
-
-        category.ToEntity().Products.Add(product);
-
-        await dbContext.AddAsync(product);
-        await dbContext.SaveChangesAsync();
-        return product.ToDto();
+        return id;
     }
 
-    public async Task UpdateAsync(string id, UpdateProductDto model)
+    public async Task UpdateAsync(Guid id, UpdateProductDto dto)
     {
-        Product product = await GetProductByIdAsync(id);
+        Product product = mapper.Map<Product>(dto);
 
-        if (product == null)
-            throw new NotFoundException("Product not found");
-
-        product.UpdateFromDto(model);
-
-        if (model.Picture?.Length > 0)
-        {
-            if (!string.IsNullOrWhiteSpace(product.PictureName))
-            {
-                fileService.DeleleFile(product.PictureName);
-            }
-            product.PictureName = await fileService.SaveFileAsync(model.Picture);
-        }
-
-        await dbContext.SaveChangesAsync();
+        await productRepository.UpdateAsync(id, product);
     }
 
-    public async Task DeleteByIdAsync(string id)
+    public async Task DeleteAsync(Guid id)
     {
-        Product product = await GetProductByIdAsync(id);
-
-        if (product == null)
-            throw new NotFoundException("Product not found");
-
-        if (!string.IsNullOrWhiteSpace(product.PictureName))
-        {
-            fileService.DeleleFile(product.PictureName);
-        }
-
-        dbContext.Remove(product);
-        await dbContext.SaveChangesAsync();
+        await productRepository.DeleteAsync(id);
     }
 }

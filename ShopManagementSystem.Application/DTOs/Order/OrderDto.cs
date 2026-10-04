@@ -9,8 +9,8 @@ public sealed record OrdersCollectionDto
 
 public record OrderDto
 {
-    public required string OrderId { get; init; }
-    public required string UserId { get; init; }
+    public required Guid OrderId { get; init; }
+    public required Guid UserId { get; init; }
     public decimal TotalPrice { get; init; }
     public OrderStatus OrderStatus { get; init; }
     public List<OrderDetailDto>? OrderDetails { get; init; }

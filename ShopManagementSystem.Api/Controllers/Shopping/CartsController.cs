@@ -9,14 +9,16 @@ namespace ShopManagementSystem.Api.Controllers.Shopping;
 [Route("carts")]
 public sealed class CartsController(ICartService cartService) : ControllerBase
 {
-    private string GetUserId()
+    private Guid GetUserId()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
         if (userId == null)
         {
             throw new UnauthorizedAccessException("Invalid user");
         }
-        return userId;
+
+        return Guid.Parse(userId);
     }
 
     [HttpGet]

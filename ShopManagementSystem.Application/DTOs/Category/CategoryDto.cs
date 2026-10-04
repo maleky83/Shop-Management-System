@@ -7,7 +7,7 @@ public sealed record CategoriesCollectionDto
 
 public sealed record CategoryDto
 {
-    public required string CategoryId { get; init; }
+    public required Guid CategoryId { get; init; }
     public string Name { get; init; } = string.Empty;
 
     public string? Description { get; init; }

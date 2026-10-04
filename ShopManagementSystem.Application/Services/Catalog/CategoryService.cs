@@ -1,36 +1,42 @@
-using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using ShopManagementSystem.Application.DTOs.Category;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Catalog;
-using ShopManagementSystem.Application.Mappings;
-using ShopManagementSystem.Application.Mappings.Catalog;
 using ShopManagementSystem.Domain.Entities.Catalog;
-using ShopManagementSystem.Infrastructure.Data.Context;
+using ShopManagementSystem.Domain.Repositories;
 
 namespace ShopManagementSystem.Application.Services.Catalog;
 
-internal sealed class CategoryService(ApplicationDbContext context) : ICategoryService
+public sealed class CategoryService(
+    ICategoryRepository categoryRepository,
+    IMapper mapper
+    ) : ICategoryService
 {
-    public async Task<List<CategoryDto>> GetAllAsync()
+    public async Task<CategoriesCollectionDto> GetAllAsync()
     {
-        List<CategoryDto> categories = await context
-            .Categories
-            .Select(CategoryQueries.ProjectToDto())
-            .ToListAsync();
+        IEnumerable<Category> categories = await categoryRepository.GetAllAsync();
 
-        return categories;
+        var categoriesDto = mapper.Map<IReadOnlyCollection<CategoryDto>>(categories);
+
+        CategoriesCollectionDto categoriesCollectionDto = new()
+        {
+            Data = categoriesDto
+        };
+        return categoriesCollectionDto;
 
     }
 
-    public async Task<CategoryDto> GetByIdAsync(string id)
+    public async Task<CategoryDto> GetAsync(Guid id)
     {
-        Category? category = await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        Category? category = await categoryRepository.GetByIdAsync(id);
 
         if (category is null)
         {
             throw new NotFoundException("Category not found");
         }
 
-        return category.ToDto();
+        CategoryDto categoryDto = mapper.Map<CategoryDto>(category);
+
+        return categoryDto;
     }
 }

@@ -17,7 +17,7 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDto>> GetUser(string id)
+    public async Task<ActionResult<UserDto>> GetUser([FromRoute] Guid id)
     {
         UserDto user = await userService.GetByIdAsync(id);
 
@@ -25,7 +25,7 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateUser(CreateUserDto model)
+    public async Task<ActionResult> CreateUser([FromBody] CreateUserDto model)
     {
         UserDto user = await userService.CreateAsync(model);
 
@@ -33,7 +33,9 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> UpdateUser(string id, UpdateUserDto model)
+    public async Task<ActionResult> UpdateUser(
+        [FromRoute] Guid id,
+        [FromBody] UpdateUserDto model)
     {
         await userService.UpdateAsync(id, model);
 
@@ -41,7 +43,7 @@ public sealed class UsersController(IUserService userService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> DeleteUser(string id)
+    public async Task<ActionResult> DeleteUser([FromRoute] Guid id)
     {
         await userService.DeleteAsync(id);
 

@@ -11,11 +11,8 @@ public class CategoriesController(ICategoryService categoryService) : Controller
     [HttpGet]
     public async Task<ActionResult<CategoriesCollectionDto>> GetCategories()
     {
-        var categoriesCollectionDto = new CategoriesCollectionDto
-        {
-            Data = await categoryService.GetAllAsync()
-        };
+        var categories = await categoryService.GetAllAsync();
 
-        return Ok(categoriesCollectionDto);
+        return Ok(categories);
     }
 }
