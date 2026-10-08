@@ -18,5 +18,8 @@ public sealed class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.HasMany(o => o.OrderDetails)
             .WithOne(od => od.Order)
             .HasForeignKey(o => o.OrderId);
+
+        builder.Property(o => o.TotalPrice)
+            .HasPrecision(18, 2);
     }
 }

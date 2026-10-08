@@ -1,32 +1,29 @@
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
 namespace ShopManagementSystem.Api.Middleware;
 
-public sealed class GlobalExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
+public sealed class GlobalExceptionHandler(
+    ILogger<GlobalExceptionHandler> logger) : IExceptionHandler
 {
-    public ValueTask<bool> TryHandleAsync(HttpContext httpContext,
+    public async ValueTask<bool> TryHandleAsync(
+        HttpContext context,
         Exception exception,
-        CancellationToken cancellationToken
-        )
+        CancellationToken cancellationToken)
     {
+        logger.LogError(exception, "Unhandled exception occurred");
 
-        var contex = new ProblemDetailsContext
-        {
-            Exception = exception,
-            HttpContext = httpContext,
-            ProblemDetails = new ProblemDetails
+        context.Response.StatusCode =
+            StatusCodes.Status500InternalServerError;
+
+        await context.Response.WriteAsJsonAsync(
+            new
             {
-                Title = "Internal Server Error",
-                Detail = "An error occurred while processing your request. Please try again",
-                Status = StatusCodes.Status500InternalServerError,
-            }
-        };
+                title = "Internal Server Error",
+                detail = "An error occurred while processing your request.",
+                status = 500
+            },
+            cancellationToken);
 
-        var error = exception.Message;
-
-        contex.ProblemDetails.Extensions.Add("error", error);
-
-        return problemDetailsService.TryWriteAsync(contex);
+        return true;
     }
 }

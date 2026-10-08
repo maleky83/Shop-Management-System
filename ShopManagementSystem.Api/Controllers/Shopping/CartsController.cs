@@ -1,6 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.Cart;
+using ShopManagementSystem.Application.Carts.Dtos;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 
 namespace ShopManagementSystem.Api.Controllers.Shopping;
@@ -24,7 +24,7 @@ public sealed class CartsController(ICartService cartService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<CartDto>> GetCart()
     {
-        var userId = GetUserId();
+        Guid userId = GetUserId();
         CartDto cart = await cartService.GetAsync(userId);
         return Ok(cart);
     }
@@ -32,7 +32,7 @@ public sealed class CartsController(ICartService cartService) : ControllerBase
     [HttpDelete]
     public async Task<ActionResult> DeleteCart()
     {
-        var userId = GetUserId();
+        Guid userId = GetUserId();
         await cartService.DeleteAsync(userId);
         return NoContent();
     }

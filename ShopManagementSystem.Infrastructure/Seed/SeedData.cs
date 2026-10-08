@@ -94,35 +94,35 @@ public static class SeedData
     private static void SeedProducts(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Product>().HasData(
-            new Product()
+            new Product
             {
-                Id = Guid.Parse($"p_jasdf99-8-asd98asdf"),
-                Name = "Sumsung Mobile",
-                Description = "ram 6 , memory 128",
+                Id = Guid.Parse("b4e72c19-6f35-4a81-9d27-58c3e1f60492"),
+                Name = "Samsung Mobile",
+                Description = "RAM 6GB, Memory 128GB",
                 Price = 20000,
-                CategoryId = Guid.Parse("c_jasdf99-8-asdf98098asdf"),
+                CategoryId = Guid.Parse("a7f3c821-4b92-4d16-9e35-72c8f1a604b9"),
                 Quantity = 10,
-                CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             },
-            new Product()
+            new Product
             {
-                Id = Guid.Parse($"p_jasdf99-8-asf"),
-                Name = "lenovo laptop",
-                Description = "ram 16 , memory 1T",
+                Id = Guid.Parse("e8315a47-2c69-4f03-b728-91d6c5a84013"),
+                Name = "Lenovo Laptop",
+                Description = "RAM 16GB, Memory 1TB",
                 Price = 10000,
-                CategoryId = Guid.Parse("c_jasdf99-8-asdf98098asdsdf"),
+                CategoryId = Guid.Parse("d2916e47-83ac-4f52-b719-05e4c9a2f638"),
                 Quantity = 30,
-                CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             },
-            new Product()
+            new Product
             {
-                Id = Guid.Parse($"p_sdf23r23-asdf"),
-                Name = "X-200 sport Watch",
-                Description = " AMOLED،GPS ",
+                Id = Guid.Parse("5d29f816-73b4-4c62-ae05-38f1b927640c"),
+                Name = "X-200 Sport Watch",
+                Description = "AMOLED, GPS",
                 Price = 30000,
-                CategoryId = Guid.Parse("c_jasdf99-8-asdf9df"),
+                CategoryId = Guid.Parse("6c48b2f9-e157-43a6-8d21-f90b735c4a82"),
                 Quantity = 20,
-                CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             });
     }
 
@@ -132,22 +132,26 @@ public static class SeedData
 
     private static void SeedCategories(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Category>().HasData(new Category
-        {
-            Id = Guid.Parse($"c_jasdf99-8-asdf98098asdf"),
-            Name = "Mobile",
-            Description = "for call and plaing"
-        }, new Category
-        {
-            Id = Guid.Parse($"c_jasdf99-8-asdf98098asdsdf"),
-            Name = "laptop",
-            Description = "for programming , suding and game"
-        }, new Category
-        {
-            Id = Guid.Parse($"c_jasdf99-8-asdf9df"),
-            Name = "Accessory",
-            Description = "for example watch and sock"
-        });
+        modelBuilder.Entity<Category>().HasData(
+            new Category
+            {
+                Id = Guid.Parse("a7f3c821-4b92-4d16-9e35-72c8f1a604b9"),
+                Name = "Mobile",
+                Description = "For calling and playing"
+            },
+            new Category
+            {
+                Id = Guid.Parse("d2916e47-83ac-4f52-b719-05e4c9a2f638"),
+                Name = "Laptop",
+                Description = "For programming, studying and gaming"
+            },
+            new Category
+            {
+                Id = Guid.Parse("6c48b2f9-e157-43a6-8d21-f90b735c4a82"),
+                Name = "Accessory",
+                Description = "For example, watch and sock"
+            }
+        );
     }
 
     #endregion
@@ -158,7 +162,7 @@ public static class SeedData
     {
         var user = new User()
         {
-            Id = Guid.Parse($"u_jasdf99-8-asdf9df"),
+            Id = Guid.Parse("f2a81c47-93d5-4e62-b718-6c04a9d35127"),
             IsActive = true,
             Name = "a",
             RoleId = RoleIds.Admin,

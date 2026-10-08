@@ -1,4 +1,4 @@
-using ShopManagementSystem.Application.DTOs.Account;
+using ShopManagementSystem.Application.Users.Dtos;
 
 namespace ShopManagementSystem.Application.Interfaces.Authentication;
 

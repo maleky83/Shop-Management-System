@@ -8,7 +8,7 @@ namespace ShopManagementSystem.Infrastructure.Repositories.Shopping;
 
 internal class CartRepository(ApplicationDbContext dbContext) : ICartRepository
 {
-    public async Task<Cart> GetAsync(Guid userId)
+    public async Task<Cart> GetByUserIdAsync(Guid userId)
     {
         Cart? cart = await dbContext.Carts
          .Include(c => c.CartItems)

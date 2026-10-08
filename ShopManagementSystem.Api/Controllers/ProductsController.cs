@@ -1,61 +1,73 @@
-using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.Product;
-using ShopManagementSystem.Application.Interfaces.Catalog;
+using ShopManagementSystem.Application.Products.Commands.CreateProduct;
+using ShopManagementSystem.Application.Products.Commands.DeleteProduct;
+using ShopManagementSystem.Application.Products.Commands.UpdateProduct;
+using ShopManagementSystem.Application.Products.Dtos;
+using ShopManagementSystem.Application.Products.Queries.GetAllProducts;
+using ShopManagementSystem.Application.Products.Queries.GetProductById;
 
 namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("products")]
 public sealed class ProductsController(
-    IProductService productService
+    IMediator mediator
     ) : ControllerBase
 {
     [HttpGet]
-    public async Task<ActionResult<ProductsCollectionDto>> GetProducts()
+    public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts()
     {
-        ProductsCollectionDto products = await productService.GetAllAsync();
+        IEnumerable<ProductDto> products = await mediator.Send(new GetAllProductsQuery());
 
         return Ok(products);
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult<ProductDto>> GetProduct([FromRoute] Guid id)
     {
-        ProductDto product = await productService.GetByIdAsync(id);
+        ProductDto? product = await mediator.Send(new GetProductByIdQuery(id));
+
+        if (product is null)
+        {
+            return NotFound();
+        }
 
         return Ok(product);
     }
 
     [HttpPost]
     public async Task<ActionResult<ProductDto>> CreateProduct(
-       [FromBody] CreateProductDto createProductDto,
-       [FromServices] IValidator<CreateProductDto> validator)
+       CreateProductCommand command)
     {
-        await validator.ValidateAndThrowAsync(createProductDto);
+        Guid productId = await mediator.Send(command);
 
-        Guid productId = await productService.CreateAsync(createProductDto);
-
-        return CreatedAtAction(
-            nameof(GetProduct),
-            new { id = productId });
+        return CreatedAtAction(nameof(GetProduct), new { id = productId }, productId);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult> UpdateProduct(
         [FromRoute] Guid id,
-        [FromBody] UpdateProductDto updateProductDto)
+        [FromBody] UpdateProductCommand command)
     {
-        await productService.UpdateAsync(id, updateProductDto);
+        command.Id = id;
 
-        return NoContent();
+        var isUpdated = await mediator.Send(command);
+
+        if (isUpdated)
+            return NoContent();
+
+        return NotFound();
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteProduct([FromRoute] Guid id)
     {
-        await productService.DeleteAsync(id);
+        var isDeleted = await mediator.Send(new DeleteProductCommand(id));
 
-        return NoContent();
+        if (isDeleted)
+            return NoContent();
+
+        return NotFound();
     }
 }

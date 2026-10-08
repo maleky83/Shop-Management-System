@@ -1,4 +1,4 @@
-using ShopManagementSystem.Application.DTOs.Cart;
+using ShopManagementSystem.Application.Carts.Dtos;
 
 namespace ShopManagementSystem.Application.Interfaces.Shopping;
 

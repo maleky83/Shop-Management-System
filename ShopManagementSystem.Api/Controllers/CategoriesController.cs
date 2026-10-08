@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.Category;
+using ShopManagementSystem.Application.Categories.Dtos;
 using ShopManagementSystem.Application.Interfaces.Catalog;
 
 namespace ShopManagementSystem.Api.Controllers;
@@ -11,7 +11,7 @@ public class CategoriesController(ICategoryService categoryService) : Controller
     [HttpGet]
     public async Task<ActionResult<CategoriesCollectionDto>> GetCategories()
     {
-        var categories = await categoryService.GetAllAsync();
+        CategoriesCollectionDto categories = await categoryService.GetAllAsync();
 
         return Ok(categories);
     }

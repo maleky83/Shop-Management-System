@@ -11,7 +11,7 @@ internal class CartItemRepository(ApplicationDbContext dbContext) : ICartItemRep
 {
     public async Task<IEnumerable<CartItem>> GetAllByCartIdAsync(Guid cartId)
     {
-        var cartItems = await dbContext
+        List<CartItem> cartItems = await dbContext
             .CartItems
             .Where(ci => ci.CartId == cartId)
             .ToListAsync();

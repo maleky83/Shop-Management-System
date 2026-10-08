@@ -8,7 +8,6 @@ public static class ServiceCollectionExtensions
 {
     public static void AddDomain(this IServiceCollection services)
     {
-
         services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
     }
 }

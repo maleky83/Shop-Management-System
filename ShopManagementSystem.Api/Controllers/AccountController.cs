@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.Account;
 using ShopManagementSystem.Application.Interfaces.Authentication;
+using ShopManagementSystem.Application.Users.Dtos;
 
 namespace ShopManagementSystem.Api.Controllers;
 

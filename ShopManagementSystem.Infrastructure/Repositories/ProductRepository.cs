@@ -22,29 +22,14 @@ internal class ProductRepository(ApplicationDbContext dbContext) : IProductRepos
         return product;
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Product entity)
     {
-        Product? product = await GetByIdAsync(id);
-
-        if (product is null)
-        {
-            throw new NotFoundException("not found");
-        }
-
-        dbContext.Products.Remove(product);
+        dbContext.Products.Remove(entity);
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Guid id, Product entity)
+    public async Task SaveChangesAsync()
     {
-        Product? product = await GetByIdAsync(id);
-
-        if (product == null)
-            throw new NotFoundException("Product not found");
-
-        product.Price = entity.Price;
-
-
         await dbContext.SaveChangesAsync();
     }
 

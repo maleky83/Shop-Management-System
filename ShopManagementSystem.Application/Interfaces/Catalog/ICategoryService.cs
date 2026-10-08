@@ -1,4 +1,4 @@
-using ShopManagementSystem.Application.DTOs.Category;
+using ShopManagementSystem.Application.Categories.Dtos;
 
 namespace ShopManagementSystem.Application.Interfaces.Catalog;
 

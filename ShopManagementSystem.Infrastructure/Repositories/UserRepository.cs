@@ -35,7 +35,7 @@ internal class UserRepository(ApplicationDbContext dbContext) : IUserRepository
 
     public async Task DeleteAsync(Guid id)
     {
-        var user = await dbContext
+        User? user = await dbContext
             .Users
             .FirstOrDefaultAsync(u => u.Id == id);
 
@@ -48,7 +48,7 @@ internal class UserRepository(ApplicationDbContext dbContext) : IUserRepository
 
     public async Task UpdateAsync(Guid id, User entity)
     {
-        var user = await GetByIdAsync(id);
+        User? user = await GetByIdAsync(id);
 
         if (user is null)
         {
@@ -85,7 +85,7 @@ internal class UserRepository(ApplicationDbContext dbContext) : IUserRepository
 
     public async Task<User> GetUserByNameAsync(string name)
     {
-        var user = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == name);
+        User? user = await dbContext.Users.FirstOrDefaultAsync(u => u.Name == name);
 
         if (user is null)
         {

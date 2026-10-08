@@ -1,4 +1,5 @@
 using ShopManagementSystem.Application.DTOs.Users;
+using ShopManagementSystem.Application.Users.Dtos;
 
 namespace ShopManagementSystem.Application.Interfaces.Users;
 

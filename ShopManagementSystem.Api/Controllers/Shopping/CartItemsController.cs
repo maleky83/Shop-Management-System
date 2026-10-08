@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.DTOs.Cart;
+using ShopManagementSystem.Application.Carts.Dtos;
 using ShopManagementSystem.Application.Interfaces.Shopping;
 
 namespace ShopManagementSystem.Api.Controllers.Shopping;
@@ -29,7 +29,7 @@ public sealed class CartItemsController(
         [FromBody] AddCartiItemDto addCartiItemDto,
         [FromServices] IValidator<AddCartiItemDto> validator)
     {
-        var userId = GetUserId();
+        Guid userId = GetUserId();
 
         await validator.ValidateAndThrowAsync(addCartiItemDto);
 
@@ -41,7 +41,7 @@ public sealed class CartItemsController(
     [HttpPut("{cartItemId}")]
     public async Task<ActionResult> UpdateCartItem(Guid cartItemId, UpdateCartItemDto updateCartItemDto)
     {
-        var userId = GetUserId();
+        Guid userId = GetUserId();
         await cartItemService.UpdateAsync(userId, cartItemId, updateCartItemDto);
         return NoContent();
     }
@@ -49,7 +49,7 @@ public sealed class CartItemsController(
     [HttpDelete("{cartItemId}")]
     public async Task<ActionResult> DeleteCartItem(Guid cartItemId)
     {
-        var userId = GetUserId();
+        Guid userId = GetUserId();
         await cartItemService.DeleteAsync(userId, cartItemId);
         return NoContent();
     }

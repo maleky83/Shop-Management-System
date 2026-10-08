@@ -1,0 +1,23 @@
+@ShopManagementSystem.Api_HostAddress = https://localhost:5001
+
+POST {{ShopManagementSystem.Api_HostAddress}}/products
+Content-Type: application/json
+
+{
+  "name":"aaaasdssssdddd",
+  "quantity":2,
+  "price":2,
+  "categoryId":
+  "a7f3c821-4b92-4d16-9e35-72c8f1a604b9"
+}
+
+###
+
+GET {{ShopManagementSystem.Api_HostAddress}}/products
+
+###
+
+@id=166d1f46-0bd7-4882-e798-08df24750b68
+GET {{ShopManagementSystem.Api_HostAddress}}/products/{{id}}
+
+###

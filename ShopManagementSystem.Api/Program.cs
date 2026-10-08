@@ -1,15 +1,14 @@
 using System.Text;
-using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using ShopManagementSystem.Api.Middleware;
+using ShopManagementSystem.Api.Extensions;
+using ShopManagementSystem.Application.Extensions;
+using ShopManagementSystem.Domain.Extensions;
 using ShopManagementSystem.Infrastructure.Extensions;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddProblemDetails(options =>
 {
@@ -19,12 +18,11 @@ builder.Services.AddProblemDetails(options =>
     };
 });
 
-builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
-builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-
 builder.Services.AddOpenApi();
 
+builder.Services.AddApi();
+builder.Services.AddApplication();
+builder.Services.AddDomain();
 builder.Services.AddInfrastrucure(builder.Configuration);
 
 #region Authentication

@@ -33,10 +33,6 @@ csharp_style_prefer_implicit_type = true:suggestion
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 
-dotnet_diagnostic.IDE0005.severity = warning
-dotnet_diagnostic.CS1591.severity = none
-dotnet_diagnostic.CA1852.severity=none
-dotnet_diagnostic.CA1848.severity=none
-dotnet_diagnostic.CA2007.severity = none
-dotnet_diagnostic.IDE0007.severity = none
-dotnet_diagnostic.IDE0008.severity = none
+dotnet_diagnostic.IDE0008.severity = error
+dotnet_diagnostic.CS9113.severity = error
+dotnet_diagnostic.IDE0005.severity = error

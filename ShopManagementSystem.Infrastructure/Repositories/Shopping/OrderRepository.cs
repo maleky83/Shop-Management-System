@@ -49,7 +49,7 @@ internal class OrderRepository(ApplicationDbContext dbContext) : IOrderRepositor
         return order.Id;
     }
 
-    public async Task<List<Order>> GetAllAsync(Guid userId)
+    public async Task<IEnumerable<Order>> GetAllAsync(Guid userId)
     {
         List<Order> orders = await dbContext.Orders
             .Where(o => o.UserId == userId)

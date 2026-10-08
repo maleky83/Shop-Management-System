@@ -24,6 +24,5 @@ public sealed class CartConfiguration : IEntityTypeConfiguration<Cart>
             .WithOne(ci => ci.Cart)
             .HasForeignKey(c => c.CartId);
 
-
     }
 }
