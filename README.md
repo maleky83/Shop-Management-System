@@ -6,6 +6,7 @@ Features:
 * RESTful
 * Web Api
 * Clean Architecure (API, Domain, Application, Infrastructure)
+* CQRS , Mediatr
 * User authentication and authorization using JWT and ASP.NET Core Identity
 * Product, category, cart , and order management
 * Entity Framework Core with Fluent API
