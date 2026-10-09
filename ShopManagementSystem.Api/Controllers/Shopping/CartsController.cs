@@ -26,7 +26,6 @@ public class CartsController(IMediator mediator) : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CartDto>> GetCart()
     {
         Guid userId = GetUserId();
