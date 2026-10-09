@@ -10,6 +10,7 @@
         <PackageReference Include="Newtonsoft.Json" />
         <PackageReference Include="NuGet.Packaging" />
         <PackageReference Include="NuGet.Protocol" />
+        <PackageReference Include="Serilog.AspNetCore" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
     </ItemGroup>
 

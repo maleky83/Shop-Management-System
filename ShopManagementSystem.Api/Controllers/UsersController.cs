@@ -7,7 +7,7 @@ namespace ShopManagementSystem.Api.Controllers;
 
 [ApiController]
 [Route("users")]
-public sealed class UsersController(IUserService userService) : ControllerBase
+public class UsersController(IUserService userService) : ControllerBase
 {
     [HttpGet]
     public async Task<ActionResult<UsersCollectionDto>> GetUsers()

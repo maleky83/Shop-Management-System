@@ -1,4 +1,4 @@
-namespace ShopManagementSystem.Application.Carts.Dtos;
+namespace ShopManagementSystem.Application.CartItems.Dtos;
 
 public record CartItemDto
 {

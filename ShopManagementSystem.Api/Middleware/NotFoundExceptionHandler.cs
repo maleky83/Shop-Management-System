@@ -1,10 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using ShopManagementSystem.Application.Exceptions;
 
-namespace ShopManagementSystem.Api.Middleware;
-
-public class NotFoundExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
+public class NotFoundExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
@@ -12,21 +9,14 @@ public class NotFoundExceptionHandler(IProblemDetailsService problemDetailsServi
         CancellationToken cancellationToken)
     {
         if (exception is not NotFoundException)
-        {
             return false;
-        }
 
-        var context = new ProblemDetailsContext
-        {
-            Exception = exception,
-            HttpContext = httpContext,
-            ProblemDetails = new ProblemDetails
-            {
-                Status = StatusCodes.Status404NotFound,
-                Detail = "asdf",
-            }
-        };
+        httpContext.Response.StatusCode = 404;
 
-        return await problemDetailsService.TryWriteAsync(context);
+        await httpContext.Response.WriteAsync(
+            "Resource not found",
+            cancellationToken);
+
+        return true;
     }
 }

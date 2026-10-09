@@ -14,7 +14,7 @@ public class DeleteProductCommandHandler(
         DeleteProductCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Deleting product {request.Id}");
+        logger.LogInformation("Deleting product {ProductId}", request.Id);
 
         Product? product = await productRepository.GetByIdAsync(request.Id);
 

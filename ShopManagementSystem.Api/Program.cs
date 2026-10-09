@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using ShopManagementSystem.Api.Extensions;
 using ShopManagementSystem.Application.Extensions;
 using ShopManagementSystem.Domain.Extensions;
@@ -10,20 +11,21 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddProblemDetails(options =>
-{
-    options.CustomizeProblemDetails = context =>
-    {
-        context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
-    };
-});
-
 builder.Services.AddOpenApi();
+
+builder.Services.AddProblemDetails();
+
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddApi();
 builder.Services.AddApplication();
 builder.Services.AddDomain();
 builder.Services.AddInfrastrucure(builder.Configuration);
+
+builder.Host.UseSerilog((context, configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration);
+});
 
 #region Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,8 +53,12 @@ builder.Services.AddSwaggerGen();
 
 WebApplication app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 if (app.Environment.IsDevelopment())
 {
+    app.UseSwagger();
+    app.UseSwaggerUI();
     app.MapOpenApi();
 }
 

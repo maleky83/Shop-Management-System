@@ -17,7 +17,24 @@ GET {{ShopManagementSystem.Api_HostAddress}}/products
 
 ###
 
-@id=166d1f46-0bd7-4882-e798-08df24750b68
+@id=69af1330-67a4-4910-a09e-08df2469848c
 GET {{ShopManagementSystem.Api_HostAddress}}/products/{{id}}
+
+###
+
+PATCH {{ShopManagementSystem.Api_HostAddress}}/products/{{id}}
+Content-Type: application/json
+
+{
+  "name":"asasdfd",
+  "description":"asdf",
+  "categoryId":
+  "a7f3c821-4b92-4d16-9e35-72c8f1a604b9"
+
+}
+
+###
+
+GET {{ShopManagementSystem.Api_HostAddress}}/products/{id:guid}
 
 ###

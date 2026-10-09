@@ -1,9 +1,11 @@
+using ShopManagementSystem.Application.CartItems.Dtos;
+
 namespace ShopManagementSystem.Application.Carts.Dtos;
 
-public record CartDto
+public class CartDto
 {
-    public required Guid CartId { get; init; }
-    public required Guid UserId { get; init; }
-    public IEnumerable<CartItemDto> CartItems { get; init; } = [];
-    public decimal TotalPrice { get; init; }
+    public Guid CartId { get; set; } = default!;
+    public Guid UserId { get; set; } = default!;
+    public IEnumerable<CartItemDto> CartItems { get; set; } = default!;
+    public decimal TotalPrice { get; set; }
 }

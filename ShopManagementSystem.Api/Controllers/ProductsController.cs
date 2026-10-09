@@ -45,7 +45,7 @@ public sealed class ProductsController(
         return CreatedAtAction(nameof(GetProduct), new { id = productId }, productId);
     }
 
-    [HttpPut("{id}")]
+    [HttpPatch("{id}")]
     public async Task<ActionResult> UpdateProduct(
         [FromRoute] Guid id,
         [FromBody] UpdateProductCommand command)

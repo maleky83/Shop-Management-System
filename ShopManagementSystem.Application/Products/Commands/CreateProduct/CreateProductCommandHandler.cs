@@ -20,7 +20,7 @@ public class CreateProductCommandHandler(
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        logger.LogInformation("Creating product");
+        logger.LogInformation("Creating product {Product}", request);
 
         Product product = mapper.Map<Product>(request);
 

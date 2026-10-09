@@ -19,7 +19,7 @@ public class GetProductByIdQueryHandler(
         GetProductByIdQuery request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Getting product {request.Id}");
+        logger.LogInformation("Getting product {ProductId}", request.Id);
 
         Product? product = await productRepository.GetByIdAsync(request.Id);
 

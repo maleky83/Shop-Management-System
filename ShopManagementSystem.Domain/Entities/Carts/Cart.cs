@@ -6,7 +6,7 @@ public sealed class Cart
 {
     public Guid Id { get; set; } = Guid.Empty;
     public DateTime CreatedAt { get; set; }
-    public required Guid UserId { get; set; }
+    public Guid UserId { get; set; } = default!;
 
     public User User { get; set; } = null!;
 

@@ -1,13 +1,15 @@
 using System.Security.Claims;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ShopManagementSystem.Application.Carts.Commands.DeleteCart;
 using ShopManagementSystem.Application.Carts.Dtos;
-using ShopManagementSystem.Application.Interfaces.Shopping;
+using ShopManagementSystem.Application.Carts.Queries.GetCartById;
 
 namespace ShopManagementSystem.Api.Controllers.Shopping;
 
 [ApiController]
 [Route("carts")]
-public sealed class CartsController(ICartService cartService) : ControllerBase
+public class CartsController(IMediator mediator) : ControllerBase
 {
     private Guid GetUserId()
     {
@@ -22,18 +24,33 @@ public sealed class CartsController(ICartService cartService) : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    //[ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<CartDto>> GetCart()
     {
         Guid userId = GetUserId();
-        CartDto cart = await cartService.GetAsync(userId);
+
+        CartDto? cart = await mediator.Send(new GetCartByIdQuery(userId));
+
+        if (cart is null)
+            return NotFound();
+
         return Ok(cart);
     }
 
     [HttpDelete]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteCart()
     {
         Guid userId = GetUserId();
-        await cartService.DeleteAsync(userId);
-        return NoContent();
+
+        var isDeleted = await mediator.Send(new DeleteCartCommand(userId));
+
+        if (isDeleted)
+            return NoContent();
+
+        return NotFound();
     }
 }

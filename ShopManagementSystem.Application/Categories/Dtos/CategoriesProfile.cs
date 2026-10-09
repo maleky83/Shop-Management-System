@@ -7,7 +7,6 @@ public class CategoriesProfile : Profile
 {
     public CategoriesProfile()
     {
-        CreateMap<CreateCategoryDto, Category>();
         CreateMap<Category, CategoryDto>()
             .ForMember(
                 dest => dest.CategoryId,

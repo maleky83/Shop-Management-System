@@ -1,43 +1,30 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 
-namespace ShopManagementSystem.Api.Middleware;
-
-public sealed class ValidationExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
+public class ValidationExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
-        CancellationToken cancellationToken
-        )
+        CancellationToken cancellationToken)
     {
         if (exception is not ValidationException validationException)
-        {
             return false;
-        }
 
-        httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-        var context = new ProblemDetailsContext
-        {
-            Exception = exception,
-            HttpContext = httpContext,
-            ProblemDetails = new ProblemDetails
-            {
-                Detail = "One or more validation errors occurred",
-                Status = StatusCodes.Status400BadRequest
-            }
-        };
+        httpContext.Response.StatusCode = 400;
 
         var errors = validationException.Errors
-            .GroupBy(e => e.PropertyName)
-            .ToDictionary(
-                g => g.Key.ToLowerInvariant(),
-                g => g.Select(e => e.ErrorMessage).ToArray()
-            );
+            .Select(e => e.ErrorMessage)
+            .ToArray();
 
-        context.ProblemDetails.Extensions.Add("errors", errors);
+        await httpContext.Response.WriteAsJsonAsync(
+            new
+            {
+                Message = "Validation failed",
+                Errors = errors
+            },
+            cancellationToken);
 
-        return await problemDetailsService.TryWriteAsync(context);
+        return true;
     }
 }

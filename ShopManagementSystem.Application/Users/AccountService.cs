@@ -1,4 +1,5 @@
 using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using ShopManagementSystem.Application.Exceptions;
 using ShopManagementSystem.Application.Interfaces.Authentication;
@@ -12,11 +13,14 @@ public sealed class AccountService(
     IPasswordHasher<User> passwordHasher,
     ITokenService tokenService,
     IMapper mapper,
-    IUserRepository userRepository
+    IUserRepository userRepository,
+    IValidator<RegisterDto> validator
     ) : IAccountService
 {
     public async Task RegisterAsync(RegisterDto dto)
     {
+        await validator.ValidateAndThrowAsync(dto);
+
         User user = mapper.Map<User>(dto);
 
         user.PasswordHash = passwordHasher.HashPassword(user, dto.Password);

@@ -15,7 +15,7 @@ internal class CreateOrderCommandHandler(
     {
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 
-        logger.LogInformation($"Creating order for user {request.UserId}");
+        logger.LogInformation("Creating order for user {UserId}", request.UserId);
 
         Guid id = await orderRepository.CreateAsync(request.UserId);
         return id;

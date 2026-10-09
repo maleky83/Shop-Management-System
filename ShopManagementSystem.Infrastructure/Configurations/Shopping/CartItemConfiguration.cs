@@ -26,7 +26,7 @@ public sealed class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
             .WithMany(p => p.CartItems)
             .HasForeignKey(ci => ci.ProductId);
 
-        builder.Property(ci => ci.UnitPrice)
+        builder.Property(ci => ci.Price)
             .HasPrecision(18, 2);
     }
 }

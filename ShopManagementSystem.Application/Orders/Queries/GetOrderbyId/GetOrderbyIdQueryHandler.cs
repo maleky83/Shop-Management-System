@@ -17,7 +17,9 @@ internal class GetOrderbyIdQueryHandler(
         GetOrderbyIdQuery request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Getting order {request.OrderId} for user {request.UserId}");
+        logger.LogInformation(
+            "Getting order {OrderId} for user {UserId}",
+            request.OrderId, request.UserId);
 
         Order order = await orderRepository.GetByIdAsync(request.UserId, request.OrderId);
 

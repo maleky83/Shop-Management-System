@@ -1,11 +1,7 @@
 using System.Reflection;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using ShopManagementSystem.Application.Carts;
-using ShopManagementSystem.Application.Categories;
 using ShopManagementSystem.Application.Interfaces.Authentication;
-using ShopManagementSystem.Application.Interfaces.Catalog;
-using ShopManagementSystem.Application.Interfaces.Shopping;
 using ShopManagementSystem.Application.Interfaces.Users;
 using ShopManagementSystem.Application.Users;
 
@@ -25,9 +21,6 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IAccountService, AccountService>();
-        services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ITokenService, TokenService>();
-        services.AddScoped<ICartService, CartService>();
-
     }
 }

@@ -1,16 +1,11 @@
 namespace ShopManagementSystem.Application.Categories.Dtos;
 
-public sealed record CategoriesCollectionDto
+public class CategoryDto
 {
-    public required IReadOnlyCollection<CategoryDto> Data { get; init; }
-}
+    public Guid CategoryId { get; set; } = default!;
+    public string Name { get; set; } = default!;
 
-public sealed record CategoryDto
-{
-    public required Guid CategoryId { get; init; }
-    public string Name { get; init; } = string.Empty;
+    public string? Description { get; set; }
 
-    public string? Description { get; init; }
-
-    public bool IsActive { get; init; } = true;
+    public bool IsActive { get; set; } = true;
 }

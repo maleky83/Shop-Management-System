@@ -1,21 +1,9 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-
 namespace ShopManagementSystem.Application.Users.Dtos;
 
-public record RegisterDto
+public class RegisterDto
 {
-    [MaxLength(300)]
-    [Required]
-    [Remote("VerifyName", "Account")]
-    public required string Name { get; init; }
-    [MaxLength(50)]
-    [DataType(DataType.Password)]
-    [Required]
-    public required string Password { get; init; }
-    [MaxLength(50)]
-    [DataType(DataType.Password)]
-    [Compare(nameof(Password))]
-    [Required]
-    public required string RePassword { get; init; }
+    //[Remote("VerifyName", "Account")]
+    public string Name { get; set; } = default!;
+    public string Password { get; set; } = default!;
+    public string RePassword { get; set; } = default!;
 }

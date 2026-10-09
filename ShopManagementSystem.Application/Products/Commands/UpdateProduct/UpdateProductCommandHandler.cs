@@ -18,7 +18,7 @@ public class UpdateProductCommandHandler(
         UpdateProductCommand request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Updating product {request.Id}");
+        logger.LogInformation("Updating product {ProductId}", request.Id);
 
         await validator.ValidateAndThrowAsync(request, cancellationToken);
 

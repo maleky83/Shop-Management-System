@@ -18,7 +18,7 @@ internal class GetAllOrdersQueryHandler(
         GetAllOrdersQuery request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation($"Getting order user {request.UserId}");
+        logger.LogInformation("Getting order user {UserId}", request.UserId);
 
         IEnumerable<Order> orders = await orderRepository.GetAllAsync(request.UserId);
 

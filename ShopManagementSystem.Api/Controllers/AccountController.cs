@@ -21,7 +21,7 @@ public sealed class AccountController(IAccountService accountService) : Controll
     }
 
     [HttpPost("login")]
-    public async Task<ActionResult> Login([FromBody] LoginDto loginDto)
+    public async Task<ActionResult<LoginResponseDto>> Login([FromBody] LoginDto loginDto)
     {
         LoginResponseDto user = await accountService.LoginAsync(loginDto);
 

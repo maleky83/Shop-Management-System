@@ -18,7 +18,7 @@ public class GetAllProductsQueryHandler(
         GetAllProductsQuery request,
         CancellationToken cancellationToken)
     {
-        logger.LogInformation("Getting all products");
+        logger.LogInformation("Getting all products {@Products}", request);
 
         IEnumerable<Product> products = await productRepository.GetAllAsync();
 

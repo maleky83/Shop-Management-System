@@ -14,7 +14,10 @@ public static class ServiceCollectionExtensions
     public static void AddInfrastrucure(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("ApplicationDb");
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+        services.AddDbContext<ApplicationDbContext>(options => options
+            .UseSqlServer(connectionString)
+            .EnableSensitiveDataLogging()
+            );
 
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();

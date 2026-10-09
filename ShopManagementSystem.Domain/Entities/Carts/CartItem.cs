@@ -2,18 +2,18 @@ using ShopManagementSystem.Domain.Entities.Catalog;
 
 namespace ShopManagementSystem.Domain.Entities.Carts;
 
-public sealed class CartItem
+public class CartItem
 {
-    public Guid Id { get; set; } = Guid.Empty;
+    public Guid Id { get; set; } = default!;
     public DateTime CreatedAt { get; set; }
-    public required Guid CartId { get; set; }
+    public Guid CartId { get; set; } = default!;
 
     public Cart Cart { get; set; } = null!;
 
-    public required Guid ProductId { get; set; }
+    public Guid ProductId { get; set; } = default!;
 
     public Product Product { get; set; } = null!;
 
     public int Quantity { get; set; }
-    public decimal UnitPrice { get; set; }
+    public decimal Price { get; set; }
 }

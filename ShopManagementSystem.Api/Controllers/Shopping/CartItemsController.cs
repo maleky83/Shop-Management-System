@@ -1,15 +1,16 @@
 using System.Security.Claims;
-using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using ShopManagementSystem.Application.Carts.Dtos;
-using ShopManagementSystem.Application.Interfaces.Shopping;
+using ShopManagementSystem.Application.CartItems.Commands.CreateCartItem;
+using ShopManagementSystem.Application.CartItems.Commands.DeleteCartItem;
+using ShopManagementSystem.Application.CartItems.Commands.UpdateCartItem;
 
 namespace ShopManagementSystem.Api.Controllers.Shopping;
 
 [ApiController]
-[Route("carts/items")]
+[Route("api/cartItems")]
 public sealed class CartItemsController(
-    ICartItemService cartItemService
+    IMediator mediator
     ) : ControllerBase
 {
     private Guid GetUserId()
@@ -24,33 +25,61 @@ public sealed class CartItemsController(
         return Guid.Parse(userId);
     }
 
-    [HttpPut]
-    public async Task<ActionResult> AddCartItem(
-        [FromBody] AddCartiItemDto addCartiItemDto,
-        [FromServices] IValidator<AddCartiItemDto> validator)
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> CreateCartItem(
+        [FromBody] CreateCartItemCommand command)
     {
         Guid userId = GetUserId();
 
-        await validator.ValidateAndThrowAsync(addCartiItemDto);
+        command.UserId = userId;
 
-        await cartItemService.AddAsync(userId, addCartiItemDto);
+        var isCreated = await mediator.Send(command);
 
-        return Ok();
+        if (isCreated)
+            return Created();
+
+        return NotFound();
     }
 
-    [HttpPut("{cartItemId}")]
-    public async Task<ActionResult> UpdateCartItem(Guid cartItemId, UpdateCartItemDto updateCartItemDto)
+    [HttpPatch("{cartItemId}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> UpdateCartItem(
+       [FromRoute] Guid cartItemId,
+       [FromBody] UpdateCartItemCommand command)
     {
         Guid userId = GetUserId();
-        await cartItemService.UpdateAsync(userId, cartItemId, updateCartItemDto);
-        return NoContent();
+
+        command.UserId = userId;
+        command.CartItemId = cartItemId;
+
+        var isUpdated = await mediator.Send(command);
+
+        if (isUpdated)
+            return NoContent();
+
+        return NotFound();
     }
 
     [HttpDelete("{cartItemId}")]
-    public async Task<ActionResult> DeleteCartItem(Guid cartItemId)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> DeleteCartItem(
+        [FromRoute] Guid cartItemId,
+        [FromBody] DeleteCartItemCommand command)
     {
         Guid userId = GetUserId();
-        await cartItemService.DeleteAsync(userId, cartItemId);
-        return NoContent();
+
+        command.UserId = userId;
+        command.CartItemId = cartItemId;
+
+        var isDeleted = await mediator.Send(command);
+
+        if (isDeleted)
+            return NoContent();
+
+        return NotFound();
     }
 }
