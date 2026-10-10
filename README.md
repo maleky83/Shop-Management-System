@@ -1,4 +1,4 @@
-# Shop Management System
+# Shop-System
 
 A shop management system developed with ASP.NET Core 
 
