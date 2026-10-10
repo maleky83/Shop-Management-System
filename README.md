@@ -1,6 +1,7 @@
 # Shop-System
 
-A shop management system developed with ASP.NET Core 
+A shop management system 
+Product, category, cart , order
 
 Features:
 * Web Api
@@ -10,7 +11,6 @@ Features:
 * CQRS , Mediatr
 * Serilog
 * User JWT and ASP.NET Core Identity
-* Product, category, cart , and order 
 * Dependency Injection
 * Auto Mapper
 * FluentValidation
